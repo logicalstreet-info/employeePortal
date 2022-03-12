@@ -18,6 +18,8 @@
           <ul class="dropdown-menu dropdown-menu-end">
             <li><span class="dropdown-item"><%= current_user.email%></span></li>
             <li><div class="dropdown-divider"></div></li>
+              <%= link_to "Change Password", passwords_edit_path, class: "dropdown-item text-primary"%>
+            <li><div class="dropdown-divider"></div></li>
             <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item text-primary"%>
           </ul>
         </li>
@@ -26,18 +28,15 @@
     <% else %>
       <div class="container-fluid">  
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <div class="collapse navbar-collapse" id="navbarNavDropdown"> 
+          <div class="collapse navbar-collapse" id=""> 
             <span class="mr-auto" style="color:white">Employee Portal</span>
           </div>
         </ul>
         <div class="dropdown-right">
           <ul class="navbar-nav ml-auto mr-4">
             <li class="nav-item dropdown-right">
-              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Action
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <%= link_to 'Login', new_user_session_path, class: "dropdown-item text-primary" %>
+              
+                <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
               </ul>
             </li>
           </ul>

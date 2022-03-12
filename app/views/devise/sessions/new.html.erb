@@ -5,6 +5,18 @@
         <div class="card-body m-3">
           <h2>Employee Login</h2>                    
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <%if @user.errors.any? %>
+              <div id="error_explanation">
+                <div class="alert alert-danger">
+                  The form contains <%= pluralize(@user.errors.count, "error") %>.
+                </div>
+                <ul>
+                  <% @user.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
             <div class="field">
               <%= f.label :email %><br />
               <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control  col-md-3 mr-1" %>
