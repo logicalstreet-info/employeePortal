@@ -1,0 +1,29 @@
+<center>
+<h1>Organizations</h1>
+
+<table class="table table-striped">
+  <div class="row">
+   <div class="col">
+    
+      <thead>
+        <th>Name</th>
+        <th>Action</th>
+      </thead>
+    
+    <div class="col-sm-4">
+      <% @organizations.each do |organization| %>
+        <tr>
+          <td><%= organization.name %></td>    
+          <td><%= link_to 'Show', organization %></td> 
+          <td><%= link_to 'Edit', edit_organization_path(organization.id) %></td> 
+          <td><%= button_to 'Destroy',organization, method: :delete,
+                      data: { confirm: 'Are you sure?' } %></td> 
+        </tr>
+      <% end %>    
+    </div>
+  </div>
+  </div>
+</table>
+<br>
+<%= link_to 'New', new_organization_path %>
+</center>

@@ -1,0 +1,10 @@
+<%= form_with model: @organization do |form| %>
+  <div class="name">
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="action">
+    <%= form.submit %>
+  </div>
+<% end %>
