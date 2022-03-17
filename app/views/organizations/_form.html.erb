@@ -1,4 +1,17 @@
-<%= form_with model: @organization do |form| %>
+<div id="organization_form">
+<%if organization.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(organization.errors.count, "error") %>.
+    </div>
+    <ul>
+      <% organization.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>  
+<% end %>
+<%= form_with model: organization do |form| %>
   <div class="name">
     <%= form.label :name %><br>
     <%= form.text_field :name %>
@@ -8,3 +21,4 @@
     <%= form.submit %>
   </div>
 <% end %>
+</div>

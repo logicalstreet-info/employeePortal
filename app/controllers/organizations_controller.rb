@@ -14,11 +14,18 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new(organization_params)
+    respond_to do |format|
+      if @organization.save
+        format.html { redirect_to organizations_index_path }
 
-    if @organization.save
-      redirect_to organizations_index_path 
-    else
-      render :new
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('organization_form',
+            partial: 'organizations/form',
+            locals: { organization: @organization })
+        end
+        format.html { render :new }
+      end
     end
   end
 
@@ -30,7 +37,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id])
 
     if @organization.update(organization_params)
-      redirect_to organizations_index_path 
+      redirect_to organizations_index_path, notice: "value updated"
     else
       render :edit
     end
