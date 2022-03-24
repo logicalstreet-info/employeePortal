@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   
   get 'passwords/edit', to: 'passwords#edit'
   patch  'passwords/edit', to: 'passwords#update'
+  post  'passwords/edit', to: 'passwords#update'
   resources :organizations
   
 
