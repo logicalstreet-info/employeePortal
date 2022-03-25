@@ -1,0 +1,45 @@
+<%= form_with(model: @property) do |form| %>
+  <% if property.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(property.errors.count, "error") %> prohibited this message from being saved:</h2>
+
+      <ul>
+        <% property.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :name, style: "display: block" %>
+      <%= form.text_field :name, class: 'form-control',placeholder: 'name' %>
+    </div><br>
+
+    <div class="col-6">
+      <%= form.label :assets_type, style: "display: block" %>
+      <%= form.select :assets_type, options_for_select(Property.assets_types.keys ,selected: form.object.assets_type ) ,{ include_blank: "Select Asset Type"}, {class: "form-control"} %><br>
+    </div>
+    
+    <div class="col-6">
+      <%= form.label :warranty_month, style: "display: block" %>
+      <%= form.text_field :warranty_month, class: 'form-control'  %>
+    </div><br>
+    
+    <div class="col-6">
+      <%= form.label :purchase_date, style: "display: block" %>
+      <%= form.text_field :purchase_date, class: 'form-control'  %>
+    </div>
+  </div><br>
+
+  <div class="col">
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description, class: 'form-control', :rows => 5 %>
+  </div>
+  <br>
+
+  <div>
+    <%= form.button "create", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+  </div>
+<% end %>
