@@ -73,3 +73,4 @@ end
 
 gem 'cssbundling-rails'
 gem 'devise'
+gem 'acts_as_paranoid'

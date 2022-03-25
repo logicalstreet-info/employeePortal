@@ -1,3 +1,4 @@
-class Organization < ApplicationRecord
-  validates :name, presence: true
+class Organization < ActiveRecord::Base
+  acts_as_paranoid
+  validates :name, presence: true, uniqueness: true
 end
