@@ -12,10 +12,11 @@ class PropertiesController < ApplicationController
 
   def create
     @property = Property.new(property_params)
+    @property.user = current_user
+
     respond_to do |format|
       if @property.save
         format.html { redirect_to properties_index_path }
-
       else
         format.html { render :new }
       end
@@ -23,12 +24,11 @@ class PropertiesController < ApplicationController
   end
 
   def edit
-    @property = Property.find(params[:id])
+    @property = Property.find(params[:id])  
   end
 
   def update
     @property = Property.find(params[:id])
-
     if @property.update(property_params)
       redirect_to properties_index_path, notice: "value updated"
     else
@@ -46,6 +46,6 @@ class PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:name, :description)
+    params.require(:property).permit(:name, :description, :purchase_date, :warranty_month, :assets_type)
   end
 end
