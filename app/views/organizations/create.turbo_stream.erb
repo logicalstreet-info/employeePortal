@@ -1,0 +1,6 @@
+<%= turbo_stream.prepend "organizations" do %>
+  <%= render "organization", organization: @organization %>
+<% end %>
+<%= turbo_stream.replace "#{dom_id(Organization.new)}_form" do %>
+  <%= render "form", organization: Organization.new %>
+<% end %>

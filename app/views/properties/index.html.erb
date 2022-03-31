@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <h1>Assets</h1>
+          <%= link_to "new", new_property_path%>
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <div id="projects">
+                <% @properties.each do |property| %>
+                  <tr>
+                    <td>
+                      <%= property.name %>
+                    </td>
+                    <td>
+                    <%= link_to "edit", edit_property_path(property.id)%> 
+                    </td>
+                  </tr>
+                <% end %>
+              </div>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
