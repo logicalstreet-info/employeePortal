@@ -5,8 +5,11 @@ class ProjectsController < ApplicationController
   # GET /projects or /projects.json
   def index
     @projects = Project.all
+    @periods = Period.all
+    #@projects = Project.where(:user_id => current_user)
+    #@projects = current_user.projects
   end
-
+  
   # GET /projects/1 or /projects/1.json
   def show
     @project = Project.find(params[:id])  
@@ -23,9 +26,9 @@ class ProjectsController < ApplicationController
   end
 
   # POST /projects or /projects.json
-  def create
+  def create   
     @project = Project.new(project_params)
-    @project.user = current_user
+    # @project.user_id = params[:id].to_i
     respond_to do |format|
       if @project.save!
         format.html { redirect_to projects_url, notice: "Project was successfully created." }
@@ -40,7 +43,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
     @project = Project.find(params[:id])
-    @project.user = current_user
+    # @projects = Project.where(:user_id => current_user) 
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to projects_url, notice: "Project was successfully updated." }

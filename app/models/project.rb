@@ -1,3 +1,4 @@
 class Project < ApplicationRecord
-  belongs_to :user
+  has_many :periods
+  has_many :user, through: :periods
 end

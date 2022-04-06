@@ -8,19 +8,42 @@
             <thead class="thead-light">
               <tr>
                 <th>Name</th>
+                <% if current_user.has_role? :super_admin%>
+                  <th>Employee-Id</th>
+                  <th>Start-Date</th>
+                  <th>End-Date</th>
+                  <th>Action</th>
+                <% end %>
               </tr>
             </thead>
+
             <tbody>
-              <tr>
-                <div id="projects">
+              <% @projects.each do |project| %>
+                <tr>
                   <td>
-                    <% @projects.each do |project| %>
-                      <%= render project %>
-                      <%= link_to "edit", edit_project_path(project.id)%> 
-                    <% end %>
+                    <%= project.name %>
                   </td>
-                </div>
-              </tr>
+                  <% if current_user.has_role? :super_admin%>
+                    <% @periods.each do |p| %>
+                      <% if project.id == p.project_id %>
+                        <td>
+                          <%= p.user_id %>
+                        </td>
+                        <td>
+                          <%= p.start_date %>
+                        </td>
+                        <td>
+                          <%= p.end_date %>
+                        </td>
+                      <% end%>
+                    <% end%>  
+                    <td>
+                      <%= link_to "edit", edit_project_path(project.id), class: "col-md-12 text-right"%> 
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+              <%= link_to "new", new_project_path(@user)%> 
             </tbody>
           </div>
         </div>
@@ -28,6 +51,7 @@
     </div>
   </div>
 </div>
+                      
 
 
 
