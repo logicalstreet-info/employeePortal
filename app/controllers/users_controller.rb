@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :find_user
   def index
+    @users = User.all 
   end
 
   def show
@@ -29,6 +30,7 @@ class UsersController < ApplicationController
   def find_user
     @user = current_user
   end
+  
   def user_params
     params.require(:user).permit(:name, :joining_date, :birth_date, :gender, :qualification, :mobile_number, :address,
     :native_address, :address, :parent_mobile_number, :user_type, :email, :password, :password_confirmation  )

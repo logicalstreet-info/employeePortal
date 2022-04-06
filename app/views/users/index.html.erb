@@ -1,2 +1,40 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <h1>Employee List</h1>
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th>Employee-Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @users.each do |user| %>
+                <% if user.organizations_id == current_user.organizations_id %>
+                  <tr>
+                    <td>
+                      <%= user.name %>
+                    </td>
+                    <td>
+                      <%= link_to "edit", edit_user_path(user.id), class: "col-md-12 text-right"%> 
+                    </td>
+                  </tr>
+                  <% end %>
+                <% end %>
+              <%= link_to "new", new_user_path(@user)%> 
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+                    
+
+
+
+

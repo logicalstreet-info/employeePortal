@@ -8,7 +8,7 @@
             <thead class="thead-light">
               <tr>
                 <th>Name</th>
-                <% if current_user.has_role? :super_admin%>
+                <% if current_user.has_role? :admin%>
                   <th>Employee-Id</th>
                   <th>Start-Date</th>
                   <th>End-Date</th>
@@ -19,29 +19,31 @@
 
             <tbody>
               <% @projects.each do |project| %>
-                <tr>
-                  <td>
-                    <%= project.name %>
-                  </td>
-                  <% if current_user.has_role? :super_admin%>
-                    <% @periods.each do |p| %>
-                      <% if project.id == p.project_id %>
-                        <td>
-                          <%= p.user_id %>
-                        </td>
-                        <td>
-                          <%= p.start_date %>
-                        </td>
-                        <td>
-                          <%= p.end_date %>
-                        </td>
-                      <% end%>
-                    <% end%>  
+                <% if project.organizations_id == current_user.organizations_id %>
+                  <tr>
                     <td>
-                      <%= link_to "edit", edit_project_path(project.id), class: "col-md-12 text-right"%> 
+                      <%= project.name %>
                     </td>
-                  <% end %>
-                </tr>
+                    <% if current_user.has_role? :admin%>
+                      <% @periods.each do |p| %>
+                        <% if project.id == p.project_id %>
+                          <td>
+                            <%= p.user_id %>
+                          </td>
+                          <td>
+                            <%= p.start_date %>
+                          </td>
+                          <td>
+                            <%= p.end_date %>
+                          </td>
+                        <% end%>
+                      <% end%>  
+                      <td>
+                        <%= link_to "edit", edit_project_path(project.id), class: "col-md-12 text-right"%> 
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
               <% end %>
               <%= link_to "new", new_project_path(@user)%> 
             </tbody>
