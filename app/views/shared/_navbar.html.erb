@@ -9,12 +9,13 @@
         <li class="nav-item">
           <%= link_to 'User', users_index_path, class: "nav-link active mr-auto" %>
         </li>
-      <% end %>
-      <% if current_user.has_role? :admin%>
         <li class="nav-item">
           <%= link_to 'Organization', organizations_index_path , class: "nav-link active mr-auto" %>
         </li>
       <% end %>
+      <li class="nav-item">
+        <%= link_to 'Daily Update', updates_path, class: "nav-link active mr-auto" %>
+      </li>
       <li class="nav-item">
         <%= link_to 'Assets', properties_index_path, class: "nav-link active mr-auto" %>
       </li>

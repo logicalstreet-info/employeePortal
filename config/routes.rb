@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
-  get 'periods/index'
-  get 'periods/new'
   root 'home#index'
   devise_for :users
   get 'organizations/index'
   get 'properties/index'
   get 'users/index'
+  get 'periods/index'
+  get 'periods/new'
   get 'passwords/edit', to: 'passwords#edit'
   patch  'passwords/edit', to: 'passwords#update'
   post  'passwords/edit', to: 'passwords#update'
+  post 'updates/new'
+
   resources :users do
     member do
       resources :projects
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
   end
   resources :organizations
   resources :properties
+  resources :updates
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
