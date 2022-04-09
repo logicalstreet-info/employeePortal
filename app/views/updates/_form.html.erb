@@ -16,7 +16,7 @@
                 <% invalid = update.errors.include?(:in_time) %>
                 <div class="form-group">
                   <%= form.label :Start_time %>
-                  <%= form.text_field :in_time, class: "form-control #{'is-invalid' if invalid}" %>
+                  <%= form.time_field :in_time, class: "form-control #{'is-invalid' if invalid}" %>
                   <% if invalid %>
                     <div class="invalid-feedback d-block">
                       <% update.errors.full_messages_for(:in_time).each do |error_message| %>
@@ -30,7 +30,7 @@
                 <% invalid = update.errors.include?(:out_time) %>
                 <div class="form-group">
                   <%= form.label :End_time %>
-                  <%= form.text_field :out_time, class: "form-control #{'is-invalid' if invalid}" %>
+                  <%= form.time_field :out_time, class: "form-control #{'is-invalid' if invalid}" %>
                   <% if invalid %>
                     <div class="invalid-feedback d-block">
                       <% update.errors.full_messages_for(:out_time).each do |error_message| %>
@@ -60,7 +60,7 @@
                 <% invalid = update.errors.include?(:description) %>
                 <div class="form-group">
                   <%= form.label :Description %>
-                  <%= form.text_area :description, class: "form-control #{'is-invalid' if invalid}", :rows => 5 %>
+                  <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}", :rows => 5 %>
                   <% if invalid %>
                     <div class="invalid-feedback d-block">
                       <% update.errors.full_messages_for(:description).each do |error_message| %>
@@ -80,7 +80,3 @@
     </div>
   </div>
 </div>
-
-
-
-
