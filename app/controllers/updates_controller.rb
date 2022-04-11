@@ -3,7 +3,11 @@ class UpdatesController < ApplicationController
 
   def index
     if current_user.has_role? :admin
-      @updates = Update.all.order("created_at DESC") 
+      @updates = Update.all.order("created_at DESC")
+      respond_to do |format|
+        format.html
+        format.csv { send_data @updates.to_csv}
+      end
     else
       @updates = Update.where(:user_id => current_user).order("created_at DESC")
     end
