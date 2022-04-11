@@ -55,6 +55,11 @@ class UpdatesController < ApplicationController
     end 
   end
 
+  def import
+    Update.import(params[:file])
+    redirect_to updates_path, notice: "successfully updated"
+  end
+
   private
   def update_params
     params.require(:update).permit(:description, :in_time, :out_time, :project_id )

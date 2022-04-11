@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   end
   resources :organizations
   resources :properties
-  resources :updates
+  resources :updates do 
+    collection { post :import}
+  end
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
