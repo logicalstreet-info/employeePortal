@@ -3,13 +3,20 @@ class UpdatesController < ApplicationController
 
   def index
     if current_user.has_role? :admin
-      @updates = Update.all.order("created_at DESC")
-      respond_to do |format|
-        format.html
-        format.csv { send_data @updates.to_csv}
-      end
+       @updates = Update.all.order("created_at DESC")
+      if params[:type] == 'day'
+        @updates = Update.where('DATE(created_at) = ? ', Date.yesterday)
+        p @updates
+      elsif params[:type] == 'month'
+        @updates = Update.where("DATE_PART('month', created_at) = ? OR  DATE_PART('year', created_at) = ? ", Date.current.month, Date.current.year) 
+        p @updates
+      end 
     else
       @updates = Update.where(:user_id => current_user).order("created_at DESC")
+    end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @updates.to_csv}
     end
   end
 

@@ -10,17 +10,23 @@
               <% end %>
             </div>
           <% else%>
-            <div class="row">
-              <div class="col-7">
-                <%= link_to "Export csv", updates_path(format: "csv"), class: "btn btn-secondary" %>  
-              </div>
-              <div class="col">
-                <%= form_tag import_updates_path, multipart: true do %>
-                  <%= file_field_tag :file %>
-                  <%= submit_tag "Import Csv", class: "btn btn-secondary"  %>
-                <% end %>
-              </div>
-            </div>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                CSV Export
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <%= link_to "Last Day CSV", updates_path( @updates, format: "csv", type: "day"), class: 'dropdown-item text-primary' %>
+                </li>
+                <li>
+                  <%= link_to "This Month CSV", updates_path( @updates, format: "csv", type: "month"), class: 'dropdown-item text-primary' %>
+                </li>
+              </ul>
+            </div><br>
+            <%= form_tag import_updates_path, multipart: true do %>
+              <%= file_field_tag :file %><br><br>
+              <%= submit_tag "CSV Import", class: "btn btn-info"  %>
+            <% end %>
           <% end %><br>
           <h1>Listing All Daily Update</h1>
           <table class="table">
