@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   patch  'passwords/edit', to: 'passwords#update'
   post  'passwords/edit', to: 'passwords#update'
   post 'updates/new'
+  post 'leave_applications/new'
+
 
   resources :users do
     member do
@@ -20,6 +22,14 @@ Rails.application.routes.draw do
   resources :properties
   resources :updates do 
     collection { post :import}
+  end
+  resources :leave_applications do
+    member do
+      patch 'approve'
+      post 'approve'
+      patch 'reject'
+      get 'reject'
+    end
   end
 
 
