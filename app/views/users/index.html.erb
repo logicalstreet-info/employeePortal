@@ -3,6 +3,11 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
+          <div class="col-md-12 text-right">
+            <%= link_to new_user_path(@user),class: "btn btn-primary"  do%> 
+              <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
+            <% end %>
+          </div> 
           <h1>Employee List</h1>
           <table class="table">
             <thead class="thead-light">
@@ -11,7 +16,6 @@
                 <th>Action</th>
               </tr>
             </thead>
-
             <tbody>
               <% @users.each do |user| %>
                 <% if user.organizations_id == current_user.organizations_id %>
@@ -20,12 +24,13 @@
                       <%= user.name %>
                     </td>
                     <td>
-                      <%= link_to "edit", edit_user_path(user.id), class: "col-md-12 text-right"%> 
+                      <%= link_to edit_user_path(user.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                        <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                      <% end %> 
                     </td>
                   </tr>
-                  <% end %>
                 <% end %>
-              <%= link_to "new", new_user_path(@user)%> 
+              <% end %>
             </tbody>
           </div>
         </div>

@@ -3,12 +3,17 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
+          <div class="col-md-12 text-right">
+            <%= link_to new_property_path,class: "btn btn-primary"  do%> 
+              <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
+            <% end %>
+          </div> 
           <h1>Assets</h1>
-          <%= link_to "new", new_property_path%>
           <table class="table">
             <thead class="thead-light">
               <tr>
-                <th>Name</th>
+                <th class="col-11">Name</th>
+                <th class="col-1">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -19,7 +24,9 @@
                       <%= property.name %>
                     </td>
                     <td>
-                    <%= link_to "edit", edit_property_path(property.id)%> 
+                    <%= link_to edit_property_path(property.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                      <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                    <% end %>
                     </td>
                   </tr>
                 <% end %>

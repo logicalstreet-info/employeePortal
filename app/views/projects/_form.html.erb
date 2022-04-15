@@ -1,22 +1,40 @@
-<%= form_with model: [project] do |form| %>
-  <% if project.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <h1>New project</h1>
+          <%= form_with model: [project] do |form| %>
+            <% if project.errors.any? %>
+              <div style="color: red">
+                <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
-      <ul>
-        <% project.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+                <ul>
+                  <% project.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="field">
+              <%= form.label :Project_name%>
+              <%= form.text_field :name, class: "form-control" %><br>
+            </div>
+
+            <div>
+              <%= form.button "Save", class:"btn btn-lg btn-primary btn-block form-control col-md-3 mr-1"%>
+            </div>
+          <% end %>
+
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :Project_name%>
-    <%= form.text_field :name, class: "form-control" %><br>
   </div>
+</div>
 
-  <div>
-    <%= form.button "Save", class:"btn btn-lg btn-primary btn-block form-control col-md-3 mr-1"%>
-  </div>
-<% end %>
+            
+
+            
+

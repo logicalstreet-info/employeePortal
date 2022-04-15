@@ -1,36 +1,60 @@
-<%= form_with(model: @property) do |form| %>
+<div class="container">
   <div class="row">
-    <div class="field col-6">
-      <%= form_group_for form, :name, label: true do %>
-        <%= form.text_field :name, class: 'form-control', placeholder: 'Name'%>
-      <% end %>
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <div class="col-md-12 text-right">
+            <%= link_to  properties_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+              <i class='bi bi-arrow-left' aria-hidden='true'></i>
+            <% end %>
+          </div>
+          <h1>Assets</h1>
+          <%= form_with(model: @property) do |form| %>
+            <div class="row">
+              <div class="field col-6">
+                <%= form_group_for form, :name, label: true do %>
+                  <%= form.text_field :name, class: 'form-control', placeholder: 'Name'%>
+                <% end %>
+              </div>
+          
+              <div class="field col-6">
+                <%= form_group_for form, :assets_type, label: true do %>
+                  <%= form.select :assets_type, options_for_select(Property.assets_types.keys ,selected: form.object.assets_type ) ,{ include_blank: "Select Asset Type"}, {class: "form-control"} %>
+                <% end %>
+              </div>
+          
+              <div class="field col-6">
+                <%= form_group_for form, :warranty_month, label: true do %>
+                  <%= form.text_field :warranty_month, class: 'form-control', placeholder: 'Warranty Month'%>
+                <% end %>
+              </div>
+              
+              <div class="field col-6">
+                <%= form_group_for form, :purchase_date, label: true do %>
+                  <%= form.date_field :purchase_date, class: 'form-control', placeholder: 'Purchase Date'%>
+                <% end %>
+              </div><br>
+            </div>
+          
+            <div class="col">
+              <%= form.label :description %>
+              <%= form.rich_text_area :description, class: 'form-control', row: 5%>
+            </div><br>
+          
+            <div>
+              <%= form.button "Save", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+            </div>
+          <% end %>
+          <div class="text-center">
+            <%= link_to "Back", properties_path, class: 'text-center' %>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="field col-6">
-      <%= form_group_for form, :assets_type, label: true do %>
-        <%= form.select :assets_type, options_for_select(Property.assets_types.keys ,selected: form.object.assets_type ) ,{ include_blank: "Select Asset Type"}, {class: "form-control"} %>
-      <% end %>
-    </div>
-
-    <div class="field col-6">
-      <%= form_group_for form, :warranty_month, label: true do %>
-        <%= form.text_field :warranty_month, class: 'form-control', placeholder: 'Warranty Month'%>
-      <% end %>
-    </div>
-    
-    <div class="field col-6">
-      <%= form_group_for form, :purchase_date, label: true do %>
-        <%= form.date_field :purchase_date, class: 'form-control', placeholder: 'Purchase Date'%>
-      <% end %>
-    </div><br>
   </div>
+</div>
 
-  <div class="col">
-    <%= form.label :description %>
-    <%= form.rich_text_area :description, class: 'form-control', row: 5%>
-  </div><br>
 
-  <div>
-    <%= form.button "Save", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
-  </div>
-<% end %>
+
+
+
