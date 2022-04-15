@@ -19,6 +19,13 @@ class User < ApplicationRecord
   def assign_default_role
     self.add_role(:newuser) if self.roles.blank?
   end
+
+  def check_role
+    self.has_role? :admin
+  end
+  def check
+    self.has_role? :newuser
+  end
 end
 
  
