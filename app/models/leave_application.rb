@@ -8,7 +8,16 @@ class LeaveApplication < ApplicationRecord
   before_create :set_default_status
 
   def total_day
-    ((to_date - from_date) / 1.day + 1).round
+    n = ((to_date - from_date) / 1.day + 1).round
+    total = []
+    x = from_date
+    (n).times.each do | x |
+      if x.day != 0
+        total << x
+      end
+      x += 1.day
+    end
+    total.count
   end
 
   private
@@ -35,6 +44,3 @@ class LeaveApplication < ApplicationRecord
     self.status ||= :pending
   end
 end
-
-
-
