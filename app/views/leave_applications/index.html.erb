@@ -5,7 +5,7 @@
         <div class="card-body">
           <% if @user.check %>
             <div class="col-md-12 text-right">
-              <%=  link_to new_leave_application_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+              <%= link_to new_leave_application_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                 <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
               <% end %>
             </div>
@@ -24,7 +24,7 @@
                 <th>Total Days</th>
                 <th>Status</th>
                 <th>
-                  <% if @leave_applications.pluck(:status).include?("pending") && @user.check_role %>
+                  <% if @leave_applications.pluck(:status).include?("pending") %>
                     Actions
                   <% end %>
                 </th>
@@ -42,10 +42,10 @@
                     <td><%= date_format(leave.from_date) %></td>
                   <% end %>
                   <% if leave.to_date.present?%>
-                  <td><%= date_format(leave.to_date) %></td>
+                    <td><%= date_format(leave.to_date) %></td>
                   <% end %>
                   <% if leave.from_date && leave.to_date?%>
-                  <td><%= leave.total_day%></td>
+                    <td><%= leave.total_day%></td>
                   <% end %>
                   <td><%= leave.status %></td>
                   <td class="">
@@ -55,6 +55,10 @@
                       <% end %>
                       <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-x' aria-hidden='true'></i>
+                      <% end %>
+                      <% elsif leave.pending? && @user.check %>
+                        <%= link_to  edit_leave_application_path(leave), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                        <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                       <% end %>
                     <% end %>
                   </td>

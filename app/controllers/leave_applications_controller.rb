@@ -15,11 +15,23 @@ class LeaveApplicationsController < ApplicationController
 
   def create
     @leave_application = LeaveApplication.create!(leave_params.merge(organization_id: current_user.organizations_id, user_id: current_user.id ))
-    p  @leave_application.organization_id
     if @leave_application.save
       redirect_to
     else
       render :new
+    end
+  end
+
+  def edit
+    @leave_application = LeaveApplication.find(params[:id])
+  end
+
+  def update
+    @leave_application = LeaveApplication.find(params[:id])
+    if @leave_application.update(leave_params)
+      redirect_to leave_applications_path, notice: "value updated"
+    else
+      render :edit
     end
   end
 
