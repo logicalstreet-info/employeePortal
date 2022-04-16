@@ -18,7 +18,7 @@
             </thead>
             <tbody>
               <% @users.each do |user| %>
-                <% if user.organizations_id == current_user.organizations_id %>
+                <% if user.organization_id == current_user.organization_id %>
                   <tr>
                     <td>
                       <%= user.name %>

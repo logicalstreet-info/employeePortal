@@ -27,8 +27,8 @@ class ProjectsController < ApplicationController
 
   # POST /projects or /projects.json
   def create   
-    @project = Project.new(project_params)
-    # @project.user_id = params[:id].to_i
+    @project = Project.new(project_params.merge(organization_id: current_user.organization_id))
+    p @project.organization_id
     respond_to do |format|
       if @project.save!
         format.html { redirect_to projects_url, notice: "Project was successfully created." }
@@ -78,6 +78,6 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:name)
+      params.require(:project).permit(:name, :organization_id)
     end
 end

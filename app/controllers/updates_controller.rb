@@ -2,8 +2,9 @@ class UpdatesController < ApplicationController
   before_action :find_user
 
   def index
-    if current_user.has_role? :admin
-       @updates = Update.all.order("created_at DESC")
+      if current_user.check_role
+        @updates = Update.joins(:user).where(users: { organization_id: current_user.organization_id })
+      #@updates = Update.all.order("created_at DESC")
       if params[:type] == 'day'
         @updates = Update.where('DATE(created_at) = ? ', Date.yesterday)
         p @updates

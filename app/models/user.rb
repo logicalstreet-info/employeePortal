@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :properties
   has_many :periods
   has_many :updates
-  has_many :application_leaves
+  has_many :leave_applications
   has_many :projects, through: :periods
   belongs_to :organization
   devise :database_authenticatable, :registerable,

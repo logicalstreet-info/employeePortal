@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <% if current_user.has_role? :newuser %>
+          <% if @user.check %>
             <div class="col-md-12 text-right">
               <%=  link_to updates_new_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                 <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
@@ -59,7 +59,7 @@
                     <% end %>
                   </td>
                   <td>
-                    <% if date_format(update.created_at) == date_format(Date.today) %>
+                    <% if @user.check && date_format(update.created_at) == date_format(Date.today) %>
                       <%= link_to  edit_update_path(update), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                       <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                     <% end %>

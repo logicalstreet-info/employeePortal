@@ -3,10 +3,11 @@ class LeaveApplicationsController < ApplicationController
 
   def index
     if current_user.has_role? :admin
-      @leave_applications = LeaveApplication.all.order("created_at DESC")
+      @leave_applications = LeaveApplication.joins(:user).where(users: { organization_id: current_user.organization_id }).order("leave_applications.created_at DESC")
     else
       @leave_applications = LeaveApplication.where(:user_id => current_user).order("created_at DESC")
     end
+    @leave_days = LeaveApplication.all  
   end
 
   def new
@@ -14,7 +15,7 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def create
-    @leave_application = LeaveApplication.create!(leave_params.merge(organization_id: current_user.organizations_id, user_id: current_user.id ))
+    @leave_application = LeaveApplication.create!(leave_params.merge(organization_id: current_user.organization_id, user_id: current_user.id ))
     if @leave_application.save
       redirect_to
     else
