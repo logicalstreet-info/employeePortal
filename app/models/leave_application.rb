@@ -10,13 +10,19 @@ class LeaveApplication < ApplicationRecord
   def total_day
     n = ((to_date - from_date) / 1.day + 1).round
     total = []
-    x = from_date
-    (n).times.each do | x |
-      if x.day != 0
-        total << x
+    a = self.from_date
+      while a <= self.to_date
+        if self.organization.weekly_off.present?
+          if self.organization.weekly_off.include?(a.strftime("%A"))
+            total = total
+          else
+            total << a
+          end
+        else
+          total << a
       end
-      x += 1.day
-    end
+      a += 1.day
+  end
     total.count
   end
 

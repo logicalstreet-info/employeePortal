@@ -3,10 +3,30 @@
     <div class="container">
       <div class="row mt-3">
         <div class="col">
-          <%= form_group_for form, :name, label: false  do %>
-            <%= form.text_field :name, class: 'form-control md-5 mr-1', placeholder: 'Add organization'%>
-          <% end %>
+          <% invalid = organization.errors.include?(:name) %>
+          <div class="form-group">
+            <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}",placeholder: "name" %>
+            <% if invalid %>
+              <div class="invalid-feedback d-block">
+                <% organization.errors.full_messages_for(:name).each do |error_message| %>
+                  <%= error_message %>.
+                <% end %>
+              </div>
+            <% end %>
+          </div><br>
         </div>
+        <div class="col dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            select
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <% weekly_off = ["Sunday", "Monday", "Tuesday","wednesday","Thursday","Friday","Saturday"] %>
+            <% weekly_off.each do |weekly_off| %>
+              <%= form.check_box :weekly_off, { multiple: true }, weekly_off, nil %> 
+              <%= weekly_off %><br>
+            <% end %>
+          </ul>
+        </div>     
         <div class="col">
           <%= form.submit class: "btn btn-outline-primary" %>
         </div>
@@ -14,6 +34,3 @@
     </div>
   <% end %>
 </div>
-
-
-

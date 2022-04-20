@@ -17,7 +17,6 @@ class OrganizationsController < ApplicationController
     respond_to do |format|
       if @organization.save
         format.html { redirect_to organizations_index_path }
-
       else
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace('organization_form',
@@ -53,6 +52,6 @@ class OrganizationsController < ApplicationController
   private
 
   def organization_params
-    params.require(:organization).permit(:name)
+    params.require(:organization).permit(:name, weekly_off:[])
   end
 end
