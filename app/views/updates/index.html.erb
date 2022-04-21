@@ -4,7 +4,7 @@
       <div class="card my-5 shadow">
         <div class="card-body">
           <% if @user.check %>
-            <div class="col-md-12 text-right">
+            <div class="col-md-12 text-end">
               <%=  link_to updates_new_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                 <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
               <% end %>

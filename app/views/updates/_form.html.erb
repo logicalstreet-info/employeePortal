@@ -4,7 +4,7 @@
       <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
         <div class="card my-5 shadow">
           <div class="card-body">
-            <div class="col-md-12 text-right">
+            <div class="col-md-12 text-end">
               <%= link_to  updates_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                 <i class='bi bi-arrow-left' aria-hidden='true'></i>
               <% end %>
@@ -69,8 +69,8 @@
                     </div>
                   <% end %>
                 </div><br>
-                <div>
-                  <%= form.button "Save", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+                <div class="col-md-12 text-end">
+                  <%= form.button "Save", class: "btn btn-primary" %>
                 </div>
               </div>
             <% end %>

@@ -3,10 +3,9 @@
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <h1>New project</h1>
+          <h1>Add Holiday</h1>
           <%= form_with model: [leave_day] do |form| %>
             <div class="field">
-              <%= form.label :Holiday%>
               <%= form.date_field :holiday, class: "form-control" %><br>
             </div>
             <div>

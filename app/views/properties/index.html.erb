@@ -3,11 +3,13 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <div class="col-md-12 text-right">
-            <%= link_to new_property_path,class: "btn btn-primary"  do%> 
-              <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
-            <% end %>
-          </div> 
+          <% if current_user.check_role%>
+            <div class="col-md-12 text-end">
+              <%= link_to new_property_path,class: "btn btn-primary"  do%> 
+                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
+              <% end %>
+            </div>
+          <% end %>
           <h1>Assets</h1>
           <table class="table">
             <thead class="thead-light">
