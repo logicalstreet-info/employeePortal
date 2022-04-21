@@ -3,11 +3,11 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-        <div class="col-md-12 text-right">
-          <%= link_to leave_applications_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Back'} do %>
-            <i class='bi bi-arrow-left' aria-hidden='true' aria-hidden='true'></i>
-          <% end %>
-        </div>	
+          <div class="col-md-12 text-right">
+            <%= link_to leave_applications_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Back'} do %>
+              <i class='bi bi-arrow-left' aria-hidden='true' aria-hidden='true'></i>
+            <% end %>
+          </div>	
           <h2>Create Leave</h2>
           <%= form_with(model: @leave_application) do |form| %>
             <div class="row">
@@ -15,12 +15,10 @@
                 <%= form.label :From_Date%>
                 <%= form.date_field :from_date, class: "form-control" %><br>
               </div>
-          
               <div class="field col-5">
                 <%= form.label :To_Date%>
                 <%= form.date_field :to_date, class: "form-control" %><br>
-              </div>
-          
+              </div>      
               <div class="field col-2">
                 <%= form.label :Leave_type%>
                 <%= form.select :leave_type, options_for_select(LeaveApplication.leave_types.keys ,selected: form.object.leave_type ) ,{ include_blank: "Select Leave Type"}, {class: "form-control"} %><br>
@@ -29,17 +27,16 @@
             <div class="field">
               <%= form.label :half_day %>
               <%= form.check_box :half_day, id: "checkbox" %>
-            </div>
-            
-            <div id="half_day_div" class="<%= @leave_application.half_day ? 'd-block d-none' : 'd-none' %>">
+            </div>           
+            <div id="half_day_div">
               <div class="row" >
                 <div class="col">
                   <%= form.label :from_time %>
-                  <%= form.text_field :from_time, class: "form-control" %>
+                  <%= form.time_field :from_time, class: "form-control" %>
                 </div>
                 <div class="col">
                   <%= form.label :to_time %>
-                  <%= form.text_field :to_time, class: "form-control" %>
+                  <%= form.time_field :to_time, class: "form-control" %>
                 </div>
               </div>
             </div><br/>

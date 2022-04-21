@@ -20,7 +20,7 @@
                 <th>Leave Type</th>
                 <th class="col-6">Description</th>
                 <th>From Date</th>
-                <th>To Time</th>
+                <th>To Date</th>
                 <th>Total Days</th>
                 <th>Status</th>
                 <th>
@@ -38,14 +38,14 @@
                   <% end %>
                   <td><%= leave.leave_type %></td>
                   <td><%= leave.description %></td>
-                  <% if leave.from_date.present?%>
-                    <td><%= date_format(leave.from_date) %></td>
+                  <% if leave.from_date.present? || leave.from_time.present?%>
+                    <td><%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
                   <% end %>
-                  <% if leave.to_date.present?%>
-                    <td><%= date_format(leave.to_date) %></td>
+                  <% if leave.to_date.present?|| leave.to_time.present?%>
+                    <td><%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
                   <% end %>
-                  <% if leave.from_date && leave.to_date?%>
-                    <td><%= leave.total_day%></td>
+                  <% if leave.from_date && leave.to_date? || leave.from_time && leave.to_time?%>
+                    <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
                   <% end %>
                   <td><%= leave.status %></td>
                   <td class="">
