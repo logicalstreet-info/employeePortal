@@ -10,6 +10,7 @@ class LeaveApplication < ApplicationRecord
   def total_day
     n = ((to_date - from_date) / 1.day + 1).round
     total = []
+    total1 = []
     a = self.from_date
       while a <= self.to_date
         if self.organization.weekly_off.present?
@@ -22,8 +23,11 @@ class LeaveApplication < ApplicationRecord
           total << a
       end
       a += 1.day
-  end
-    total.count
+    end
+    self.organization.leave_days.each do |a|
+      total1 << a.holiday
+    end
+    (total - total1).count
   end
 
   private
@@ -49,4 +53,4 @@ class LeaveApplication < ApplicationRecord
   def set_default_status
     self.status ||= :pending
   end
-end
+end 

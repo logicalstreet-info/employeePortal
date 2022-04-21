@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <div class="col-md-12 text-right">
+            <%= link_to new_leave_day_path ,class: "btn btn-primary"  do%> 
+              <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
+            <% end %>
+          </div> 
+          <h1>Holiday List</h1>
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th>Holiday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @leave_days.each do |day| %>
+                <% if day.organization_id == current_user.organization_id%>
+                  <tr>
+                  <% if day.holiday.present?%>
+                    <td><%= date_format(day.holiday) %></td>
+                  <% end %>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+                    
+
+
+
+

@@ -3,5 +3,6 @@ class Organization < ActiveRecord::Base
   has_many :users
   has_many :projects
   has_many :leave_applications
+  has_many :leave_days
   validates :name, presence: true, uniqueness: true
 end
