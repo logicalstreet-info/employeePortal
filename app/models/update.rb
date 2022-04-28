@@ -17,8 +17,10 @@ class Update < ApplicationRecord
   end
 
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
-      Update.create! row.to_hash
+    if file.present?
+      CSV.foreach(file.path, headers: true) do |row|
+        Update.create! row.to_hash
+      end
     end
   end
 end 

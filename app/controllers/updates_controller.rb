@@ -3,7 +3,7 @@ class UpdatesController < ApplicationController
 
   def index
       if current_user.check_role
-        @updates = Update.joins(:user).where(users: { organization_id: current_user.organization_id })
+        @updates = Update.joins(:user).where(users: { organization_id: current_user.organization_id }).order("updates.created_at DESC")
       #@updates = Update.all.order("created_at DESC")
       if params[:type] == 'day'
         @updates = Update.where('DATE(created_at) = ? ', Date.yesterday)
