@@ -9,7 +9,7 @@
                 <i class='bi bi-arrow-left' aria-hidden='true' aria-hidden='true'></i>
               <% end %>
             </div>	
-            <h2>Create Leave</h2>
+            <h2>Leave</h2>
             <%= form_with(model: @leave_application) do |form| %>
               <div class="row">
                 <div class="field col-5">
@@ -26,21 +26,31 @@
                 </div>
               </div>
               <div class="field">
-                <%= form.label :half_day %>
-                <%= form.check_box :half_day, id: "checkbox" %>
-              </div>           
-              <div id="half_day_div">
-                <div class="row" >
-                  <div class="col">
-                    <%= form.label :from_time %>
-                    <%= form.time_field :from_time, class: "form-control" %>
-                  </div>
-                  <div class="col">
-                    <%= form.label :to_time %>
-                    <%= form.time_field :to_time, class: "form-control" %>
+              <%= form.label :half_day %>
+              <%= form.check_box :half_day, id: "checkbox" %>
+            </div>
+            <div id="half_day_div" class="<%= @leave_application.half_day ? 'd-block' : 'd-none' %>">
+              <div class="row">
+                <div class="col">
+                  <%= form.label :from_time %>
+                  <div class="input-group date" data-target-input="nearest">
+                    <%= form.text_field :from_time, class: "form-control timepicker-input" %>
+                    <div class="input-group-append" data-target="#leave_application_from_time" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                    </div>
                   </div>
                 </div>
-              </div><br/>
+                <div class="col">
+                  <%= form.label :to_time %>
+                  <div class="input-group date" data-target-input="nearest">
+                    <%= form.text_field :to_time, class: "form-control timepicker-input" %>
+                    <div class="input-group-append" data-target="#leave_application_to_time" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><br/>
               <div class="col">
                 <%= form.label :description %>
                 <%= form.rich_text_area :description, class: 'form-control', row: 5%>
