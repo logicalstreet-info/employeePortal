@@ -30,9 +30,14 @@
               </div>
               
               <div class="field col-6">
-                <%= form_group_for form, :purchase_date, label: true do %>
-                  <%= form.date_field :purchase_date, class: 'form-control', placeholder: 'Purchase Date'%>
-                <% end %>
+                  <%= form_group_for form, :purchase_date, label: true do %>
+                    <div class="input-group date" data-provide="date" >
+                      <%= form.text_field :purchase_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date'%>
+                        <div class="input-group-append">
+                          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                        </div>  
+                    </div>      
+                  <% end %>
               </div><br>
             </div>
           
@@ -50,8 +55,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-

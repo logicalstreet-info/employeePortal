@@ -6,10 +6,15 @@
           <h1>Add Holiday</h1>
           <%= form_with model: [leave_day] do |form| %>
             <div class="field">
-              <%= form.date_field :holiday, class: "form-control" %><br>
+              <div class="input-group date" data-provide="date" >
+                <%= form.text_field :holiday, class: "form-control datepicker-input" %><br>
+                  <div class="input-group-append">
+                    <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                  </div>
+              </div><br>
             </div>
-            <div>
-              <%= form.button "Save", class:"btn btn-lg btn-primary btn-block form-control col-md-3 mr-1"%>
+            <div class="col-md-12 text-end">
+              <%= form.button "Save", class: "btn btn-primary"%>
             </div>
           <% end %>
         </div>

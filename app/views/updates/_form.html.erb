@@ -13,62 +13,72 @@
             <%= form_with model: @update do |form| %>
               <div class="row">
                 <div class="field col-4">
-                <% invalid = update.errors.include?(:in_time) %>
-                <div class="form-group">
-                  <%= form.label :Start_time %>
-                  <%= form.time_field :in_time, class: "form-control #{'is-invalid' if invalid}" %>
-                  <% if invalid %>
-                    <div class="invalid-feedback d-block">
-                      <% update.errors.full_messages_for(:in_time).each do |error_message| %>
-                        <%= error_message %>.
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div><br>
-                </div>
-                <div class="field col-4">
-                <% invalid = update.errors.include?(:out_time) %>
-                <div class="form-group">
-                  <%= form.label :End_time %>
-                  <%= form.time_field :out_time, class: "form-control #{'is-invalid' if invalid}" %>
-                  <% if invalid %>
-                    <div class="invalid-feedback d-block">
-                      <% update.errors.full_messages_for(:out_time).each do |error_message| %>
-                        <%= error_message %>.
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div>
-                </div>
-                <div class="field col-4">
-                <% invalid = update.errors.include?(:project_id) %>
-                <div class="form-group">
-                  <%= form.label :project %>
-                  <%= form.collection_select :project_id, Project.all, :id, :name, {prompt: "Select Project"}, { class: "form-control #{'is-invalid' if invalid}" } %>
-
+                  <% invalid = update.errors.include?(:in_time) %>
+                  <div class="form-group">
+                    <%= form.label :Start_time %>
+                    <div class="input-group date" data-target="#daily_update_start_time" data-toggle="datetimepicker" >
+                      <%= form.text_field :in_time, class: "form-control timepicker-input #{'is-invalid' if invalid}" %>
+                      <div class="input-group-append" >
+                        <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
+                      </div>
                     <% if invalid %>
-                    <div class="invalid-feedback d-block">
-                      <% update.errors.full_messages_for(:project_id).each do |error_message| %>
-                        <%= error_message %>.
-                      <% end %>
-                    </div>
-                  <% end %>
+                      <div class="invalid-feedback d-block">
+                        <% update.errors.full_messages_for(:in_time).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
+                    <% end %>
+                    </div><br>
+                  </div>
                 </div>
+                <div class="field col-4">
+                  <% invalid = update.errors.include?(:out_time) %>
+                  <div class="form-group">
+                    <%= form.label :End_time %>
+                    <div class="input-group date" data-target="#daily_update_start_time" data-toggle="datetimepicker" >
+                      <%= form.text_field :out_time, class: "form-control timepicker-input #{'is-invalid' if invalid}" %>
+                      <div class="input-group-append" >
+                        <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
+                      </div>
+                    <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% update.errors.full_messages_for(:out_time).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
+                    <% end %>
+                    </div>
+                  </div>
+                </div>
+                <div class="field col-4">
+                  <% invalid = update.errors.include?(:project_id) %>
+                  <div class="form-group">
+                    <%= form.label :project %>
+                    <%= form.collection_select :project_id, Project.all, :id, :name, {prompt: "Select Project"}, { class: "form-control #{'is-invalid' if invalid}" } %>
 
+                      <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% update.errors.full_messages_for(:project_id).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
                 <div class="field">
-                <% invalid = update.errors.include?(:description) %>
-                <div class="form-group">
-                  <%= form.label :Description %>
-                  <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}", :rows => 5 %>
-                  <% if invalid %>
-                    <div class="invalid-feedback d-block">
-                      <% update.errors.full_messages_for(:description).each do |error_message| %>
-                        <%= error_message %>.
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div><br>
+                  <% invalid = update.errors.include?(:description) %>
+                  <div class="form-group">
+                    <%= form.label :description %>
+                    <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}" %>
+                    <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% update.errors.full_messages_for(:description).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div><br>
+                </div>
                 <div class="col-md-12 text-end">
                   <%= form.button "Save", class: "btn btn-primary" %>
                 </div>
