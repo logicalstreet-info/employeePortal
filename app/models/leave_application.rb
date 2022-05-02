@@ -9,19 +9,19 @@ class LeaveApplication < ApplicationRecord
   before_create :set_default_status
 
   def total_day
-    n = ((to_date - from_date) / 1.day + 1).round
+    to_date > from_date ? n = ((to_date - from_date) / 1.day + 1).round : n = 1
     total = []
     total1 = []
     a = self.from_date
-      while a <= self.to_date
-        if self.organization.weekly_off.present?
-          if self.organization.weekly_off.include?(a.strftime("%A"))
-            total = total
-          else
-            total << a
-          end
+    while a <= self.to_date
+      if self.organization.weekly_off.present?
+        if self.organization.weekly_off.include?(a.strftime("%A"))
+          total = total
         else
           total << a
+        end
+      else
+        total << a
       end
       a += 1.day
     end
@@ -39,12 +39,12 @@ class LeaveApplication < ApplicationRecord
 
     if half_day?
       errors.add(:to_time, "can't be blank") unless to_time.present?
-
       errors.add(:from_time, "can't be blank") unless from_time.present?
-
+      
       if to_date.present? && from_date.present? && (to_date != from_date)
         errors.add(:to_date, '& from date must be same')
       end
+
     else
       errors.add(:to_time, 'must be blank if half_day not checked') if to_time.present?
       errors.add(:from_time, 'must be blank if half_day not checked') if from_time.present?
