@@ -1,0 +1,82 @@
+.message-content {
+  padding: 5px;
+  margin: 5px;
+  border: 2px solid #b6d4fe;
+  border-radius: 5px;
+  background-color: #cfe2ff;
+  color: #084298;
+}
+.card-boxes {
+  color: #084298;
+  border: 2px solid #b6d4fe;
+  background-color: #cfe2ffd8;
+}
+.card-link {
+  color: #084298; 
+}
+
+.chat-input {
+  border-top: 0 none;
+  border-radius: 0 0 5px 5px;
+}
+
+.group-chat {
+  width: 55% !important;
+}
+
+body{
+  overflow: hidden;
+}
+
+.msg-form{
+  width: 100px;
+  height: 56px;
+  padding: 10px;
+}
+
+#single_group {
+  height: calc(100vh-150px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#messages {
+  height: calc(100vh-150px);
+}
+
+#room_container {
+  height: 100vh;
+  margin-right: 0px !important;
+}
+
+#side_panel {
+  height: 100vh;
+  margin-right: 0px !important;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin-bottom: 55px;
+}
+
+#chatroom_container {
+  height: 100vh;
+  margin-right: 0px !important;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.msg-content {
+  width: 80%;
+  margin-right: 5px;
+}
+
+.message-box{
+  word-wrap: break-word;
+  width: fit-content;
+  max-width: 40%;
+  padding: 5px;
+  border: 2px solid #b6d4fe;
+  border-radius: 5px;
+  background-color: #cfe2ff;
+  margin-bottom: 10px;
+  padding: 10pxl;
+}

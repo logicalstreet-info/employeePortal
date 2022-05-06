@@ -12,17 +12,25 @@ Rails.application.routes.draw do
   post 'updates/new'
   post 'leave_applications/new'
 
+  resources :leave_days 
+  resources :notifications 
+  resources :organizations
+  resources :properties
+
+  resources :groups do 
+    resources :messages
+  end
 
   resources :users do
     member do
       resources :projects
     end
   end
-  resources :organizations
-  resources :properties
+  
   resources :updates do 
     collection { post :import}
   end
+  
   resources :leave_applications do
     member do
       patch 'approve'
@@ -31,8 +39,6 @@ Rails.application.routes.draw do
       get 'reject'
     end
   end
-  resources :leave_days 
-  resources :notifications 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

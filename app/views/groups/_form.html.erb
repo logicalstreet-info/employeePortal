@@ -1,0 +1,6 @@
+<%= form_for @group do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %><br/>
+
+  <%= form.submit "Save", class: 'btn btn-success' %>
+<% end %>
