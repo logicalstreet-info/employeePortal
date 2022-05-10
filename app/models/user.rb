@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :notifications
   has_many :projects, through: :periods
   has_many :messages
+  has_many :participants, dependent: :destroy
   belongs_to :organization
 
   devise :database_authenticatable, :registerable,
@@ -31,9 +32,11 @@ class User < ApplicationRecord
   def check_role
     self.has_role? :admin
   end
+
   def check
     self.has_role? :newuser
   end
+
   def gravatar_url
     gravatar_id = Digest::MD5::hexdigest(email).downcase
     "https://gravatar.com/avatar/#{gravatar_id}.png"
