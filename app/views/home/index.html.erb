@@ -1,2 +1,31 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<% if current_user.check_role %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <div class="col-md-12 ">
+              <h2>Employee Birth-Date</h2>
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th class="col-6">Name</th>
+                    <th>Birth-Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @bday.each do |day| %>
+                    <tr>
+                      <td><%= day.name %></td>
+                      <td><%= date_format(day.birth_date)%></td>
+                    </tr>
+                  <% end %>    
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
