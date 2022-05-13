@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :projects, through: :periods
   has_many :messages
   has_many :participants, dependent: :destroy
+  has_many :groups, through: :participants
   belongs_to :organization
 
   devise :database_authenticatable, :registerable,
@@ -42,5 +43,3 @@ class User < ApplicationRecord
     "https://gravatar.com/avatar/#{gravatar_id}.png"
   end
 end
-
- 

@@ -25,6 +25,7 @@
         <div class="card-body card-boxes">
           <%= turbo_stream_from "groups"%>
           <div id="groups">
+          <%= render partial: 'layouts/new_group_form' %>
             <%= link_to 'new', new_group_path %>
             <% if @groups.present? %>
               <nav class="nav flex-column">
@@ -40,7 +41,7 @@
           </div>
         </div>
       </div>  
-      </div>  
+    </div>  
   </div>
   <div class="col mt-4">
     <h4 class="alert-heading">

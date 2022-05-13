@@ -1,6 +1,7 @@
 class Group < ApplicationRecord
   has_many :messages
   has_many :participants, dependent: :destroy
+  has_many :users, through: :participants
   belongs_to :organization
 
   scope :public_groups, -> {where(is_private: false)}

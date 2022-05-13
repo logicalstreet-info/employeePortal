@@ -1,7 +1,8 @@
 class GroupsController < ApplicationController
   def index
     @group = Group.new
-    @groups = Group.public_groups.where(:organization_id => current_user.organization_id)
+    @groups = Group.public_groups.joins(:participants).where(
+                participants: { user_id: current_user.id }) 
     @users = User.all_except(current_user)
 
     render 'index'
@@ -9,8 +10,8 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.new
-    @groups = Group.public_groups.where(:organization_id => current_user.organization_id)
-
+    @groups = Group.public_groups.joins(:participants).where(
+                participants: { user_id: current_user.id })
     @single_group = Group.find(params[:id])
 
     @message = Message.new
@@ -37,6 +38,6 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:name, :organization_id)
+    params.require(:group).permit(:name, :organization_id, :user_ids=>[])
   end
 end
