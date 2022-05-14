@@ -41,7 +41,11 @@ class LeaveApplicationsController < ApplicationController
     @leave_application = LeaveApplication.find(params[:id])
     @leave_application.status = "approved" 
     if @leave_application.update(status: "approved")
-      redirect_to leave_applications_path, notice: "Leaves Approve Succsesfully"
+      if URI(request.referer).path == '/leave_applications'
+        redirect_to leave_applications_path, notice: "Leaves Approve Succsesfully"
+      else
+        redirect_to root_path, notice: "Leaves Approve Succsesfully"
+      end  
     else
       redirect_to leave_applications_path, notice: "Something went wrong"
     end
@@ -56,7 +60,6 @@ class LeaveApplicationsController < ApplicationController
       redirect_to leave_applications_path, notice: "Something went wrong"
     end
   end
-
 
 private
   def leave_params
