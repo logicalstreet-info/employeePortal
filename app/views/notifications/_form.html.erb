@@ -12,50 +12,50 @@
             <h1>Add Notification</h1>
             <%= form_with model: @notification do |form| %>
               <div class="row">
-              <div class="field col-4">
-                <% invalid = notification.errors.include?(:user_id) %>
-                <div class="form-group">
-                  <%= form.label :user_listing %> <br />
-                  <%= form.select :user_id, @users , {prompt: '-- Select A Employee --'}, {class: 'form-control', style: "width: 75%" ,multiple: true}%>
-                    <% if invalid %>
-                    <div class="invalid-feedback d-block">
-                      <% notification.errors.full_messages_for(:user_id).each do |error_message| %>
-                        <%= error_message %>.
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div>
-
+                <div class="field col-4">
+                  <% invalid = notification.errors.include?(:user_id) %>
+                  <div class="form-group">
+                    <%= form.label :user_listing %> <br />
+                    <%= form.select :user_id, @users , {prompt: '-- Select A Employee --'}, {class: 'form-control', style: "width: 75%" ,multiple: true}%>
+                      <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% notification.errors.full_messages_for(:user_id).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
                 <div class="field col-4">
-                <% invalid = notification.errors.include?(:title) %>
-                <div class="form-group">
-                  <%= form.label :Title %>
-                  <%= form.text_field :title, class: "form-control #{'is-invalid' if invalid}" %>
-                  <% if invalid %>
-                    <div class="invalid-feedback d-block">
-                      <% notification.errors.full_messages_for(:title).each do |error_message| %>
-                        <%= error_message %>.
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div><br>
+                  <% invalid = notification.errors.include?(:title) %>
+                  <div class="form-group">
+                    <%= form.label :Title %>
+                    <%= form.text_field :title, class: "form-control #{'is-invalid' if invalid}" %>
+                    <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% notification.errors.full_messages_for(:title).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div><br>
                 </div>
                 <div class="field">
-                <% invalid = notification.errors.include?(:description) %>
-                <div class="form-group">
-                  <%= form.label :Description %>
-                  <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}", :rows => 5 %>
-                  <% if invalid %>
-                    <div class="invalid-feedback d-block">
-                      <% notification.errors.full_messages_for(:description).each do |error_message| %>
-                        <%= error_message %>.
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div><br>
-                <div class="col-md-12 text-end">
-                  <%= form.button "Save", class: "btn btn-primary" %>
+                  <% invalid = notification.errors.include?(:description) %>
+                  <div class="form-group">
+                    <%= form.label :Description %>
+                    <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}", :rows => 5 %>
+                    <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% notification.errors.full_messages_for(:description).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div><br>
+                  <div class="col-md-12 text-end">
+                    <%= form.button "Save", class: "btn btn-primary" %>
+                  </div>
                 </div>
               </div>
             <% end %>

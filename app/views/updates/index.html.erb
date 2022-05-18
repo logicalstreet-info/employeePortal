@@ -46,26 +46,26 @@
             <tbody>
               <% @updates.each do |update| %>
                 <tr>
-                <% if @user.check_role%> 
-                  <td><%= User.find(update.user_id).name %></td><% end %>
-                  <td><%= update.description %></td>
-                  <td><%= date_format(update.created_at) %></td>
-                  <td><%= time_format(update.in_time) %></td>
-                  <td><%= time_format(update.out_time) %></td>
-                  <td><%= total_time(update.in_time,update.out_time) %></td>
-                  <td>  
-                    <% if update.project.present? %>
-                      <%= update.project.name %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <% if @user.check && date_format(update.created_at) == date_format(Date.today) %>
-                      <%= link_to  edit_update_path(update), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
-                      <i class='bi bi-pencil-fill' aria-hidden='true'></i>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
+                  <% if @user.check_role%> 
+                    <td><%= User.find(update.user_id).name %></td><% end %>
+                    <td><%= update.description %></td>
+                    <td><%= date_format(update.created_at) %></td>
+                    <td><%= time_format(update.in_time) %></td>
+                    <td><%= time_format(update.out_time) %></td>
+                    <td><%= total_time(update.in_time,update.out_time) %></td>
+                    <td>  
+                      <% if update.project.present? %>
+                        <%= update.project.name %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if @user.check && date_format(update.created_at) == date_format(Date.today) %>
+                        <%= link_to  edit_update_path(update), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                        <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                      <% end %>
+                    </td>
+                  <% end %>
+                </tr>              
               <% end %>    
             </tbody>
           </div>

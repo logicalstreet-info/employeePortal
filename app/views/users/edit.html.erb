@@ -17,53 +17,43 @@
                 <%=form.label :Email%>
                 <%= form.text_field :email, class: 'form-control', placeholder: 'email'%><br>
               </div>
-
               <div class="field col-6">
                 <%=form.label :Name%>
                 <%= form.text_field :name, class: 'form-control', placeholder: 'name'%>
-              </div>
-              
+              </div>              
               <div class="field col-6">
                 <%=form.label :Qualification%>
                 <%= form.text_field :qualification, class: 'form-control', placeholder: 'qualification'%><br>
-              </div>
-          
+              </div>          
               <div class="field col-6">
                 <%=form.label :Birth_Date%>
                 <%= form.date_field :birth_date, class: 'form-control', placeholder: 'Birth Date'%>
               </div>
-
               <div class="field col-6">
                 <%=form.label :Joining_Date%>
                 <%= form.date_field :joining_date, class: 'form-control', placeholder: 'Joining Date'%><br>
               </div>
-
               <div class="field col-6">
                 <%=form.label :Mobile_number%>
                 <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>
-              </div>
-                
+              </div>                
               <div class="field col-6">
                 <%=form.label :Parent_mobile_number%>
                 <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
               </div>
-
               <div class="field col-6">
                 <%=form.label :Type%>
                 <%= form.select :user_type, options_for_select(User.user_types.keys ,selected: form.object.user_type ) ,{ include_blank: "Select Type"}, {class: "form-control"} %><br>
               </div><br>
             </div>
-
             <div class="col">
               <%= form.label :address, style: "display: block" %>
               <%= form.text_area :address, class: 'form-control', :rows => 5 %>
             </div><br>
-
             <div class="col">
               <%= form.label :native_address, style: "display: block" %>
               <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
-            </div><br>
-              
+            </div><br>              
             <div>
               <%= form.button "Update", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
             </div>
