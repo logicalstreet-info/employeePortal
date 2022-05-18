@@ -2,9 +2,8 @@ class PropertiesController < ApplicationController
   def index
     @properties = Property.all
   end
-  
-  def show
-  end
+
+  def show; end
 
   def new
     @property = Property.new
@@ -24,13 +23,13 @@ class PropertiesController < ApplicationController
   end
 
   def edit
-    @property = Property.find(params[:id])  
+    @property = Property.find(params[:id])
   end
 
   def update
     @property = Property.find(params[:id])
     if @property.update(property_params)
-      redirect_to properties_index_path, notice: "value updated"
+      redirect_to properties_index_path, notice: 'value updated'
     else
       render :edit
     end

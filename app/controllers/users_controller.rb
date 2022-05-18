@@ -1,15 +1,15 @@
 class UsersController < ApplicationController
   before_action :find_user
   def index
-    @users = User.all 
+    @users = User.all
   end
 
   def show
     @user = User.find(params[:id])
     @users = User.all_except(current_user)
-    
+
     @group = Group.new
-    @groups = Group.public_groups.where(:organization_id => current_user.organization_id)
+    @groups = Group.public_groups.where(organization_id: current_user.organization_id)
     @group_name = get_name(@user, current_user)
 
     @single_group = Group.where(
@@ -22,8 +22,7 @@ class UsersController < ApplicationController
     render 'groups/index'
   end
 
-  def new
-  end
+  def new; end
 
   def edit
     @user = User.find(params[:id])
@@ -32,8 +31,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update!(user_params)
-      
-        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+        format.html { redirect_to user_url(@user), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -45,15 +43,17 @@ class UsersController < ApplicationController
   def find_user
     @user = current_user
   end
-  
-  def user_params
-    params.require(:user).permit(:name, :joining_date, :birth_date, :gender, :qualification, :mobile_number, :address,
-    :native_address, :address, :parent_mobile_number, :user_type, :email, :password, :password_confirmation, :organization_id)
-  end
 
   private
+
   def get_name(user1, user2)
     user = [user1, user2].sort
     "private_#{user[0].id}_#{user[1].id}"
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :joining_date, :birth_date, :gender, :qualification, :mobile_number, :address,
+    :native_address, :address, :parent_mobile_number, :user_type, :email, :password, :password_confirmation,
+    :organization_id)
   end
 end

@@ -10,22 +10,18 @@ class NotificationsController < ApplicationController
     @notification = Notification.new
   end
 
-  def show
-    
-  end
+  def show; end
 
   def create
-    @notification = Notification.create(notification_params.merge(
-      organization_id: current_user.organization_id))
+    @notification = Notification.create(notification_params.merge(organization_id: current_user.organization_id))
 
     respond_to do |format|
       if @notification.save!
         format.html { redirect_to notifications_path }
       else
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('notification_form',
-            partial: 'notifications/form',
-            locals: { notification: @notification })
+          render turbo_stream: turbo_stream.replace('notification_form', partial: 'notifications/form',
+          locals: { notification: @notification })
         end
         format.html { render :new }
       end
@@ -36,7 +32,7 @@ class NotificationsController < ApplicationController
     @notification = Notification.find(params[:id])
 
     if @notification.update(notification_params)
-      redirect_to notifications_path, notice: "value updated"
+      redirect_to notifications_path, notice: 'value updated'
     else
       render :edit
     end
@@ -61,10 +57,9 @@ class NotificationsController < ApplicationController
 
   def find_users
     @users = if current_user.organization
-      current_user.organization.users.map { |u| [u.name, u.id] }
-    else
-      []
-    end
+               current_user.organization.users.map { |u| [u.name, u.id] }
+             else
+               []
+             end
   end
 end
-
