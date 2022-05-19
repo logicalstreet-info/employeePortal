@@ -1,4 +1,6 @@
 class PropertiesController < ApplicationController
+  before_action :get_users, only: %i[new create edit update index]
+
   def index
     @properties = Property.all
   end
@@ -11,8 +13,6 @@ class PropertiesController < ApplicationController
 
   def create
     @property = Property.new(property_params)
-    @property.user = current_user
-
     respond_to do |format|
       if @property.save
         format.html { redirect_to properties_index_path }
@@ -45,6 +45,10 @@ class PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:name, :description, :purchase_date, :warranty_month, :assets_type)
+    params.require(:property).permit(:user_id, :name, :description, :purchase_date, :warranty_month, :assets_type)
+  end
+
+  def get_users
+    @users_array = User.where(organization_id: current_user.organization_id).order(name: :asc).map { |c| [c.name, c.id] }
   end
 end

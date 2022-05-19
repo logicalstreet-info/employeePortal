@@ -10,12 +10,17 @@
           </div>
           <h1>Assets</h1>
           <%= form_with(model: @property) do |form| %>
+            <div class="field">
+              <%= form_group_for form, :name, label: true do %>
+                <%= form.text_field :name, class: 'form-control', placeholder: 'Name'%>
+              <% end %>
+            </div> 
             <div class="row">
               <div class="field col-6">
-                <%= form_group_for form, :name, label: true do %>
-                  <%= form.text_field :name, class: 'form-control', placeholder: 'Name'%>
+                <%= form_group_for form, :User_listing, label: true do %>
+                  <%= form.select :user_id, options_for_select(@users_array, selected: form.object.user_id), { include_blank: "Please select User"}, {class: "form-control"} %>
                 <% end %>
-              </div>         
+              </div>        
               <div class="field col-6">
                 <%= form_group_for form, :assets_type, label: true do %>
                   <%= form.select :assets_type, options_for_select(Property.assets_types.keys ,selected: form.object.assets_type ) ,{ include_blank: "Select Asset Type"}, {class: "form-control"} %>
