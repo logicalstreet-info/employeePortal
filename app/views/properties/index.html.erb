@@ -9,6 +9,21 @@
                 <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
               <% end %>
             </div>
+            <%= form_tag properties_path, method: :get do %>
+              <div class="row">
+                <div class="col-5"> 
+                  <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
+                </div>
+                <div class="col-5">
+                  <%= select_tag :assets_type, options_for_select(@asset_types, selected: params[:assets_type]),{ include_blank: "All Asset Type", class: "form-control col-md-3 mr-1" } %>
+                </div>
+                <div class="col-2">
+                  <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Find'} do %>
+                    <i class='bi bi-search' aria-hidden='true'></i>
+                  <% end %>
+                </div>
+              </div></br>
+            <% end %>
           <% end %>
           <h1>Assets</h1>
           <table class="table">
@@ -32,7 +47,7 @@
                     <td><%= property.purchase_date %></td>
                     <td><%= property.warranty_month %></td>
                     <td><%= property.assets_type %></td>
-                    <td>
+                    <td>  
                       <% if property.user_id.present? %>
                         <%= property.user.name %>
                       <% end %>

@@ -2,7 +2,16 @@ class PropertiesController < ApplicationController
   before_action :get_users, only: %i[new create edit update index]
 
   def index
-    @properties = Property.all
+    @asset_types = Property.assets_types.keys.collect { |s| [s.upcase, s] }
+    @properties = if params[:user_id].present? && params[:assets_type].present?
+                    Property.where(user_id: params[:user_id], assets_type: params[:assets_type])
+                  elsif params[:user_id].present?
+                    Property.where(user_id: params[:user_id])
+                  elsif params[:assets_type].present?
+                    Property.where(assets_type: params[:assets_type])
+                  else 
+                    Property.all
+                  end 
   end
 
   def show; end
