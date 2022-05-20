@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <% if current_user.check_role%>
+            <div class="col-md-12 text-end">
+              <%= link_to new_notification_path,class: "btn btn-primary"  do%> 
+                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
+              <% end %>
+            </div>
+          <% end %>
+          <h1>Notifications</h1>
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th class="col-2">Title</th>
+                <th class="col-9">Description</th>
+                <th class="col-1">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @notifications.each do |notification| %>
+                <tr>
+                  <td>
+                    <%= notification.title %>
+                  </td>
+                  <td>
+                    <%= notification.description %>
+                  </td>
+                  <td>
+                  <%= link_to edit_notification_path(notification.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                    <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                  <% end %>
+                  </td>
+                </tr>
+                <% end %>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
