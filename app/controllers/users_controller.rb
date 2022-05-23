@@ -42,6 +42,8 @@ class UsersController < ApplicationController
 
   def user_profile
     @user = User.find(params[:id])
+    @leaves = LeaveApplication.where(user_id: current_user).order('created_at DESC')
+    @properties = Property.where(user_id: current_user.id)
   end
 
   private

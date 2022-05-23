@@ -61,4 +61,94 @@
     </div>
   </div>
 </div>
-
+<% if @user.check %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <% if @leaves.present? %>
+              <h1>Leave</h1>
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Leave Type</th>
+                    <th class="col-6">Description</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Total Days</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @leaves.each do |leave| %>
+                    <tr>
+                      <% if @user.check_role%>
+                        <td><%= User.find(leave.user_id).name %></td>
+                      <% end %>
+                      <td><%= leave.leave_type %></td>
+                      <td><%= leave.description %></td>
+                      <% if leave.from_date.present? || leave.from_time.present?%>
+                        <td>
+                          <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                        </td>  
+                      <% end %>
+                      <% if leave.to_date.present?|| leave.to_time.present?%>
+                        <td>
+                          <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                        </td>
+                      <% end %>
+                      <% if leave.from_date && leave.to_date? || leave.from_time && leave.to_time?%>
+                        <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
+                      <% end %>
+                      <td><%= leave.status %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <h2>There Are No Leave</h2>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <% if @properties.present? %>
+              <h1>Assets</h1>
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Purchase Date</th>
+                    <th>Warranty Month</th>
+                    <th>Assets Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @properties.each do |property| %>
+                    <tr>
+                      <td><%= property.name %></td>
+                      <td><%= property.description %></td>
+                      <td><%= property.purchase_date %></td>
+                      <td><%= property.warranty_month %></td>
+                      <td><%= property.assets_type %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <h2>There Are No Assets</h2>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
