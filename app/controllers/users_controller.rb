@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  def show
+  def show   
     @user = User.find(params[:id])
     @users = User.all_except(current_user)
 
@@ -40,11 +40,15 @@ class UsersController < ApplicationController
     end
   end
 
-  def find_user
-    @user = current_user
+  def user_profile
+    @user = User.find(params[:id])
   end
 
   private
+
+  def find_user
+    @user = current_user
+  end
 
   def get_name(user1, user2)
     user = [user1, user2].sort

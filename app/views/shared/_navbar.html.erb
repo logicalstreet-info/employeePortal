@@ -26,7 +26,7 @@
           <%= link_to 'Assets', properties_index_path, class: "nav-link active mr-auto" %>
         </li>
         <li class="nav-item">
-          <%= link_to 'Project', projects_path(:user_id) , class: "nav-link active mr-auto" %>
+          <%= link_to 'Project', projects_path(current_user.id) , class: "nav-link active mr-auto" %>
         </li>
         <li class="nav-item">
           <%= link_to 'Notification', notifications_path, class: "nav-link active mr-auto" %>
@@ -44,7 +44,7 @@
             <ul class="dropdown-menu dropdown-menu-end">
               <li><span class="dropdown-item"><%= current_user.email%></span></li>
               <li><div class="dropdown-divider"></div></li>
-              <%= link_to "Your Profile", user_path(:user_id), class: "dropdown-item text-primary"%>
+              <%= link_to "Your Profile", user_profile_user_path(current_user.id), class: "dropdown-item text-primary"%>
               <%= link_to "Change Password", passwords_edit_path, class: "dropdown-item text-primary"%>
               <li><div class="dropdown-divider"></div></li>
               <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item text-primary"%>
