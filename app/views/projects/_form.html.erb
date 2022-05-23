@@ -1,8 +1,13 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
+          <div class="col-md-12 text-end">
+            <%= link_to projects_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+              <i class='bi bi-arrow-left' aria-hidden='true'></i>
+            <% end %>
+          </div>
           <h1>New project</h1>
           <%= form_with model: [project] do |form| %>
             <% if project.errors.any? %>
@@ -19,6 +24,8 @@
               <%= form.label :Project_name%>
               <%= form.text_field :name, class: "form-control" %><br>
             </div>
+            <h4>User Listing</h4>
+            <%= form.collection_check_boxes(:user_ids, User.where(:organization_id => current_user.organization_id), :id, :name)%>
             <div>
               <%= form.button "Save", class:"btn btn-lg btn-primary btn-block form-control col-md-3 mr-1"%>
             </div>
@@ -28,8 +35,3 @@
     </div>
   </div>
 </div>
-
-            
-
-            
-

@@ -1,10 +1,11 @@
 class ProjectsController < ApplicationController
   before_action :find_user
   before_action :set_project, only: %i[edit update destroy]
+  before_action :get_users, only: [:new, :create, :edit, :update]
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.where(organization_id: current_user.organization_id)
     @periods = Period.all
     # @projects = Project.where(:user_id => current_user)
     # @projects = current_user.projects
@@ -24,7 +25,6 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params.merge(organization_id: current_user.organization_id))
-    p @project.organization_id
     respond_to do |format|
       if @project.save!
         format.html { redirect_to projects_url, notice: 'Project was successfully created.' }
@@ -69,6 +69,10 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :organization_id)
+    params.require(:project).permit(:name, :organization_id, user_ids: [])
+  end
+
+  def get_users
+    @users_array = User.where(organization_id: current_user.organization_id).order(name: :asc).map { |c| [c.name, c.id] }
   end
 end

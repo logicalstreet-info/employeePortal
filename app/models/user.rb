@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   has_many :properties
-  has_many :periods
+  has_many :periods, dependent: :destroy
   has_many :updates
   has_many :leave_applications
   has_many :notifications

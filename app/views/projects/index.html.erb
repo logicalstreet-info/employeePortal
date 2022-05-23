@@ -16,42 +16,22 @@
               <tr>
                 <th>Name</th>
                 <% if @user.check_role%>
-                  <th>Employee-Id</th>
-                  <th>Start-Date</th>
-                  <th>End-Date</th>
                   <th>Action</th>
                 <% end %>
               </tr>
             </thead>
             <tbody>
               <% @projects.each do |project| %>
-                <% if project.organization_id == current_user.organization_id %>
-                  <tr>
-                    <td>
-                      <%= project.name %>
-                    </td>
-                    <% if @user.check_role%>
-                      <% @periods.each do |p| %>
-                        <% if project.id == p.project_id %>
-                          <td>
-                            <%= p.user_id %>
-                          </td>
-                          <td>
-                            <%= p.start_date %>
-                          </td>
-                          <td>
-                            <%= p.end_date %>
-                          </td>
-                        <% end%>
-                      <% end%>  
-                      <td>
-                        <%= link_to edit_project_path(project.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
-                          <i class='bi bi-pencil-fill' aria-hidden='true'></i>
-                        <% end %> 
-                      </td>
+                <tr>
+                  <td><%= project.name %></td>
+                  <td>
+                    <%= link_to edit_project_path(project.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                      <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                     <% end %>
-                  </tr>
-                <% end %>
+                    <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, project, class: "btn btn-danger", method: :delete,
+                                data: { confirm: 'Are you sure?' } %> 
+                  </td>
+                </tr>
               <% end %>
             </tbody>
           </table>
