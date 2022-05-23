@@ -20,9 +20,6 @@
           <%= link_to 'Daily Update', updates_path, class: "nav-link active mr-auto" %>
         </li>
         <li class="nav-item">
-          <%= link_to 'Leaves', leave_applications_path , class: "nav-link active mr-auto" %>
-        </li>
-        <li class="nav-item">
           <%= link_to 'Assets', properties_index_path, class: "nav-link active mr-auto" %>
         </li>
         <li class="nav-item">
@@ -33,7 +30,16 @@
         </li>
         <li class="nav-item">
           <%= link_to 'Chat', groups_path, class: "nav-link active mr-auto" %>
-        </li> 
+        </li>
+        <li class="nav-item">
+        <% if current_user.has_role? :admin %>
+          <%= link_to pending_leave > 0 ? "Leaves <span class='badge badge-light'>#{pending_leave}</span>".html_safe : "Leaves",
+          leave_applications_path ,
+        class: pending_leave > 0 ? "btn btn-outline-light btn-sm mt-1" : "nav-link active" %>
+        </li>
+      <% else %>
+        <%= link_to 'Leaves', leave_applications_path , class: "nav-link active mr-auto" %>
+      <% end %>
       </ul>
       <div class="dropdown-right">
         <ul class="navbar-nav ml-auto mr-4">

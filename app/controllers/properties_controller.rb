@@ -11,7 +11,7 @@ class PropertiesController < ApplicationController
                     Property.where(assets_type: params[:assets_type])
                   else 
                     Property.where(organization_id: current_user.organization_id)
-                  end 
+                  end
   end
 
   def show; end
