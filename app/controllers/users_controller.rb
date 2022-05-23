@@ -40,6 +40,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+
+    redirect_to users_index_path
+  end
+
   def user_profile
     @user = User.find(params[:id])
     @leaves = LeaveApplication.where(user_id: current_user).order('created_at DESC')

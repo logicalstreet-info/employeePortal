@@ -20,13 +20,18 @@
               <% @users.each do |user| %>
                 <% if user.organization_id == current_user.organization_id %>
                   <tr>
-                    <td>
+                    <td class= "col-4">
                       <%= user.name %>
                     </td>
-                    <td>
+                    <td class= "col-8">
                       <%= link_to edit_user_path(user.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
-                      <% end %> 
+                      <% end %>
+                      <%= link_to user_profile_user_path(user.id), class: "btn btn-warning", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                        <i class='bi bi-eye-fill' aria-hidden='true'></i>
+                      <% end %>
+                      <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, user, class: "btn btn-danger", method: :delete,
+                                    data: { confirm: 'Are you sure?' } %> 
                     </td>
                   </tr>
                 <% end %>
