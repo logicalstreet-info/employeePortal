@@ -1,6 +1,6 @@
 <%= form_for @group do |form| %>
   <%= form.label :name %>
-  <%= form.text_field :name %><br/>
+  <%= form.text_field :name %><br/><br/>
   <div class="col dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
       select
@@ -8,6 +8,6 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
       <%= form.collection_check_boxes(:user_ids, User.where(:organization_id => current_user.organization_id), :id, :name)%>
     </ul>
-  </div> 
+  </div><br/> 
   <%= form.submit "Save", class: 'btn btn-success' %>
 <% end %>
