@@ -3,71 +3,75 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <% if @user.check %>
-            <div class="col-md-12 text-end">
-              <%=  link_to updates_new_path, target: '_top', class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update' } do %>
-                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
-              <% end %>
-            </div>
-          <% else%>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                CSV Export
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li>
-                  <%= link_to "Last Day CSV", updates_path( @updates, format: "csv", type: "day"), class: 'dropdown-item text-primary' %>
-                </li>
-                <li>
-                  <%= link_to "This Month CSV", updates_path( @updates, format: "csv", type: "month"), class: 'dropdown-item text-primary' %>
-                </li>
-              </ul>
-            </div><br>
-            <%= form_tag import_updates_path, multipart: true do %>
-              <%= file_field_tag :file %><br><br>
-              <%= submit_tag "CSV Import", class: "btn btn-info"  %>
-            <% end %>
-          <% end %><br>
-          <h1>Listing All Daily Update</h1>
-          <table class="table">
-            <thead class="thead-light">
-              <tr>
-                <% if @user.check_role %>
-                  <th>Name</th>
+          <% if @updates.present? %>
+            <% if @user.check %>
+              <div class="col-md-12 text-end">
+                <%=  link_to updates_new_path, target: '_top', class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update' } do %>
+                  <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
                 <% end %>
-                <th class="col-6">Description</th>
-                <th>Created Date</th>
-                <th>Start Time</th>
-                <th>Out Time</th>
-                <th>Total Hour</th>
-                <th>Project</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @updates.each do |update| %>
+              </div>
+            <% else%>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  CSV Export
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <%= link_to "Last Day CSV", updates_path( @updates, format: "csv", type: "day"), class: 'dropdown-item text-primary' %>
+                  </li>
+                  <li>
+                    <%= link_to "This Month CSV", updates_path( @updates, format: "csv", type: "month"), class: 'dropdown-item text-primary' %>
+                  </li>
+                </ul>
+              </div><br>
+              <%= form_tag import_updates_path, multipart: true do %>
+                <%= file_field_tag :file %><br><br>
+                <%= submit_tag "CSV Import", class: "btn btn-info"  %>
+              <% end %>
+            <% end %><br>
+            <h1>Listing All Daily Update</h1>
+            <table class="table">
+              <thead class="thead-light">
                 <tr>
-                  <% if @user.check_role%> 
-                    <td><%= User.find(update.user_id).name %></td><% end %>
-                    <td><%= update.description %></td>
-                    <td><%= date_format(update.created_at) %></td>
-                    <td><%= time_format(update.in_time) %></td>
-                    <td><%= time_format(update.out_time) %></td>
-                    <td><%= total_time(update.in_time,update.out_time) %></td>
-                    <td>  
-                      <% if update.project.present? %>
-                        <%= update.project.name %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <% if @user.check && date_format(update.created_at) == date_format(Date.today) %>
-                        <%= link_to  edit_update_path(update), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
-                        <i class='bi bi-pencil-fill' aria-hidden='true'></i>
-                      <% end %>
-                    </td>
+                  <% if @user.check_role %>
+                    <th>Name</th>
                   <% end %>
-                </tr>              
-              <% end %>    
-            </tbody>
+                  <th class="col-6">Description</th>
+                  <th>Created Date</th>
+                  <th>Start Time</th>
+                  <th>Out Time</th>
+                  <th>Total Hour</th>
+                  <th>Project</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @updates.each do |update| %>
+                  <tr>
+                    <% if @user.check_role%> 
+                      <td><%= User.find(update.user_id).name %></td><% end %>
+                      <td><%= update.description %></td>
+                      <td><%= date_format(update.created_at) %></td>
+                      <td><%= time_format(update.in_time) %></td>
+                      <td><%= time_format(update.out_time) %></td>
+                      <td><%= total_time(update.in_time,update.out_time) %></td>
+                      <td>  
+                        <% if update.project.present? %>
+                          <%= update.project.name %>
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if @user.check && date_format(update.created_at) == date_format(Date.today) %>
+                          <%= link_to  edit_update_path(update), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                          <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                        <% end %>
+                      </td>
+                    <% end %>
+                  </tr> 
+                </tbody>
+              <% end %>
+            <% else %>
+              <h2>There Are No Updates</h2>
+            <% end %>
           </div>
         </div>
       </div>
