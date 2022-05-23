@@ -10,7 +10,7 @@ class PropertiesController < ApplicationController
                   elsif params[:assets_type].present?
                     Property.where(assets_type: params[:assets_type])
                   else 
-                    Property.all
+                    Property.where(organization_id: current_user.organization_id)
                   end 
   end
 
@@ -21,7 +21,9 @@ class PropertiesController < ApplicationController
   end
 
   def create
-    @property = Property.new(property_params)
+    @property = Property.create(property_params.merge(
+      organization_id: current_user.organization_id)
+    )
     respond_to do |format|
       if @property.save
         format.html { redirect_to properties_index_path }
@@ -54,7 +56,7 @@ class PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:user_id, :name, :description, :purchase_date, :warranty_month, :assets_type)
+    params.require(:property).permit(:user_id, :name, :description, :purchase_date, :warranty_month, :assets_type, :organization_id)
   end
 
   def get_users
