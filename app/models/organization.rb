@@ -3,6 +3,7 @@ class Organization < ActiveRecord::Base
 
   has_many :users, dependent: :destroy
   has_many :projects, dependent: :destroy
+  has_many :properties, dependent: :destroy
   has_many :leave_applications, dependent: :destroy
   has_many :leave_days, dependent: :destroy
   has_many :notifications, dependent: :destroy

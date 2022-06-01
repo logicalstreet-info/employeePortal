@@ -18,7 +18,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
-  
+  validates_format_of :mobile_number, :parent_mobile_number,
+    :with => /[0-9]{9}/,
+    :message => " must be in xxxxxxxxxx format.",
+    :allow_blank => true
+  validates_length_of :mobile_number, :parent_mobile_number, is: 10,
+  message: "must be 10 digit long", :allow_blank => true
+  validate :validate_age
+  validates_confirmation_of :password
+
   enum user_type: {trainee: 1, employee: 2}
   
   after_create :assign_default_role
@@ -41,5 +49,11 @@ class User < ApplicationRecord
   def gravatar_url
     gravatar_id = Digest::MD5::hexdigest(email).downcase
     "https://gravatar.com/avatar/#{gravatar_id}.png"
+  end
+
+  def validate_age
+    if birth_date.present? && birth_date > 18.years.ago
+        errors.add(:birth_date, 'should be over 18 years old.')
+    end
   end
 end
