@@ -5,14 +5,16 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.where(organization_id: current_user.organization_id)
+    @projects = if current_user.has_role? :admin
+                  Project.where(organization_id: current_user.organization_id)
+                else
+                  current_user.projects
+                end
     @periods = Period.all
-    # @projects = Project.where(:user_id => current_user)
-    # @projects = current_user.projects
   end
 
   def show
-    @project = Project.find(params[:id])
+    @project = current_user.projects
   end
 
   def new
