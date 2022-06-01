@@ -2,7 +2,7 @@ class LeaveDaysController < ApplicationController
   before_action :find_user
 
   def index
-    @leave_days = LeaveDay.where(organization_id: current_user.organization_id).order('created_at DESC')
+    @leave_days = LeaveDay.where(organization_id: current_user.organization_id).order('created_at DESC').page(params[:page]).per(5)
   end
 
   def new

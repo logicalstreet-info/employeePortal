@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
                 else
                   current_user.projects
                 end
+    @projects = @projects.page(params[:page]).per(5)
     @periods = Period.all
   end
 

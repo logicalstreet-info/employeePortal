@@ -14,7 +14,7 @@ class UpdatesController < ApplicationController
         p @updates
       end
     else
-      @updates = Update.where(user_id: current_user).order('created_at DESC')
+      @updates = Update.where(user_id: current_user).order('created_at DESC').page(params[:page]).per(5)
     end
     respond_to do |format|
       format.html

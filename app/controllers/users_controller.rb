@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :find_user
   def index
-    @users = User.where(organization_id: current_user.organization_id)
+    @users = User.where(organization_id: current_user.organization_id).page(params[:page]).per(5)
   end
 
   def show   

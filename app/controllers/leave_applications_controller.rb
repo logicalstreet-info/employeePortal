@@ -12,6 +12,7 @@ class LeaveApplicationsController < ApplicationController
                           else
                             LeaveApplication.where(user_id: current_user).order('created_at DESC')
                           end
+    @leave_applications = @leave_applications.page(params[:page]).per(5)      
 
     @leaves = if params[:user_id].present? && params[:status].present?
                 @leave_applications.where(user_id: params[:user_id], status: params[:status])

@@ -67,11 +67,15 @@
                       </td>
                     <% end %>
                   </tr> 
-                </tbody>
-              <% end %>
-            <% else %>
-              <h2>There Are No Updates</h2>
-            <% end %>
+                <% end %>
+                <% else %>
+                  <h2>There Are No Updates</h2>
+                <% end %>
+              </tbody>
+            </table>
+            <%= paginate @properties, theme: 'bootstrap-5',
+          pagination_class: "pagination-sm flex-wrap justify-content-center",
+          nav_class: "d-inline-block" %>
           </div>
         </div>
       </div>

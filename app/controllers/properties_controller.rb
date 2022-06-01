@@ -12,6 +12,7 @@ class PropertiesController < ApplicationController
                   else 
                     Property.where(organization_id: current_user.organization_id)
                   end
+    @properties = @properties.page(params[:page]).per(5)
   end
 
   def show; end

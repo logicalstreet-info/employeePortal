@@ -10,7 +10,7 @@
               <% end %>
             </div>
           <% else %>
-            <%= form_tag leave_applications_path, target: "_top", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'},  method: :get do %>
+            <%= form_tag leave_applications_path, data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'},  method: :get do %>
               <div class="row mt-4">
                 <div class="col-3"> 
                   <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
@@ -94,6 +94,9 @@
               <% end %>
             </tbody>
           </table>
+          <%= paginate @leave_applications, theme: 'bootstrap-5',
+          pagination_class: "pagination-sm flex-wrap justify-content-center",
+          nav_class: "d-inline-block" %>
         </div>
       </div>
     </div>
