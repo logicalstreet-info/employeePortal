@@ -34,11 +34,11 @@
         <li class="nav-item">
         <% if current_user.has_role? :admin %>
           <%= link_to pending_leave > 0 ? "Leaves <span class='badge badge-light'>#{pending_leave}</span>".html_safe : "Leaves",
-          leave_applications_path ,
+          leave_applications_path , target: "_top",
         class: pending_leave > 0 ? "btn btn-outline-light btn-sm mt-1" : "nav-link active" %>
         </li>
       <% else %>
-        <%= link_to 'Leaves', leave_applications_path , class: "nav-link active mr-auto" %>
+        <%= link_to 'Leaves', leave_applications_path, target: "_top", class: "nav-link active mr-auto" %>
       <% end %>
       </ul>
       <div class="dropdown-right">
