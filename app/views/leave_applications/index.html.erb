@@ -12,13 +12,16 @@
           <% else %>
             <%= form_tag leave_applications_path, data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'},  method: :get do %>
               <div class="row mt-4">
-                <div class="col-3"> 
+                <div class="col-2"> 
                   <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                   <%= select_tag :status, options_for_select(@status, selected: params[:status]),{ include_blank: "All Leave Type", class: "form-control col-md-3 mr-1" } %>
                 </div>
-                <div class ="col-3">
+                <div class="col-2">
+                  <%= select_tag :order, options_for_select(@order, selected: params[:order]),{ include_blank: "By Order", class: "form-control col-md-3 mr-1" } %>
+                </div>
+                <div class ="col-2">
                   <div class="input-group date col-3" data-provide="date" >
                     <%= text_field_tag :from_date, params[:from_date], class: "form-control datepicker-input" %>
                     <div class="input-group-append">
@@ -26,7 +29,7 @@
                     </div>
                   </div>
                 </div><br>
-                <div class="col-3">
+                <div class="col-2">
                   <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Find'} do %>
                     <i class='bi bi-search' aria-hidden='true'></i>
                   <% end %>
@@ -94,7 +97,7 @@
               <% end %>
             </tbody>
           </table>
-          <%= paginate @leave_applications, theme: 'bootstrap-5',
+          <%= paginate @leaves, theme: 'bootstrap-5',
           pagination_class: "pagination-sm flex-wrap justify-content-center",
           nav_class: "d-inline-block" %>
         </div>

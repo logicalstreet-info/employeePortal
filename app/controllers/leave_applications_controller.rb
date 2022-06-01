@@ -12,7 +12,6 @@ class LeaveApplicationsController < ApplicationController
                           else
                             LeaveApplication.where(user_id: current_user).order('created_at DESC')
                           end
-    @leave_applications = @leave_applications.page(params[:page]).per(5)      
 
     @leaves = if params[:user_id].present? && params[:status].present?
                 @leave_applications.where(user_id: params[:user_id], status: params[:status])
@@ -20,6 +19,8 @@ class LeaveApplicationsController < ApplicationController
                 @leave_applications.where(user_id: params[:user_id])
               elsif params[:status].present?
                 @leave_applications.where(status: params[:status])
+              elsif params[:order].present?
+                params[:order] == "ASC" ? @leave_applications.all.reorder('created_at ASC') : @leave_applications
               elsif params[:from_date].present?
                 q << "from_date <= ? AND to_date >= ?"
                 s << params[:from_date]
@@ -28,6 +29,8 @@ class LeaveApplicationsController < ApplicationController
               else 
                 @leave_applications.all
               end
+              
+    @leaves = @leaves.page(params[:page]).per(5)
   end
 
   def new
@@ -99,5 +102,6 @@ class LeaveApplicationsController < ApplicationController
   def get_users
     @users_array = User.where(organization_id: current_user.organization_id).order(name: :asc).map { |c| [c.name, c.id] }
     @status = LeaveApplication.statuses.keys.collect { |s| [s.upcase, s] }
+    @order = [ "ASC", "DESC" ]
   end
 end
