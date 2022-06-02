@@ -14,8 +14,9 @@ class UpdatesController < ApplicationController
         p @updates
       end
     else
-      @updates = Update.where(user_id: current_user).order('created_at DESC').page(params[:page]).per(5)
+      @updates = Update.where(user_id: current_user).order('created_at DESC')
     end
+    @updates = @updates.page(params[:page]).per(5)
     respond_to do |format|
       format.html
       format.csv { send_data @updates.to_csv }
