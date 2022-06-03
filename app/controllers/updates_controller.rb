@@ -77,6 +77,7 @@ class UpdatesController < ApplicationController
 
   def find_user
     @user = current_user
+    @project = current_user.projects
   end
 
   def get_users
