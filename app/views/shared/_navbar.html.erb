@@ -2,44 +2,13 @@
   <% if user_signed_in? %>
     <div class="container-fluid">   
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <%= link_to 'Home', root_path, class: "nav-link active mr-auto" %>
-        </li>
-        <% if current_user.has_role? :admin%>
-          <li class="nav-item">
-            <%= link_to 'User', users_index_path, class: "nav-link active mr-auto" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Organization', organizations_index_path , class: "nav-link active mr-auto" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Holiday', leave_days_path , class: "nav-link active mr-auto" %>
-          </li>
+        <% if current_user.has_role? :superadmin%>
+          <%= render 'shared/super_admin_navbar'%>
+        <% elsif current_user.has_role? :admin%>
+          <%= render 'shared/admin_navbar'%>
+        <% elsif current_user.has_role? :newuser%>
+          <%= render 'shared/user_navbar'%>
         <% end %>
-        <li class="nav-item">
-          <%= link_to 'Daily Update', updates_path, class: "nav-link active mr-auto" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Assets', properties_index_path, class: "nav-link active mr-auto" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Project', projects_path(current_user.id) , class: "nav-link active mr-auto" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Notification', notifications_path, class: "nav-link active mr-auto" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Chat', groups_path, class: "nav-link active mr-auto" %>
-        </li>
-        <li class="nav-item">
-        <% if current_user.has_role? :admin %>
-          <%= link_to pending_leave > 0 ? "Leaves <span class='badge badge-light'>#{pending_leave}</span>".html_safe : "Leaves",
-          leave_applications_path , target: "_top",
-        class: pending_leave > 0 ? "btn btn-outline-light btn-sm mt-1" : "nav-link active" %>
-        </li>
-      <% else %>
-        <%= link_to 'Leaves', leave_applications_path, target: "_top", class: "nav-link active mr-auto" %>
-      <% end %>
       </ul>
       <div class="dropdown-right">
         <ul class="navbar-nav ml-auto mr-4">
