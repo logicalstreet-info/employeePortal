@@ -4,7 +4,7 @@
       <div class="card my-5 shadow">
         <div class="card-body">
           <div class="col-md-12 text-end">
-            <%= link_to new_user_path(@user),class: "btn btn-primary"  do%> 
+            <%= link_to new_user_path(),class: "btn btn-primary"  do%> 
               <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
             <% end %>
           </div> 
@@ -20,7 +20,7 @@
               <% @users.each do |user| %>
                 <tr>
                   <td class="col-7">
-                    <%= user.name %>
+                    <%= link_to user.name, user_profile_user_path(user.id)%>
                   </td>
                   <td class="col-1">
                     <%= link_to edit_user_path(user.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
@@ -28,13 +28,19 @@
                     <% end %>
                   </td>
                   <td class="col-1">
-                    <%= link_to user_profile_user_path(user.id), class: "btn btn-warning", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                    <%= link_to passwords_path(user.id), class: "btn btn-warning", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                       <i class='bi bi-eye-fill' aria-hidden='true'></i>
                     <% end %>
                   </td>
                   <td class="col-1">
                     <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, user, class: "btn btn-danger", method: :delete,
                                   data: { confirm: 'Are you sure?' } %>
+                  </td>
+                  <td class="col-1">
+                    <a tabindex="0" class="btn btn-secondary" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Project" data-bs-content="
+                    <% user.projects.each do |a| %>
+                      <%= a.name + "," %>
+                      <% end %>">Project</a>
                   </td>
                 </tr>
               <% end %>
