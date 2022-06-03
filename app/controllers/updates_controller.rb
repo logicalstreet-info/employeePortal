@@ -1,5 +1,6 @@
 class UpdatesController < ApplicationController
   before_action :find_user
+  before_action :get_users, only: %i[index]
 
   def index
     if current_user.check_role
@@ -7,15 +8,14 @@ class UpdatesController < ApplicationController
         'updates.created_at DESC')
       if params[:type] == 'day'
         @updates = Update.where('DATE(created_at) = ? ', Date.yesterday)
-        p @updates
       elsif params[:type] == 'month'
         @updates = Update.where("DATE_PART('month', created_at) = ? OR  DATE_PART('year', created_at) = ? ",
           Date.current.month, Date.current.year)
-        p @updates
       end
     else
       @updates = Update.where(user_id: current_user).order('created_at DESC')
     end
+    @updates = @updates.where(user_id: params[:user_id]) if params[:user_id].present?
     @updates = @updates.page(params[:page]).per(5)
     respond_to do |format|
       format.html
@@ -77,5 +77,9 @@ class UpdatesController < ApplicationController
 
   def find_user
     @user = current_user
+  end
+
+  def get_users
+    @users_array = User.where(organization_id: current_user.organization_id).order(name: :asc).map { |c| [c.name, c.id] }
   end
 end
