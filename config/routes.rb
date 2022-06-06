@@ -7,11 +7,12 @@ Rails.application.routes.draw do
   get 'periods/index'
   get 'periods/new'
   get 'passwords/edit', to: 'passwords#edit'
-  patch  'passwords/edit', to: 'passwords#update'
-  post  'passwords/edit', to: 'passwords#update'
   post 'updates/new'
   post 'leave_applications/new'
-
+  get  'employees',  to: 'users#new'
+  post 'employees',  to: 'users#add_user'
+  
+  resources :passwords
   resources :leave_days 
   resources :notifications 
   resources :organizations
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
+      get 'user_profile'
       resources :projects
     end
   end

@@ -79,3 +79,5 @@ gem 'cssbundling-rails'
 gem 'devise'
 gem 'acts_as_paranoid'
 gem "rolify"
+gem 'kaminari'
+gem 'bootstrap5-kaminari-views'

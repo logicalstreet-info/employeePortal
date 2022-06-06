@@ -1,74 +1,47 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <% if user_signed_in? %>
-  <div class="container-fluid">   
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
-        <%= link_to 'Home', root_path, class: "nav-link active mr-auto" %>
-      </li>
-      <% if current_user.has_role? :admin%>
-        <li class="nav-item">
-          <%= link_to 'User', users_index_path, class: "nav-link active mr-auto" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Organization', organizations_index_path , class: "nav-link active mr-auto" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Holiday', leave_days_path , class: "nav-link active mr-auto" %>
-        </li>
-      <% end %>
-      <li class="nav-item">
-        <%= link_to 'Daily Update', updates_path, class: "nav-link active mr-auto" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Leaves', leave_applications_path , class: "nav-link active mr-auto" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Assets', properties_index_path, class: "nav-link active mr-auto" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Project', projects_path(:user_id) , class: "nav-link active mr-auto" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Notification', notifications_path, class: "nav-link active mr-auto" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Chat', groups_path, class: "nav-link active mr-auto" %>
-      </li> 
-    </ul>
-    <div class="dropdown-right">
-      <ul class="navbar-nav ml-auto mr-4">
-        <li class="nav-item dropdown-right">
-          <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Account
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><span class="dropdown-item"><%= current_user.email%></span></li>
-            <li><div class="dropdown-divider"></div></li>
-            <%= link_to "Your Profile", user_path(:user_id), class: "dropdown-item text-primary"%>
-            <%= link_to "Change Password", passwords_edit_path, class: "dropdown-item text-primary"%>
-            <li><div class="dropdown-divider"></div></li>
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item text-primary"%>
-          </ul>
-        </li>
+    <div class="container-fluid">   
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <% if current_user.has_role? :superadmin%>
+          <%= render 'shared/super_admin_navbar'%>
+        <% elsif current_user.has_role? :admin%>
+          <%= render 'shared/admin_navbar'%>
+        <% elsif current_user.has_role? :newuser%>
+          <%= render 'shared/user_navbar'%>
+        <% end %>
       </ul>
-    </div>
-    <% else %>
-      <div class="container-fluid">  
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <div class="collapse navbar-collapse" id=""> 
-            <span class="mr-auto" style="color:white">Employee Portal</span>
-          </div>
+      <div class="dropdown-right">
+        <ul class="navbar-nav ml-auto mr-4">
+          <li class="nav-item dropdown-right">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Account
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><span class="dropdown-item"><%= current_user.email%></span></li>
+              <li><div class="dropdown-divider"></div></li>
+              <%= link_to "Your Profile", user_profile_user_path(current_user.id), class: "dropdown-item text-primary"%>
+              <%= link_to "Change Password", passwords_edit_path, class: "dropdown-item text-primary"%>
+              <li><div class="dropdown-divider"></div></li>
+              <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item text-primary"%>
+            </ul>
+          </li>
         </ul>
-        <div class="dropdown-right">
-          <ul class="navbar-nav ml-auto mr-4">
-            <li class="nav-item dropdown-right">
-              
-                <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
-              </ul>
-            </li>
-          </ul>
-        </div>
       </div>
-    <% end %>
-  </div>       
+    </div>
+  <% else %>
+    <div class="container-fluid">  
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <div class="collapse navbar-collapse" id=""> 
+          <span class="mr-auto" style="color:white">Employee Portal</span>
+        </div>
+      </ul>
+      <div class="dropdown-right">
+        <ul class="navbar-nav ml-auto mr-4">
+          <li class="nav-item dropdown-right">
+            <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 </nav>

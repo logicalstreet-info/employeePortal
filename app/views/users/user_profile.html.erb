@@ -1,0 +1,154 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <h1>Profile</h1>
+          <dl class="row">
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9"><%= @user.name %></dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9"><%= @user.email %></dd>
+
+            <% if @user.birth_date %>
+              <dt class="col-sm-3">Birth Date</dt>
+              <dd class="col-sm-9"><%= @user.birth_date %></dd>
+            <% end %>
+          
+            <% if @user.joining_date %>
+              <dt class="col-sm-3">Joining Date</dt>
+              <dd class="col-sm-9"><%= @user.joining_date %></dd>
+            <% end %>
+
+            <% if !@user.gender.nil? %>
+              <dt class="col-sm-3">Gender</dt>
+              <dd class="col-sm-9"><%= @user.gender ? 'Male' : 'Female' %></dd>
+            <% end %>
+
+            <% if @user.qualification.present? %>
+              <dt class="col-sm-3">Qualification</dt>
+              <dd class="col-sm-9"><%= @user.qualification %></dd>
+            <% end %>
+            
+            <% if @user.mobile_number.present? %>
+              <dt class="col-sm-3">Mobile Number</dt>
+              <dd class="col-sm-9"><%= @user.mobile_number %></dd>
+            <% end %>
+
+            <% if @user.parent_name %>
+              <dt class="col-sm-3">Parent Name</dt>
+              <dd class="col-sm-9"><%= @user.parent_name %></dd>
+            <% end %>
+
+            <% if @user.parent_mobile_number.present? %>
+              <dt class="col-sm-3">Parent Mobile Number</dt>
+              <dd class="col-sm-9"><%= @user.parent_mobile_number %></dd>
+            <% end %>
+
+            <% if @user.address.present? %>
+              <dt class="col-sm-3">Address</dt>
+              <dd class="col-sm-9"><%= @user.address %></dd>
+            <% end %>
+
+            <% if @user.native_address.present? %>
+              <dt class="col-sm-3">Native Address</dt>
+              <dd class="col-sm-9"><%= @user.native_address %></dd>
+            <% end %>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @user.check %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <% if @leaves.present? %>
+              <h1>Leave</h1>
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Leave Type</th>
+                    <th class="col-6">Description</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Total Days</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @leaves.each do |leave| %>
+                    <tr>
+                      <% if @user.check_role%>
+                        <td><%= User.find(leave.user_id).name %></td>
+                      <% end %>
+                      <td><%= leave.leave_type %></td>
+                      <td><%= leave.description %></td>
+                      <% if leave.from_date.present? || leave.from_time.present?%>
+                        <td>
+                          <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                        </td>  
+                      <% end %>
+                      <% if leave.to_date.present?|| leave.to_time.present?%>
+                        <td>
+                          <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                        </td>
+                      <% end %>
+                      <% if leave.from_date && leave.to_date? || leave.from_time && leave.to_time?%>
+                        <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
+                      <% end %>
+                      <td><%= leave.status %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <h2>There Are No Leave</h2>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <% if @properties.present? %>
+              <h1>Assets</h1>
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Purchase Date</th>
+                    <th>Warranty Month</th>
+                    <th>Assets Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @properties.each do |property| %>
+                    <tr>
+                      <td><%= property.name %></td>
+                      <td><%= property.description %></td>
+                      <td><%= property.purchase_date %></td>
+                      <td><%= property.warranty_month %></td>
+                      <td><%= property.assets_type %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <h2>There Are No Assets</h2>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<li class="nav-item">
+  <%= link_to 'Home', root_path, class: "nav-link active mr-auto" %>
+</li>
+<li class="nav-item">
+  <%= link_to 'User', users_index_path, class: "nav-link active mr-auto" %>
+</li>
+<li class="nav-item">
+  <%= link_to 'Holiday', leave_days_path , class: "nav-link active mr-auto" %>
+</li>
+<li class="nav-item">
+  <%= link_to 'Daily Update', updates_path, class: "nav-link active mr-auto" %>
+</li>
+<li class="nav-item">
+  <%= link_to 'Assets', properties_index_path, class: "nav-link active mr-auto" %>
+</li>
+<li class="nav-item">
+  <%= link_to 'Project', projects_path(current_user.id) , class: "nav-link active mr-auto" %>
+</li>
+<li class="nav-item">
+  <%= link_to 'Notification', notifications_path, class: "nav-link active mr-auto" %>
+</li>
+<li class="nav-item">
+  <%= link_to 'Chat', groups_path, class: "nav-link active mr-auto" %>
+</li>
+<li class="nav-item">
+  <%= link_to pending_leave > 0 ? "Leaves <span class='badge badge-light'>#{pending_leave}</span>".html_safe : "Leaves",
+  leave_applications_path , target: "_top",
+  class: pending_leave > 0 ? "btn btn-outline-light btn-sm mt-1" : "nav-link active" %>
+</li>

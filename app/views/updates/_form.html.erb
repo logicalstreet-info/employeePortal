@@ -21,13 +21,13 @@
                       <div class="input-group-append" >
                         <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
                       </div>
-                    <% if invalid %>
-                      <div class="invalid-feedback d-block">
-                        <% update.errors.full_messages_for(:in_time).each do |error_message| %>
-                          <%= error_message %>.
-                        <% end %>
-                      </div>
-                    <% end %>
+                      <% if invalid %>
+                        <div class="invalid-feedback d-block">
+                          <% update.errors.full_messages_for(:in_time).each do |error_message| %>
+                            <%= error_message %>.
+                          <% end %>
+                        </div>
+                      <% end %>
                     </div><br>
                   </div>
                 </div>
@@ -40,13 +40,13 @@
                       <div class="input-group-append" >
                         <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
                       </div>
-                    <% if invalid %>
-                      <div class="invalid-feedback d-block">
-                        <% update.errors.full_messages_for(:out_time).each do |error_message| %>
-                          <%= error_message %>.
-                        <% end %>
-                      </div>
-                    <% end %>
+                      <% if invalid %>
+                        <div class="invalid-feedback d-block">
+                          <% update.errors.full_messages_for(:out_time).each do |error_message| %>
+                            <%= error_message %>.
+                          <% end %>
+                        </div>
+                      <% end %>
                     </div>
                   </div>
                 </div>
@@ -54,9 +54,8 @@
                   <% invalid = update.errors.include?(:project_id) %>
                   <div class="form-group">
                     <%= form.label :project %>
-                    <%= form.collection_select :project_id, Project.all, :id, :name, {prompt: "Select Project"}, { class: "form-control #{'is-invalid' if invalid}" } %>
-
-                      <% if invalid %>
+                    <%= form.collection_select :project_id, @project, :id, :name, {prompt: "Select Project"}, { class: "form-control #{'is-invalid' if invalid}" } %>
+                    <% if invalid %>
                       <div class="invalid-feedback d-block">
                         <% update.errors.full_messages_for(:project_id).each do |error_message| %>
                           <%= error_message %>.

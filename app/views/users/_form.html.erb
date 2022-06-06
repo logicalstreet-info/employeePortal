@@ -3,8 +3,8 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <h1>Edit Your Profile</h1>
-          <%= form_with(model: @user) do |form| %>
+          <h1>Create User</h1>
+          <%=  form_for User.new, :url => {:action => "add_user"} do |form| %>
             <div class="row">
               <div class="field col-6">
                 <%= form.label :Gender %><br />
@@ -14,8 +14,16 @@
                 <%= form.radio_button :gender, false, :checked => true %>
               </div>
               <div class="field col-6">
+                <%=form.label :Type%>
+                <%= form.select :user_type, options_for_select(User.user_types.keys ,selected: form.object.user_type ) ,{ include_blank: "Select Type"}, {class: "form-control"} %><br>
+              </div>
+              <div class="field col-6">
                 <%=form.label :Email%>
                 <%= form.text_field :email, class: 'form-control', placeholder: 'email'%><br>
+              </div>
+              <div class="field col-6">
+                <%=form.label :password%>
+                <%= form.password_field :password, class: 'form-control', placeholder: 'password'%><br>
               </div>
               <div class="field col-6">
                 <%=form.label :Name%>
@@ -40,10 +48,6 @@
               <div class="field col-6">
                 <%=form.label :Parent_mobile_number%>
                 <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
-              </div>
-              <div class="field col-6">
-                <%=form.label :Type%>
-                <%= form.select :user_type, options_for_select(User.user_types.keys ,selected: form.object.user_type ) ,{ include_blank: "Select Type"}, {class: "form-control"} %><br>
               </div><br>
             </div>
             <div class="col">
@@ -55,7 +59,7 @@
               <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
             </div><br>              
             <div>
-              <%= form.button "Update", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+              <%= form.button "Add", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
             </div>
           <% end %>
         </div>

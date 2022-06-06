@@ -10,42 +10,42 @@
           </div>
           <h1>Assets</h1>
           <%= form_with(model: @property) do |form| %>
+            <div class="field">
+              <%= form_group_for form, :name, label: true do %>
+                <%= form.text_field :name, class: 'form-control', placeholder: 'Name'%>
+              <% end %>
+            </div> 
             <div class="row">
               <div class="field col-6">
-                <%= form_group_for form, :name, label: true do %>
-                  <%= form.text_field :name, class: 'form-control', placeholder: 'Name'%>
+                <%= form_group_for form, :User_listing, label: true do %>
+                  <%= form.select :user_id, options_for_select(@users_array, selected: form.object.user_id), { include_blank: "Please select User"}, {class: "form-control"} %>
                 <% end %>
-              </div>
-          
+              </div>        
               <div class="field col-6">
                 <%= form_group_for form, :assets_type, label: true do %>
                   <%= form.select :assets_type, options_for_select(Property.assets_types.keys ,selected: form.object.assets_type ) ,{ include_blank: "Select Asset Type"}, {class: "form-control"} %>
                 <% end %>
-              </div>
-          
+              </div>          
               <div class="field col-6">
                 <%= form_group_for form, :warranty_month, label: true do %>
                   <%= form.text_field :warranty_month, class: 'form-control', placeholder: 'Warranty Month'%>
                 <% end %>
-              </div>
-              
+              </div>              
               <div class="field col-6">
-                  <%= form_group_for form, :purchase_date, label: true do %>
-                    <div class="input-group date" data-provide="date" >
-                      <%= form.text_field :purchase_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date'%>
-                        <div class="input-group-append">
-                          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                        </div>  
-                    </div>      
-                  <% end %>
+                <%= form_group_for form, :purchase_date, label: true do %>
+                  <div class="input-group date" data-provide="date" >
+                    <%= form.text_field :purchase_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date'%>
+                      <div class="input-group-append">
+                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                      </div>  
+                  </div>      
+                <% end %>
               </div><br>
-            </div>
-          
+            </div>          
             <div class="col">
               <%= form.label :description %>
               <%= form.rich_text_area :description, class: 'form-control', row: 5%>
-            </div><br>
-          
+            </div><br>          
             <div class="col-md-12 text-end">
               <%= form.button "Save", class: "btn btn-primary" %>
             </div>
