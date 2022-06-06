@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <h1>Create User</h1>
+          <%=  form_for User.new, :url => {:action => "add_user"} do |form| %>
+            <div class="row">
+              <div class="field col-6">
+                <%= form.label :Gender %><br />
+                <%= form.label :Gender, "Male", :value => "true"  %>
+                <%= form.radio_button :gender, true %>
+                <%= form.label :gender, "Female", :value => "false" %>
+                <%= form.radio_button :gender, false, :checked => true %>
+              </div>
+              <div class="field col-6">
+                <%=form.label :Type%>
+                <%= form.select :user_type, options_for_select(User.user_types.keys ,selected: form.object.user_type ) ,{ include_blank: "Select Type"}, {class: "form-control"} %><br>
+              </div>
+              <div class="field col-6">
+                <%=form.label :Email%>
+                <%= form.text_field :email, class: 'form-control', placeholder: 'email'%><br>
+              </div>
+              <div class="field col-6">
+                <%=form.label :password%>
+                <%= form.password_field :password, class: 'form-control', placeholder: 'password'%><br>
+              </div>
+              <div class="field col-6">
+                <%=form.label :Name%>
+                <%= form.text_field :name, class: 'form-control', placeholder: 'name'%>
+              </div>              
+              <div class="field col-6">
+                <%=form.label :Qualification%>
+                <%= form.text_field :qualification, class: 'form-control', placeholder: 'qualification'%><br>
+              </div>          
+              <div class="field col-6">
+                <%=form.label :Birth_Date%>
+                <%= form.date_field :birth_date, class: 'form-control', placeholder: 'Birth Date'%>
+              </div>
+              <div class="field col-6">
+                <%=form.label :Joining_Date%>
+                <%= form.date_field :joining_date, class: 'form-control', placeholder: 'Joining Date'%><br>
+              </div>
+              <div class="field col-6">
+                <%=form.label :Mobile_number%>
+                <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>
+              </div>                
+              <div class="field col-6">
+                <%=form.label :Parent_mobile_number%>
+                <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
+              </div><br>
+            </div>
+            <div class="col">
+              <%= form.label :address, style: "display: block" %>
+              <%= form.text_area :address, class: 'form-control', :rows => 5 %>
+            </div><br>
+            <div class="col">
+              <%= form.label :native_address, style: "display: block" %>
+              <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
+            </div><br>              
+            <div>
+              <%= form.button "Add", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

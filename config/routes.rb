@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'passwords/edit', to: 'passwords#edit'
   post 'updates/new'
   post 'leave_applications/new'
+  get  'employees',  to: 'users#new'
+  post 'employees',  to: 'users#add_user'
   
   resources :passwords
   resources :leave_days 

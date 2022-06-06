@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :find_user
+
   def index
-    @users = User.where(organization_id: current_user.organization_id).page(params[:page]).per(5)
+    @users = User.all_except(current_user).where(organization_id: current_user.organization_id).page(params[:page]).per(5)
   end
 
   def show   
@@ -22,7 +23,21 @@ class UsersController < ApplicationController
     render 'groups/index'
   end
 
-  def new; end
+  def new
+    @user = User.new
+  end
+
+  def add_user
+    @user = User.new(user_params.merge(organization_id: current_user.organization_id))
+
+    respond_to do |format|
+      if @user.save!
+        format.html { redirect_to users_path }
+      else
+        format.html { render :new }
+      end
+    end
+  end
 
   def edit
     @user = User.find(params[:id])
