@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     @users = User.all_except(current_user).where(organization_id: current_user.organization_id).page(params[:page]).per(5)
   end
 
-  def show   
+  def show
     @user = User.find(params[:id])
     @users = User.all_except(current_user)
 
@@ -44,14 +44,10 @@ class UsersController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @user.update!(user_params)
-        format.html { redirect_to user_url(@user), notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update!(user_params)
+      redirect_to users_path, notice: 'User was successfully updated.'
+    else
+      render :edit
     end
   end
 
