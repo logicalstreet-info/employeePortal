@@ -86,12 +86,16 @@
                   <td><%= leave.status %></td>
                   <td>
                     <% if leave.pending? && @user.check_role %>
-                      <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                    <td>
+                      <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-check-lg' aria-hidden='true'></i>
                       <% end %>
-                      <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                    </td>
+                    <td>
+                      <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-x' aria-hidden='true'></i>
                       <% end %>
+                    </td>
                     <% elsif leave.pending? && @user.check %>
                       <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
