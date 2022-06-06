@@ -27,9 +27,9 @@
               <% end %>
             </tbody>
           </table>
-          <%= paginate @leave_days, theme: 'bootstrap-5',
-          pagination_class: "pagination-sm flex-wrap justify-content-center",
-          nav_class: "d-inline-block" %>
+          <div class="pagination justify-content-center">
+            <%= paginate @leave_days, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+          </div>
         </div>
       </div>
     </div>
