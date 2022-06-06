@@ -7,11 +7,10 @@ Rails.application.routes.draw do
   get 'periods/index'
   get 'periods/new'
   get 'passwords/edit', to: 'passwords#edit'
-  patch  'passwords/edit', to: 'passwords#update'
-  post  'passwords/edit', to: 'passwords#update'
   post 'updates/new'
   post 'leave_applications/new'
-
+  
+  resources :passwords
   resources :leave_days 
   resources :notifications 
   resources :organizations
