@@ -8,9 +8,9 @@ class LeaveApplicationsController < ApplicationController
     @leave_applications = if current_user.has_role? :admin
                             LeaveApplication.joins(:user).where(
                               users: { organization_id: current_user.organization_id }
-                            ).order('leave_applications.created_at DESC')
+                            ).order('leave_applications.from_date DESC')
                           else
-                            LeaveApplication.where(user_id: current_user).order('created_at DESC')
+                            LeaveApplication.where(user_id: current_user).order('from_date DESC')
                           end
 
     @leaves = if params[:user_id].present? && params[:status].present?
@@ -20,7 +20,7 @@ class LeaveApplicationsController < ApplicationController
               elsif params[:status].present?
                 @leave_applications.where(status: params[:status])
               elsif params[:order].present?
-                params[:order] == "ASC" ? @leave_applications.all.reorder('created_at ASC') : @leave_applications
+                params[:order] == "ASC" ? @leave_applications.all.reorder('from_date ASC') : @leave_applications
               elsif params[:from_date].present?
                 q << "from_date <= ? AND to_date >= ?"
                 s << params[:from_date]

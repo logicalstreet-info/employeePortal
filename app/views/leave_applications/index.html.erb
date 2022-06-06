@@ -34,6 +34,11 @@
                     <i class='bi bi-search' aria-hidden='true'></i>
                   <% end %>
                 </div>
+                <div class="col-1">
+                  <%= link_to leave_applications_path , class: 'btn btn-secondary' do %>
+                    <i class='bi bi-x-lg' aria-hidden='true'></i>
+                  <% end %>
+                </div>
               </div></br>
             <% end %>
           <% end %><br>
@@ -101,9 +106,9 @@
               <% end %>
             </tbody>
           </table>
-          <%= paginate @leaves, theme: 'bootstrap-5',
-          pagination_class: "pagination-sm flex-wrap justify-content-center",
-          nav_class: "d-inline-block" %>
+          <div class="pagination justify-content-center">
+            <%= paginate @leaves, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+          </div>
         </div>
       </div>
     </div>
