@@ -13,6 +13,9 @@
 
                 <dt class="col-sm-3">Email:</dt>
                 <dd class="col-sm-9"><%= list.email %></dd>
+
+                <dt class="col-sm-3">Organization:</dt>
+                <dd class="col-sm-9"><%= list.organization.name %></dd>
               </dl>
               <% end %>
             <% else %>
@@ -22,7 +25,6 @@
         </div>
       </div>
     </div>
-  </div>>
   </div>
   <div class="container">
     <div class="row">
@@ -96,8 +98,8 @@
         <div class="card my-5 shadow">
           <div class="card-body">
             <div class="col-md-12 ">
-              <table class="table">  
-                <% if @leave_application.present? %>
+              <% if @leave_application.present? %>
+                <table class="table">  
                   <h2> Users Leave</h2>
                   <thead class="thead-light">
                     <tr>
@@ -140,10 +142,13 @@
                       </tr>
                     <% end %>    
                   </tbody>
-                <% else %>
-                  <h2>There are no Leaves</h2>
-                <% end %>
-              </table>    
+                </table>
+                <div class="pagination justify-content-center">
+                  <%= paginate @leave_applications, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+                </div>
+              <% else %>
+                <h2>There are no Leaves</h2>
+              <% end %>  
             </div>
           </div>
         </div>

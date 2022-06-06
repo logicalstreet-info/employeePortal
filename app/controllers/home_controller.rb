@@ -12,6 +12,6 @@ class HomeController < ApplicationController
     @leave_application = @users.joins(:leave_applications).where(leave_applications: { status: 'pending' })
     @leave_applications = LeaveApplication.joins(:user).where(
       users: { organization_id: current_user.organization_id }
-    ).order('leave_applications.created_at DESC')
+    ).order('leave_applications.created_at DESC').page(params[:page]).per(5)
   end
 end
