@@ -5,7 +5,7 @@
         <div class="card my-5 shadow">
           <div class="card-body">
             <h2>Update Password</h2>
-            <%= form_for @user do |f| %>
+            <%= form_for @user, url: update_password_password_path do |f| %>
               <% invalid = @user.errors.include?(:password) %>
               <div class="form-group">
                 <%= f.text_field :password, class: "form-control #{'is-invalid' if invalid}",placeholder: "Password" %>

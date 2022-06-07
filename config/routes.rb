@@ -13,7 +13,13 @@ Rails.application.routes.draw do
   post 'employees',  to: 'users#add_user'
   get 'leave_balances/index'
   
-  resources :passwords
+  resources :passwords do
+    member do
+      get 'edit_password'
+      patch 'edit_password'
+      patch 'update_password'
+    end
+  end
   resources :leave_days 
   resources :notifications 
   resources :organizations
