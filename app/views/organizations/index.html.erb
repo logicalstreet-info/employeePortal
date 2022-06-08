@@ -21,7 +21,7 @@
                   <tr>
                     <td><li id="<%= "#{dom_id(organization)}_container" %>" class="py-2 px-4 border-b border-gray-300">
                       <%= turbo_frame_tag dom_id(organization) do %>
-                        <%= link_to organization.name, edit_organization_path(organization.id), class: 'text-black' %>
+                        <%= link_to organization.name, edit_organization_path(organization.id), class: 'btn btn-link' %>
                       <% end %>
                     </li></td>
                     <td>
