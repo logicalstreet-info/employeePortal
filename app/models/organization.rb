@@ -10,4 +10,8 @@ class Organization < ActiveRecord::Base
   has_many :groups, dependent: :destroy
   
   validates :name, presence: true, uniqueness: true
+
+  def specified_role_users(role)
+    users.with_role(role)
+  end
 end
