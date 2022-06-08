@@ -12,7 +12,13 @@ Rails.application.routes.draw do
   get  'employees',  to: 'users#new'
   post 'employees',  to: 'users#add_user'
   
-  resources :passwords
+  resources :passwords do
+    member do
+      get 'edit_password'
+      patch 'edit_password'
+      patch 'update_password'
+    end
+  end
   resources :leave_days 
   resources :notifications 
   resources :organizations
