@@ -13,6 +13,7 @@
             <table class="table table-hover">
               <thead class="thead-light">
                 <th>Name</th>
+                <th>Admin List</th>
                 <th>Action</th>
               </thead>
               <div class="col-sm-4">
@@ -20,12 +21,22 @@
                   <tr>
                     <td><li id="<%= "#{dom_id(organization)}_container" %>" class="py-2 px-4 border-b border-gray-300">
                       <%= turbo_frame_tag dom_id(organization) do %>
-                        <%= link_to organization.name, edit_organization_path(organization.id), class: 'text-black' %>
+                        <%= link_to organization.name, edit_organization_path(organization.id), class: 'btn btn-link' %>
                       <% end %>
-                    </li></td>   
+                    </li></td>
                     <td>
-                      <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, organization, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+                      <%= organization.specified_role_users(:admin).pluck(:email).join(', ') %>
                     </td>
+                    <div class="actions">
+                      <td>
+                        <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
+                          <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, organization, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+                      </td>
+                    </div>
                   </tr>
                 <% end %>
               </div>

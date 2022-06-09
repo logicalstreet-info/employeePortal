@@ -1,1 +1,5 @@
-<%= render "form", user: @user %>
+<% if params[:organization_id].present? %>
+  <%= render "super_admin_form" %>
+<% else %>
+  <%= render "form", user: @user %>
+<% end %>

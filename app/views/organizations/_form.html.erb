@@ -17,7 +17,7 @@
         </div>
         <div class="col dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Select
+            Select weekly off days
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <% weekly_off = ["Sunday", "Monday", "Tuesday","wednesday","Thursday","Friday","Saturday"] %>
@@ -26,9 +26,14 @@
               <%= weekly_off %><br>
             <% end %>
           </ul>
-        </div>     
+        </div>
         <div class="col">
           <%= form.submit class: "btn btn-primary" %>
+        </div>
+         <div class="reset">
+          <%= link_to organizations_path, target: "_top" ,class: "btn btn-secondary"  do%> 
+            <i class='bi bi-x-lg' aria-hidden='true'></i>                  
+          <% end %>
         </div>
       </div>
     </div>
