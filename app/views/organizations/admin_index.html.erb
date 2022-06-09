@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <div class="col-md-12 text-right">
+            <h1>Organizations</h1>
+            <div class="reset float-end">
+              <%= link_to organizations_admin_index_path, target: "_top" ,class: "btn btn-secondary"  do%> 
+                <i class='bi bi-x-lg' aria-hidden='true'></i>                  
+              <% end %>
+            </div>
+            <table class="table table-hover">
+              <thead class="thead-light">
+                <th>Name</th>
+                <th>Admin List</th>
+                <th>Action</th>
+              </thead>
+              <div class="col-sm-4">
+                <tr>
+                  <td>
+                    <id="<%= "#{dom_id(@organizations)}_container" %>" class="py-2 px-4 border-b border-gray-300">
+                    <%= turbo_frame_tag dom_id(@organizations) do %>
+                      <%= link_to @organizations.name, edit_organization_path(@organizations.id), class: 'btn btn-link', disabled: :disabled %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= @organizations.specified_role_users(:admin).pluck(:email).join(', ') %>
+                  </td>
+                  <div class="actions">
+                    <td>
+                      <%= link_to new_user_path(organization_id: @organizations.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
+                        <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                      <% end %>
+                    </td>
+                  </div>
+                </tr>
+              </div>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

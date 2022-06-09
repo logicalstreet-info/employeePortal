@@ -3,6 +3,10 @@ class OrganizationsController < ApplicationController
     @organizations = Organization.page(params[:page]).per(5)
   end
 
+  def admin_index
+    @organizations = current_user.organization
+  end
+  
   def show
     @organization = Organization.find(params[:id])
   end

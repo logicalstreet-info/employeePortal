@@ -5,7 +5,7 @@
         <div class="col">
           <% invalid = organization.errors.include?(:name) %>
           <div class="form-group">
-            <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}",placeholder: "name" %>
+            <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}",placeholder: "name", :readonly => (current_user.has_role_admin ? true : false) %>
             <% if invalid %>
               <div class="invalid-feedback d-block">
                 <% organization.errors.full_messages_for(:name).each do |error_message| %>
@@ -15,25 +15,22 @@
             <% end %>
           </div><br>
         </div>
-        <div class="col dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Select weekly off days
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <% weekly_off = ["Sunday", "Monday", "Tuesday","wednesday","Thursday","Friday","Saturday"] %>
-            <% weekly_off.each do |weekly_off| %>
-              <%= form.check_box :weekly_off, { multiple: true }, weekly_off, nil %> 
-              <%= weekly_off %><br>
-            <% end %>
-          </ul>
-        </div>
+        <% if current_user.has_role_admin %>
+          <div class="col dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Select weekly off days
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <% weekly_off = ["Sunday", "Monday", "Tuesday","wednesday","Thursday","Friday","Saturday"] %>
+              <% weekly_off.each do |weekly_off| %>
+                <%= form.check_box :weekly_off, { multiple: true }, weekly_off, nil %> 
+                <%= weekly_off %><br>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
         <div class="col">
           <%= form.submit class: "btn btn-primary" %>
-        </div>
-         <div class="reset">
-          <%= link_to organizations_path, target: "_top" ,class: "btn btn-secondary"  do%> 
-            <i class='bi bi-x-lg' aria-hidden='true'></i>                  
-          <% end %>
         </div>
       </div>
     </div>
