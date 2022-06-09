@@ -57,7 +57,7 @@
           <table class="table">
             <thead class="thead-light">
               <tr>
-                <% if @user.check_role %>
+                <% if @user.has_role_admin %>
                   <th>Name</th>
                 <% end %>
                 <th class="col-6">Description</th>
@@ -71,7 +71,7 @@
             <tbody>
               <% @daily_updates.each do |update| %>
                 <tr>
-                  <% if @user.check_role%> 
+                  <% if @user.has_role_admin%> 
                     <td><%= User.find(update.user_id).name %></td><% end %>
                     <td><%= update.description %></td>
                     <td><%= date_format(update.created_at) %></td>

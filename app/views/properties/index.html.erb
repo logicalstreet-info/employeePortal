@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <% if current_user.check_role %>
+          <% if current_user.has_role_admin %>
             <%= form_tag properties_path, method: :get do %>
               <div class="col-md-12 text-end">
                 <%= link_to new_property_path, target: "_top" ,class: "btn btn-primary"  do%> 
@@ -39,7 +39,7 @@
                 <th>Purchase Date</th>
                 <th>Warranty Month</th>
                 <th>Assets Type</th>
-                <% if current_user.check_role %>
+                <% if current_user.has_role_admin %>
                   <th>User Name</th>
                   <th>Action</th>
                 <% end %>
@@ -48,14 +48,14 @@
             <tbody>
               <div id="projects">
                 <% @properties.each do |property| %>
-                  <% if current_user.check_role || property.user_id == current_user.id %>
+                  <% if current_user.has_role_admin || property.user_id == current_user.id %>
                     <tr>
                       <td><%= property.name %></td>
                       <td><%= property.description %></td>
                       <td><%= date_format(property.purchase_date) %></td>
                       <td><%= property.warranty_month %></td>
                       <td><%= property.assets_type %></td>
-                      <% if current_user.check_role %>
+                      <% if current_user.has_role_admin %>
                         <td>  
                           <% if property.user_id.present? %>
                             <%= property.user.name %>

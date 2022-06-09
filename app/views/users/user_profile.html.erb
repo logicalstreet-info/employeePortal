@@ -83,7 +83,7 @@
                 <tbody>
                   <% @leaves.each do |leave| %>
                     <tr>
-                      <% if @user.check_role%>
+                      <% if @user.has_role_admin%>
                         <td><%= User.find(leave.user_id).name %></td>
                       <% end %>
                       <td><%= leave.leave_type %></td>

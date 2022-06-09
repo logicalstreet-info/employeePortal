@@ -54,7 +54,7 @@
           <table class="table">
             <thead class="thead-light">
               <tr>
-                <% if @user.check_role %>
+                <% if @user.has_role_admin %>
                   <th>Name</th>
                 <% end %>
                 <th>Leave Type</th>
@@ -73,7 +73,7 @@
             <tbody>
               <% @leaves.each do |leave| %>
                 <tr>
-                  <% if @user.check_role%>
+                  <% if @user.has_role_admin%>
                     <td><%= User.find(leave.user_id).name %></td>
                   <% end %>
                   <td><%= leave.leave_type %></td>
@@ -93,7 +93,7 @@
                   <% end %>
                   <td><%= leave.status %></td>
                   <td>
-                    <% if leave.pending? && @user.check_role %>
+                    <% if leave.pending? && @user.has_role_admin %>
                     <td>
                       <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-check-lg' aria-hidden='true'></i>
