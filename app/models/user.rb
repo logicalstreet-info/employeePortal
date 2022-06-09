@@ -38,7 +38,7 @@ class User < ApplicationRecord
     self.add_role(:newuser) if self.roles.blank?
   end
 
-  def check_role
+  def has_role_admin
     self.has_role? :admin
   end
 
