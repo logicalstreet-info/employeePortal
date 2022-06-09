@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
   def add_user
     @user = User.new(user_params)  
-    if @user.organization_id != current_user.organization_id
+    if @user.organization_id
       @user.add_role :admin
       @user.remove_role :newuser
     end

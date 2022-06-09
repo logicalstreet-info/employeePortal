@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
   devise_for :users
   get 'organizations/index'
+  get 'organizations/admin_index'
   get 'properties/index'
   get 'users/index'
   get 'periods/index'

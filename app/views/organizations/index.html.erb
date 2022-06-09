@@ -8,6 +8,9 @@
             <div class="w-full max-w-2xl bg-gray-100 py-8 px-4 border border-gray-200 rounded shadow-sm">
               <div class="py-2 px-4">
                 <%= render "form", organization: @organizations.new %>
+                <%= link_to organizations_index_path, target: "_top" ,class: "btn btn-secondary"  do%> 
+                  <i class='bi bi-x-lg' aria-hidden='true'></i>                  
+                <% end %>
               </div>
             </div>
             <table class="table table-hover">
@@ -19,20 +22,23 @@
               <div class="col-sm-4">
                 <% @organizations.each do |organization| %>
                   <tr>
-                    <td><li id="<%= "#{dom_id(organization)}_container" %>" class="py-2 px-4 border-b border-gray-300">
+                    <td>
+                      <id="<%= "#{dom_id(organization)}_container" %>" class="py-2 px-4 border-b border-gray-300">
                       <%= turbo_frame_tag dom_id(organization) do %>
                         <%= link_to organization.name, edit_organization_path(organization.id), class: 'btn btn-link' %>
                       <% end %>
-                    </li></td>
+                    </td>
                     <td>
                       <%= organization.specified_role_users(:admin).pluck(:email).join(', ') %>
                     </td>
                     <div class="actions">
-                      <td>
-                        <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
-                          <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
-                        <% end %>
-                      </td>
+                      <% if organization.specified_role_users(:admin).present? %>
+                        <td>
+                          <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
+                            <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                          <% end %>
+                        </td>
+                      <% end %>
                       <td>
                         <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, organization, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
                       </td>
