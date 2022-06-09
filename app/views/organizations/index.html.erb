@@ -8,7 +8,7 @@
             <div class="w-full max-w-2xl bg-gray-100 py-8 px-4 border border-gray-200 rounded shadow-sm">
               <div class="py-2 px-4">
                 <%= render "form", organization: @organizations.new %>
-                <%= link_to organizations_index_path, target: "_top" ,class: "btn btn-secondary"  do%> 
+                <%= link_to organizations_index_path, target: "_top" ,class: "btn btn-secondary"  do %> 
                   <i class='bi bi-x-lg' aria-hidden='true'></i>                  
                 <% end %>
               </div>
@@ -31,6 +31,9 @@
                     <td>
                       <%= organization.specified_role_users(:admin).pluck(:email).join(', ') %>
                     </td>
+                    <td>
+                      <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, organization, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+                    </td>
                     <div class="actions">
                       <% if organization.specified_role_users(:admin).present? %>
                         <td>
@@ -39,9 +42,6 @@
                           <% end %>
                         </td>
                       <% end %>
-                      <td>
-                        <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, organization, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-                      </td>
                     </div>
                   </tr>
                 <% end %>
