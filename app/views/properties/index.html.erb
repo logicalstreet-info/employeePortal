@@ -52,7 +52,7 @@
                     <tr>
                       <td><%= property.name %></td>
                       <td><%= property.description %></td>
-                      <td><%= property.purchase_date %></td>
+                      <td><%= date_format(property.purchase_date) %></td>
                       <td><%= property.warranty_month %></td>
                       <td><%= property.assets_type %></td>
                       <% if current_user.has_role_admin %>
