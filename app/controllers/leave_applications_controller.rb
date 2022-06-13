@@ -23,7 +23,6 @@ class LeaveApplicationsController < ApplicationController
                 params[:order] == "ASC" ? @leave_applications.all.reorder('from_date ASC') : @leave_applications
               elsif params[:from_date].present? && params[:to_date].present?
                 @leave_applications.where("((DATE(from_date) BETWEEN ? AND ?) AND (DATE(to_date) BETWEEN ? AND ?)) OR ((? BETWEEN DATE(from_date) AND DATE(to_date)) OR (? BETWEEN DATE(from_date) AND DATE(to_date)))", set_format(params[:from_date]), set_format(params[:to_date]), set_format(params[:from_date]), set_format(params[:to_date]), set_format(params[:from_date]), set_format(params[:to_date]))
-
               elsif params[:from_date].present?
                 q << "from_date <= ? AND to_date >= ?"
                 s << set_format(params[:from_date])

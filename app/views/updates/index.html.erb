@@ -32,12 +32,20 @@
                 <div class="col-2"> 
                   <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
                 </div>
+                <div class ="col-2">
+                  <div class="input-group date col-3" data-provide="date" >
+                    <%= text_field_tag :date, params[:date], class: "form-control datepicker-input" %>
+                    <div class="input-group-append">
+                      <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                    </div>
+                  </div>
+                </div>
                 <div class="col-1">
                   <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Find'} do %>
                     <i class='bi bi-search' aria-hidden='true'></i>
                   <% end %>
                 </div>
-                <div class="col-1">
+                <div class="reset">
                   <%= link_to updates_path , class: 'btn btn-secondary' do %>
                     <i class='bi bi-x-lg' aria-hidden='true'></i>
                   <% end %>
@@ -61,7 +69,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @updates.each do |update| %>
+              <% @daily_updates.each do |update| %>
                 <tr>
                   <% if @user.check_role%> 
                     <td><%= User.find(update.user_id).name %></td><% end %>
@@ -87,7 +95,7 @@
             </tbody>
           </table>
           <div class="pagination justify-content-center">
-            <%= paginate @updates, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+            <%= paginate @daily_updates, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
           </div>
         </div>
       </div>

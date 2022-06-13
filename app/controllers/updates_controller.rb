@@ -15,8 +15,14 @@ class UpdatesController < ApplicationController
     else
       @updates = Update.where(user_id: current_user).order('created_at DESC')
     end
-    @updates = @updates.where(user_id: params[:user_id]) if params[:user_id].present?
-    @updates = @updates.page(params[:page]).per(5)
+    @daily_updates = if params[:user_id].present?
+                      @updates.where(user_id: params[:user_id])
+                     elsif params[:date].present?
+                      @updates.where("DATE(in_time) = ?", params[:date].to_date)
+                     else
+                      @updates.all
+                     end
+    @daily_updates = @daily_updates.page(params[:page]).per(5)
     respond_to do |format|
       format.html
       format.csv { send_data @updates.to_csv }
