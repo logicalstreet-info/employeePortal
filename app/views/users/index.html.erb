@@ -19,24 +19,23 @@
             <tbody>
               <% @users.each do |user| %>
                 <tr>
-                  <td class="col-7">
+                  <td class="col-8">
                     <%= link_to user.name, user_profile_user_path(user.id)%>
                   </td>
-                  <td class="col-1">
+                  <td class="reset">
                     <%= link_to edit_user_path(user.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                       <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                     <% end %>
                   </td>
-                  <td class="col-1">
-                    <%= link_to passwords_path(user.id), class: "btn btn-warning", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                  <td class="reset">
+                    <%= link_to edit_password_password_path(user.id), class: "btn btn-warning", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                       <i class='bi bi-eye-fill' aria-hidden='true'></i>
                     <% end %>
                   </td>
-                  <td class="col-1">
-                    <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, user, class: "btn btn-danger", method: :delete,
-                                  data: { confirm: 'Are you sure?' } %>
+                  <td class="reset">
+                    <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, user, class: "btn btn-danger", form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
                   </td>
-                  <td class="col-1">
+                  <td class="reset">
                     <a tabindex="0" class="btn btn-secondary" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Project" data-bs-content="
                     <% user.projects.each do |a| %>
                       <%= a.name + "," %>
