@@ -21,10 +21,13 @@ class LeaveApplicationsController < ApplicationController
                 @leave_applications.where(status: params[:status])
               elsif params[:order].present?
                 params[:order] == "ASC" ? @leave_applications.all.reorder('from_date ASC') : @leave_applications
+              elsif params[:from_date].present? && params[:to_date].present?
+                @leave_applications.where("((DATE(from_date) BETWEEN ? AND ?) AND (DATE(to_date) BETWEEN ? AND ?)) OR ((? BETWEEN DATE(from_date) AND DATE(to_date)) OR (? BETWEEN DATE(from_date) AND DATE(to_date)))", set_format(params[:from_date]), set_format(params[:to_date]), set_format(params[:from_date]), set_format(params[:to_date]), set_format(params[:from_date]), set_format(params[:to_date]))
+
               elsif params[:from_date].present?
                 q << "from_date <= ? AND to_date >= ?"
-                s << params[:from_date]
-                s << params[:from_date]
+                s << set_format(params[:from_date])
+                s << set_format(params[:from_date])
                 @leave_applications.where(q.join(' AND '), *s)
               else 
                 @leave_applications.all
@@ -97,6 +100,11 @@ class LeaveApplicationsController < ApplicationController
 
   def find_user
     @user = current_user
+  end
+
+  def set_format(date)
+    dates = date.to_date
+    dates.strftime('%Y-%m-%d')
   end
 
   def get_users
