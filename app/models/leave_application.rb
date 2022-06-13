@@ -6,7 +6,12 @@ class LeaveApplication < ApplicationRecord
   enum :status, [:pending, :approved, :rejected], default: :pending
   validates :description, :to_date, :from_date, :leave_type, presence: true
   validate :date_scope, on: :create
+<<<<<<< HEAD
   before_create :set_default_status
+=======
+  before_create :set_default_status 
+  after_update :add_leave_balance
+>>>>>>> 828fd94... Counted users leaves of the current month
 
   def total_day
     to_date > from_date ? n = ((to_date - from_date) / 1.day + 1).round : n = 1
@@ -53,5 +58,20 @@ class LeaveApplication < ApplicationRecord
 
   def set_default_status
     self.status ||= :pending
+  end
+
+  def add_leave_balance
+    if self.status == "approved"
+      leave_dates = self.from_date
+      while leave_dates <= self.to_date
+        b = leave_balances.new
+        b.leave_application_id = self.id
+        b.user_id = self.user_id
+        b.organization_id = self.organization_id
+        b.leave_date = leave_dates
+        b.save!
+        leave_dates += 1.day
+      end
+    end
   end
 end 

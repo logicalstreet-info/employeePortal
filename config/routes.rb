@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post 'leave_applications/new'
   get  'employees',  to: 'users#new'
   post 'employees',  to: 'users#add_user'
+  get 'leave_balances/index'
   
   resources :passwords
   resources :leave_days 
