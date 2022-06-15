@@ -2,11 +2,13 @@ FactoryBot.define do
   factory :leave_application do
     from_date { Date.today }
     to_date { Date.today + 1 }
-    description { 'Leave description_1' }
+    description { 'Leave' }
     user { User.first || create(:user) }
     leave_type { Faker::Number.between(from: 0, to: 8) }
     # user { User.first || create(:user) }
     organization { Organization.first || create(:organization) }
+    # user { create(:user) }
+    # organization { create(:organization) }
 
     trait :Other do
       leave_type { :Other }

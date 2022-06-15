@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :property do
     name { Faker::Name.name }
-    description { "hhdhdhdhhdhdhhdhdslssdkddskdk" }
+    description { "properties" }
     assets_type { Faker::Number.between(from: 0, to: 5) }
     purchase_date { Date.today }
     warranty_month { Faker::Number.between(from: 0, to: 120) }

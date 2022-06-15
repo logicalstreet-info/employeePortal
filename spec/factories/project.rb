@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :project do
-    name { Faker::Name.name }
-    association :organization, factory: :organization
+    name { "My project" }
+    organization { Organization.first || create(:organization) }
   end
 end
