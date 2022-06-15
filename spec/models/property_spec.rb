@@ -14,7 +14,7 @@ RSpec.describe Property, type: :model do
 
     it "should require a user" do
       record = build(:property, user_id: nil)
-      expect(record).to be_invalid
+      expect(record).to be_valid
     end
   end
   
