@@ -1,1 +1,415 @@
-<%= @leave_balance %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <div class="row">
+            <h1>Leave Balance Sheet</h1>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                <div class="card my-5 shadow">
+                  <div class="card-body">
+                    <div class="row">
+                      <div>
+                        <h2><%= Date.today.strftime("%B-%Y") %></h2>
+                      </div>
+                      <div> Leave Count </div>
+                      <div>
+                        <%= LeaveBalance.count_month_leaves(Date.today.beginning_of_month, Date.today.end_of_month) %>
+                      </div>&nbsp;
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Leave Type</th>
+                            <th class="col-6">Description</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% LeaveApplication.display_month_leaves(Date.today.beginning_of_month, Date.today.end_of_month).each do |leave| %>
+                            <tr>
+                              <td><%= leave.leave_type %></td>
+                              <td><%= leave.description %></td>
+                              <% if leave.from_date.present? || leave.from_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                                </td>  
+                              <% end %>
+                              <% if leave.to_date.present?|| leave.to_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                                </td>
+                              <% end %>
+                              <td><%= leave.status %></td>
+                              <td>
+                                <% if leave.pending? && @user.has_role_admin %>
+                                <td>
+                                  <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-check-lg' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <td>
+                                  <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-x' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <% elsif leave.pending? && @user.check %>
+                                  <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                                  <% end %>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                <div class="card my-5 shadow">
+                  <div class="card-body">
+                    <div class="row">
+                      <div>
+                        <h2><%= (Date.today - 1.months).strftime("%B-%Y") %></h2>
+                      </div>
+                      <div> Leave Count </div>
+                      <div>
+                        <%= LeaveBalance.count_month_leaves((Date.today - 1.months).beginning_of_month, (Date.today - 1.months).end_of_month) %>
+                      </div>
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Leave Type</th>
+                            <th class="col-6">Description</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% LeaveApplication.display_month_leaves((Date.today - 1.months).beginning_of_month, (Date.today - 1.months).end_of_month).each do |leave| %>
+                            <tr>
+                              <td><%= leave.leave_type %></td>
+                              <td><%= leave.description %></td>
+                              <% if leave.from_date.present? || leave.from_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                                </td>  
+                              <% end %>
+                              <% if leave.to_date.present?|| leave.to_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                                </td>
+                              <% end %>
+                              <td><%= leave.status %></td>
+                              <td>
+                                <% if leave.pending? && @user.has_role_admin %>
+                                <td>
+                                  <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-check-lg' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <td>
+                                  <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-x' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <% elsif leave.pending? && @user.check %>
+                                  <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                                  <% end %>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                <div class="card my-5 shadow">
+                  <div class="card-body">
+                    <div class="row">
+                      <div>
+                        <h2><%= (Date.today - 2.months).strftime("%B-%Y") %></h2>
+                      </div>
+                      <div> Leave Count </div>
+                      <div>
+                        <%= LeaveBalance.count_month_leaves((Date.today - 2.months).beginning_of_month, (Date.today - 2.months).end_of_month) %>
+                      </div>
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Leave Type</th>
+                            <th class="col-6">Description</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% LeaveApplication.display_month_leaves((Date.today - 2.months).beginning_of_month, (Date.today - 2.months).end_of_month).each do |leave| %>
+                            <tr>
+                              <td><%= leave.leave_type %></td>
+                              <td><%= leave.description %></td>
+                              <% if leave.from_date.present? || leave.from_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                                </td>  
+                              <% end %>
+                              <% if leave.to_date.present?|| leave.to_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                                </td>
+                              <% end %>
+                              <td><%= leave.status %></td>
+                              <td>
+                                <% if leave.pending? && @user.has_role_admin %>
+                                <td>
+                                  <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-check-lg' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <td>
+                                  <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-x' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <% elsif leave.pending? && @user.check %>
+                                  <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                                  <% end %>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                <div class="card my-5 shadow">
+                  <div class="card-body">
+                    <div class="row">
+                      <div>
+                        <h2><%= (Date.today - 3.months).strftime("%B-%Y") %></h2>
+                      </div>
+                      <div> Leave Count </div>
+                      <div>
+                        <%= LeaveBalance.count_month_leaves((Date.today - 3.months).beginning_of_month, (Date.today - 3.months).end_of_month) %>
+                      </div>
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Leave Type</th>
+                            <th class="col-6">Description</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% LeaveApplication.display_month_leaves((Date.today - 3.months).beginning_of_month, (Date.today - 3.months).end_of_month).each do |leave| %>
+                            <tr>
+                              <td><%= leave.leave_type %></td>
+                              <td><%= leave.description %></td>
+                              <% if leave.from_date.present? || leave.from_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                                </td>  
+                              <% end %>
+                              <% if leave.to_date.present?|| leave.to_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                                </td>
+                              <% end %>
+                              <td><%= leave.status %></td>
+                              <td>
+                                <% if leave.pending? && @user.has_role_admin %>
+                                <td>
+                                  <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-check-lg' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <td>
+                                  <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-x' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <% elsif leave.pending? && @user.check %>
+                                  <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                                  <% end %>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                <div class="card my-5 shadow">
+                  <div class="card-body">
+                    <div class="row">
+                      <div>
+                        <h2><%= (Date.today - 4.months).strftime("%B-%Y") %></h2>
+                      </div>
+                      <div> Leave Count </div>
+                      <div>
+                        <%= LeaveBalance.count_month_leaves((Date.today - 4.months).beginning_of_month, (Date.today - 4.months).end_of_month) %>
+                      </div>
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Leave Type</th>
+                            <th class="col-6">Description</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% LeaveApplication.display_month_leaves((Date.today - 4.months).beginning_of_month, (Date.today - 4.months).end_of_month).each do |leave| %>
+                            <tr>
+                              <td><%= leave.leave_type %></td>
+                              <td><%= leave.description %></td>
+                              <% if leave.from_date.present? || leave.from_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                                </td>  
+                              <% end %>
+                              <% if leave.to_date.present?|| leave.to_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                                </td>
+                              <% end %>
+                              <td><%= leave.status %></td>
+                              <td>
+                                <% if leave.pending? && @user.has_role_admin %>
+                                <td>
+                                  <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-check-lg' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <td>
+                                  <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-x' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <% elsif leave.pending? && @user.check %>
+                                  <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                                  <% end %>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                <div class="card my-5 shadow">
+                  <div class="card-body">
+                    <div class="row">
+                      <div>
+                        <h2><%= (Date.today - 5.months).strftime("%B-%Y") %></h2>
+                      </div>
+                      <div> Leave Count </div>
+                      <div>
+                        <%= LeaveBalance.count_month_leaves((Date.today - 5.months).beginning_of_month, (Date.today - 5.months).end_of_month) %>
+                      </div>
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Leave Type</th>
+                            <th class="col-6">Description</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% LeaveApplication.display_month_leaves((Date.today - 5.months).beginning_of_month, (Date.today - 5.months).end_of_month).each do |leave| %>
+                            <tr>
+                              <td><%= leave.leave_type %></td>
+                              <td><%= leave.description %></td>
+                              <% if leave.from_date.present? || leave.from_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                                </td>  
+                              <% end %>
+                              <% if leave.to_date.present?|| leave.to_time.present?%>
+                                <td>
+                                  <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                                </td>
+                              <% end %>
+                              <td><%= leave.status %></td>
+                              <td>
+                                <% if leave.pending? && @user.has_role_admin %>
+                                <td>
+                                  <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-check-lg' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <td>
+                                  <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-x' aria-hidden='true'></i>
+                                  <% end %>
+                                </td>
+                                <% elsif leave.pending? && @user.check %>
+                                  <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                                    <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                                  <% end %>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
