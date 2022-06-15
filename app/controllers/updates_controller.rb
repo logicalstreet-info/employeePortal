@@ -53,7 +53,7 @@ class UpdatesController < ApplicationController
     @update.user_id = current_user.id
     respond_to do |format|
       if @update.update(update_params)
-        format.html { redirect_to updates_url, notice: 'Your Daily was successfully updated.' }
+        format.html { redirect_to updates_url, notice: 'Your Daily update was successfully updated.' }
         format.json { render :show, status: :ok, location: @update }
       else
         format.turbo_stream do

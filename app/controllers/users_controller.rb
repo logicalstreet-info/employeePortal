@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save!
-        format.html { redirect_to users_path }
+        format.html { redirect_to users_path, notice: 'User was successfully created.' }
       else
         format.html { render :new }
       end
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
 
-    redirect_to users_index_path
+    redirect_to users_index_path, notice: 'User was successfully destroyed.'
   end
 
   def user_profile
@@ -75,6 +75,7 @@ class UsersController < ApplicationController
     "private_#{user[0].id}_#{user[1].id}"
   end
 
+  private
   def user_params
     params.require(:user).permit(:name, :joining_date, :birth_date, :gender, :qualification, :mobile_number,
     :native_address, :address, :parent_mobile_number, :user_type, :email, :password, :password_confirmation,

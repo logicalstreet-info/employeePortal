@@ -12,7 +12,7 @@ class LeaveDaysController < ApplicationController
   def create
     @leave_day = LeaveDay.create!(leave_params.merge(organization_id: current_user.organization_id))
     if @leave_day.save
-      redirect_to
+      redirect_to leave_days_path, notice: 'Holiday was successfully created.'
     else
       render :new
     end
