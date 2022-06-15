@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'user_profile'
+      get 'edit_user'
+      patch 'edit_user'
+      patch 'update_user'
       resources :projects
     end
   end

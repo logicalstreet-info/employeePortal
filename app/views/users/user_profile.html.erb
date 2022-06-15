@@ -13,12 +13,12 @@
 
             <% if @user.birth_date %>
               <dt class="col-sm-3">Birth Date</dt>
-              <dd class="col-sm-9"><%= @user.birth_date %></dd>
+              <dd class="col-sm-9"><%= date_format(@user.birth_date) %></dd>
             <% end %>
           
             <% if @user.joining_date %>
               <dt class="col-sm-3">Joining Date</dt>
-              <dd class="col-sm-9"><%= @user.joining_date %></dd>
+              <dd class="col-sm-9"><%= date_format(@user.joining_date) %></dd>
             <% end %>
 
             <% if !@user.gender.nil? %>
