@@ -30,7 +30,7 @@ class PasswordsController < ApplicationController
         format.html { redirect_to users_path, notice: 'Your User Password Is Successfully Updated!' }
       else
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('password_form', partial: 'passwords/form',
+          render turbo_stream: turbo_stream.replace('edit_user_password_form', partial: 'passwords/admin_form',
           locals: { password: @password })
         end
         format.html { render :edit }
