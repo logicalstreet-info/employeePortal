@@ -8,6 +8,7 @@ class Organization < ActiveRecord::Base
   has_many :leave_days, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :groups, dependent: :destroy
+  has_many :leave_balances, dependent: :destroy
   
   validates :name, presence: true, uniqueness: true
 

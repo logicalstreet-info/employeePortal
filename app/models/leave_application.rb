@@ -2,6 +2,7 @@ class LeaveApplication < ApplicationRecord
   belongs_to :user
   belongs_to :organization
   has_rich_text :description
+  has_many :leave_balances, dependent: :destroy
   enum leave_type: { Other: 0, Personal: 1, Medical: 2, Family_Emergency: 3, Govt_Work: 4, Religious: 5, Bad_Weather: 6, Maternity: 7, Occasional:8 }
   enum :status, [:pending, :approved, :rejected], default: :pending
   validates :description, :to_date, :from_date, :leave_type, presence: true
