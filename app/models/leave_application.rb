@@ -60,7 +60,7 @@ class LeaveApplication < ApplicationRecord
     if self.status == "approved"
       leave_dates = self.from_date
       while leave_dates <= self.to_date
-        b = leave_balances.new
+        b = LeaveBalance.new
         b.leave_application_id = self.id
         b.user_id = self.user_id
         b.organization_id = self.organization_id
