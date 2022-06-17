@@ -72,7 +72,7 @@ class LeaveApplication < ApplicationRecord
     end
   end
 
-  def self.display_month_leaves(beginning_month, end_month)
-    monthly_leaves = LeaveApplication.where("(DATE(from_date) BETWEEN ? AND ?) OR (DATE(to_date) BETWEEN ? AND ?)", beginning_month, end_month, beginning_month, end_month).where(status: "approved")
+  def self.display_month_leaves(beginning_month, end_month, user, organization)
+    monthly_leaves = LeaveApplication.where("user_id = ? AND organization_id = ? AND status = ? AND ((DATE(from_date) BETWEEN ? AND ?) OR (DATE(to_date) BETWEEN ? AND ?))", user, organization, 1, beginning_month, end_month, beginning_month, end_month)
   end
 end 
