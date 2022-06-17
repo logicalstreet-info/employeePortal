@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'passwords/edit', to: 'passwords#edit'
   post 'updates/new'
   post 'leave_applications/new'
+  post 'leave_applications/get_calculated_leaves'
   get  'employees',  to: 'users#new'
   post 'employees',  to: 'users#add_user'
   get 'leave_balances/index'

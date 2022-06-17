@@ -91,6 +91,11 @@ class LeaveApplicationsController < ApplicationController
     end
   end
 
+  def get_calculated_leaves
+    Organization.calculated_lefted_leaves_of_the_month(current_user.organization)
+    redirect_to leave_applications_path
+  end
+
   private
 
   def leave_params

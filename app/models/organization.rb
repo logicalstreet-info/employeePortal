@@ -15,4 +15,17 @@ class Organization < ActiveRecord::Base
   def specified_role_users(role)
     users.with_role(role)
   end
+
+  def self.calculated_lefted_leaves_of_the_month(organization)
+    organization.users.each do |user|
+      count = LeaveBalance.where("user_id = ? AND organization_id = ? AND (DATE(leave_date) BETWEEN ? AND ?)", user.id, organization.id, Date.today.beginning_of_month, Date.today.end_of_month).count
+      u = User.find(user.id)
+      total = count - 1.5 + u.lefted_leave
+      if total < 0 
+        u.update(lefted_leave: total) 
+      else
+        u.update(lefted_leave: 0.0)
+      end
+    end
+  end
 end
