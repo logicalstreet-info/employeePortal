@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :find_user
+  before_action :find_user, only: %i[edit update destroy]
 
   def index
     @users = User.all_except(current_user).where(organization_id: current_user.organization_id).page(params[:page]).per(5)
@@ -41,10 +41,22 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
+    if @user.update!(user_params)
+      redirect_to users_path, notice: 'User was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  def edit_user
+    @user = User.find(params[:id])
+  end
+
+  def update_user
+    @user = User.find(params[:id])
     if @user.update!(user_params)
       redirect_to users_path, notice: 'User was successfully updated.'
     else

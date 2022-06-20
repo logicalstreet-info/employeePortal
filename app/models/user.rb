@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :participants, dependent: :destroy
   has_many :groups, through: :participants
+  has_many :leave_balances, dependent: :destroy
   belongs_to :organization
 
   devise :database_authenticatable, :registerable,

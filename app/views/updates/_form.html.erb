@@ -17,7 +17,7 @@
                   <div class="form-group">
                     <%= form.label :Start_time %>
                     <div class="input-group date" data-target="#daily_update_start_time" data-toggle="datetimepicker" >
-                      <%= form.text_field :in_time, class: "form-control timepicker-input #{'is-invalid' if invalid}" %>
+                      <%= form.text_field :in_time, class: "form-control timepicker-input #{'is-invalid' if invalid}", value: @update.in_time&.strftime('%I:%M %p') %>
                       <div class="input-group-append" >
                         <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
                       </div>
@@ -36,7 +36,7 @@
                   <div class="form-group">
                     <%= form.label :End_time %>
                     <div class="input-group date" data-target="#daily_update_start_time" data-toggle="datetimepicker" >
-                      <%= form.text_field :out_time, class: "form-control timepicker-input #{'is-invalid' if invalid}" %>
+                      <%= form.text_field :out_time, class: "form-control timepicker-input #{'is-invalid' if invalid}", value: @update.out_time&.strftime('%I:%M %p') %>
                       <div class="input-group-append" >
                         <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
                       </div>

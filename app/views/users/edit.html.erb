@@ -26,13 +26,25 @@
                 <%= form.text_field :qualification, class: 'form-control', placeholder: 'qualification'%><br>
               </div>          
               <div class="field col-6">
-                <%=form.label :Birth_Date%>
-                <%= form.date_field :birth_date, class: 'form-control', placeholder: 'Birth Date'%>
-              </div>
+                <%= form_group_for form, :birth_date, label: true do %>
+                  <div class="input-group date" data-provide="date" >
+                    <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
+                      <div class="input-group-append">
+                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                      </div>  
+                  </div>      
+                <% end %>
+              </div><br>
               <div class="field col-6">
-                <%=form.label :Joining_Date%>
-                <%= form.date_field :joining_date, class: 'form-control', placeholder: 'Joining Date'%><br>
-              </div>
+                <%= form_group_for form, :joining_date, label: true do %>
+                  <div class="input-group date" data-provide="date" >
+                    <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
+                    <div class="input-group-append">
+                      <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                    </div>  
+                  </div>      
+                <% end %>
+              </div><br>
               <div class="field col-6">
                 <%=form.label :Mobile_number%>
                 <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>

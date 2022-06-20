@@ -2,6 +2,7 @@ class LeaveApplication < ApplicationRecord
   belongs_to :user
   belongs_to :organization
   has_rich_text :description
+  has_many :leave_balances, dependent: :destroy
   enum leave_type: { Other: 0, Personal: 1, Medical: 2, Family_Emergency: 3, Govt_Work: 4, Religious: 5, Bad_Weather: 6, Maternity: 7, Occasional:8 }
   enum :status, [:pending, :approved, :rejected], default: :pending
   validates :description, :to_date, :from_date, :leave_type, presence: true
@@ -60,7 +61,7 @@ class LeaveApplication < ApplicationRecord
     if self.status == "approved"
       leave_dates = self.from_date
       while leave_dates <= self.to_date
-        b = leave_balances.new
+        b = LeaveBalance.new
         b.leave_application_id = self.id
         b.user_id = self.user_id
         b.organization_id = self.organization_id
@@ -71,7 +72,7 @@ class LeaveApplication < ApplicationRecord
     end
   end
 
-  def self.display_month_leaves(beginning_month, end_month)
-    monthly_leaves = LeaveApplication.where("(DATE(from_date) BETWEEN ? AND ?) OR (DATE(to_date) BETWEEN ? AND ?)", beginning_month, end_month, beginning_month, end_month).where(status: "approved")
+  def self.display_month_leaves(beginning_month, end_month, user, organization)
+    monthly_leaves = LeaveApplication.where("user_id = ? AND organization_id = ? AND status = ? AND ((DATE(from_date) BETWEEN ? AND ?) OR (DATE(to_date) BETWEEN ? AND ?))", user, organization, 1, beginning_month, end_month, beginning_month, end_month)
   end
 end 

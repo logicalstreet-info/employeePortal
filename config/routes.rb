@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'passwords/edit', to: 'passwords#edit'
   post 'updates/new'
   post 'leave_applications/new'
+  post 'leave_applications/get_calculated_leaves'
   get  'employees',  to: 'users#new'
   post 'employees',  to: 'users#add_user'
   get 'leave_balances/index'
@@ -33,6 +34,9 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'user_profile'
+      get 'edit_user'
+      patch 'edit_user'
+      patch 'update_user'
       resources :projects
     end
   end
