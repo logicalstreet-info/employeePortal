@@ -5,7 +5,7 @@ FactoryBot.define do
     assets_type { Faker::Number.between(from: 0, to: 5) }
     purchase_date { Date.today }
     warranty_month { Faker::Number.between(from: 0, to: 120) }
-
+    
     association :user, factory: :user
 
     trait :Laptop do

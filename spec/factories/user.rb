@@ -6,12 +6,9 @@ FactoryBot.define do
     email { "#{Faker::Lorem.word}@hiclark.com" }
     password { 11111111 }
     password_confirmation { 11111111 }
-    # user_type { Faker::Number.between(from: 1, to: 2) }
-    # organization { '1' }
+    birth_date {Faker::Date.birthday(min_age: 18, max_age: 65)}
     organization { Organization.first || create(:organization) }
-    # association :organization, factory: :organization
-
-
+    
     trait :trainee do
       user_type { :trainee }
     end
