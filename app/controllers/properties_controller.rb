@@ -27,7 +27,7 @@ class PropertiesController < ApplicationController
     )
     respond_to do |format|
       if @property.save
-        format.html { redirect_to properties_index_path }
+        format.html { redirect_to properties_index_path, notice: 'Property was successfully created.' }
       else
         format.html { render :new }
       end
@@ -41,7 +41,7 @@ class PropertiesController < ApplicationController
   def update
     @property = Property.find(params[:id])
     if @property.update(property_params)
-      redirect_to properties_index_path, notice: 'value updated'
+      redirect_to properties_index_path, notice: 'Property was successfully updated'
     else
       render :edit
     end
@@ -51,7 +51,7 @@ class PropertiesController < ApplicationController
     @property = Property.find(params[:id])
     @property.destroy
 
-    redirect_to properties_index_path
+    redirect_to properties_index_path, notice: 'Property was successfully destroyed.'
   end
 
   private

@@ -44,7 +44,7 @@ class LeaveApplicationsController < ApplicationController
       leave_params.merge(organization_id: current_user.organization_id, user_id: current_user.id)
     )
     if @leave_application.save
-      redirect_to
+      redirect_to leave_applications_path, notice: 'Leave Application Created Sucessfully'
     else
       render :new
     end
@@ -57,7 +57,7 @@ class LeaveApplicationsController < ApplicationController
   def update
     @leave_application = LeaveApplication.find(params[:id])
     if @leave_application.update(leave_params)
-      redirect_to leave_applications_path, notice: 'value updated'
+      redirect_to leave_applications_path, notice: 'Your LeaveApplication Was Successfully Updated.'
     else
       render :edit
     end
