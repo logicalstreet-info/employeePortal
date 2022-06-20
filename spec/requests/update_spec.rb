@@ -1,14 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'UpdatesController', type: :request do
+  
+  let(:user) {create(:user)}
   before :each do
-    sign_in(create(:user))
+    sign_in(user)
   end
-  # before do
-  #   create(:update)
-  #   create(:project)
-  #   create(:user)
-  # end
+  
   describe "update registration" do
     before do
       @params = {
@@ -40,13 +38,13 @@ RSpec.describe 'UpdatesController', type: :request do
     it "check the in_time is right" do
       record = create(:update)
       get updates_path, params: {}, as: :turbo_stream
-      expect(response.body).to include(record.in_time.strftime('%d-%B-%Y'))
+      expect(response.body).to include(record.in_time.strftime('%I:%M %p'))
     end
 
     it "check the out_time is right" do
       record = create(:update)
       get updates_path, params: {}, as: :turbo_stream
-      expect(response.body).to include(record.out_time.strftime('%d-%B-%Y'))
+      expect(response.body).to include(record.out_time.strftime('%I:%M %p'))
     end
   end
 
@@ -124,8 +122,17 @@ RSpec.describe 'UpdatesController', type: :request do
       expect(response.body).to redirect_to(updates_path)
       expect(flash[:notice]).to match('Your Daily update was successfully updated.')
     end
-  
+
   end
 
+  describe "import/" do
+  
+    it "imports the Update file" do
+      expect(Update).to receive(:import).with("foo.txt")
+      post import_updates_path, params: { file: 'foo.txt' }
+      expect(flash[:notice]).to eq "successfully updated"
+    end
+
+  end
 
 end

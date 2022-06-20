@@ -17,8 +17,7 @@ RSpec.describe "UsersController", type: :request do
           email: "#{Faker::Lorem.word}@hiclark.com",
           password: 11111111,
           password_confirmation: 11111111,
-          # user_type: 2,
-          # organization_id: user.organization_id 
+          organization_id: user.organization_id 
         }
       }
     
@@ -28,7 +27,13 @@ RSpec.describe "UsersController", type: :request do
       get users_path, params: @params
       expect(response).to be_successful
     end
-   
+
+    it "show the user" do
+      user = create(:user)
+      get user_path(user)
+      expect(response).to be_successful
+    end
+    
     describe "new form validation" do 
       it "for a name include" do
         get new_user_path
@@ -101,13 +106,6 @@ RSpec.describe "UsersController", type: :request do
      
       it 'New User' do
         get new_user_path
-      end
-      
-      it 'Create User' do
-        post employees_path, params: @params
-        expect(response.body).to redirect_to(users_path)
-        expect(flash[:notice]).to match("User was successfully created.")
-        expect(User.last.mobile_number.to_i).to match(1111111111)
       end
 
     end

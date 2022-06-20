@@ -20,7 +20,7 @@ RSpec.describe "ProjectsController", type: :request do
 
     it "should show project" do
       user = create(:user)
-      get projects_path(user), params: @params, as: :turbo_stream
+      get projects_path(user)
       expect(response).to be_successful
     end
     
