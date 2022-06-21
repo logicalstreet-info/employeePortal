@@ -1,5 +1,5 @@
 <% if params[:organization_id].present? %>
   <%= render "super_admin_form" %>
 <% else %>
-  <%= render "form", user: @user %>
+  <%= render "form", user: @user, target: "_top" %>
 <% end %>
