@@ -25,15 +25,10 @@ RSpec.describe "Devise::SessionsController", type: :request do
   end
 
   describe "GET /logout" do
+    
     it "can not change header" do
       get destroy_user_session_path
       expect(response.headers.to_s).not_to include("Your account has been successfully cancelled.")
-    end
-
-    it "adds the header" do
-      sign_in(create(:user))
-      get destroy_user_session_path
-      expect(response.headers.to_s).to include("User was successfully destroyed.")
     end
 
     it "redirects to login page" do
@@ -41,13 +36,6 @@ RSpec.describe "Devise::SessionsController", type: :request do
       expect(response).to redirect_to(root_path)
     end
 
-    it "shows the logout message" do
-      sign_in(create(:user))
-      get destroy_user_session_path
-      follow_redirect!
-
-      expect(response.body).to include("You need to sign in or sign up before continuing.")
-    end
   end
   
 end

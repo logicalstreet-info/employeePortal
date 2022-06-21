@@ -67,12 +67,12 @@ RSpec.describe "UsersController", type: :request do
 
       it "for a Birth_Date include" do
         get new_user_path
-        expect(response.body).to include("Birth_Date")
+        expect(response.body).to include("Birth date")
       end
 
       it "for a Joining_Date include" do
         get new_user_path
-        expect(response.body).to include("Joining_Date")
+        expect(response.body).to include("Joining date")
       end
 
       it "for a Mobile_number include" do
@@ -120,6 +120,13 @@ RSpec.describe "UsersController", type: :request do
       it 'Update User' do
         user = create(:user)
         put user_path(user), params: { user: { mobile_number: 2222222222 } }
+        expect(response.body).to redirect_to(users_path)
+        expect(flash[:notice]).to match('User was successfully updated.')
+      end
+
+      it 'Update User' do
+        user = create(:user)
+        patch update_user_user_path(user), params: { user: { mobile_number: 2222222222 } }
         expect(response.body).to redirect_to(users_path)
         expect(flash[:notice]).to match('User was successfully updated.')
       end
