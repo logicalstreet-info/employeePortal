@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   def index
     @group = Group.new
     @groups = Group.public_groups.joins(:participants).where(participants: { user_id: current_user.id })
-    @users = User.all_except(current_user)
+    @users = User.all_except(current_user).where(organization_id: current_user.organization_id)
 
     render 'index'
   end
@@ -15,7 +15,7 @@ class GroupsController < ApplicationController
     @message = Message.new
     @messages = @single_group.messages.order(created_at: :asc)
 
-    @users = User.all_except(current_user)
+    @users = User.all_except(current_user).where(organization_id: current_user.organization_id)
 
     render 'index'
   end
