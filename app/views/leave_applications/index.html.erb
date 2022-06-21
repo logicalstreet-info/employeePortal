@@ -11,7 +11,7 @@
             </div>
           <% else %>
             <div class="col-md-12 text-end">
-              <%= button_to raw("<i class=\"bi bi-calendar2-week-fill\"></i>"), {:controller => :leave_applications, :action => :get_calculated_leaves}, {class: 'btn btn-success'} %>
+              <!-- %= button_to raw("<i class=\"bi bi-calendar2-week-fill\"></i>"), {:controller => :leave_applications, :action => :get_calculated_leaves}, {class: 'btn btn-success'} -----! % -->
             </div>
             <%= form_tag leave_applications_path, data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'},  method: :get do %>
               <div class="row mt-4">
