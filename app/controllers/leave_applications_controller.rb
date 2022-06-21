@@ -66,7 +66,8 @@ class LeaveApplicationsController < ApplicationController
   def approve
     @leave_application = LeaveApplication.find(params[:id])
     @leave_application.status = 'approved'
-    if @leave_application.update(status: 'approved')
+    @leave_application.apporved_by = current_user.name
+    if @leave_application.update(status: 'approved', apporved_by: current_user.name)
       if URI(request.referer).path == '/leave_applications'
         redirect_to leave_applications_path, notice: 'Leaves Approve Succsesfully'
       else
@@ -80,7 +81,8 @@ class LeaveApplicationsController < ApplicationController
   def reject
     @leave_application = LeaveApplication.find(params[:id])
     @leave_application.status = 'rejected'
-    if @leave_application.update(status: 'rejected')
+    @leave_application.apporved_by = current_user.name
+    if @leave_application.update(status: 'rejected', apporved_by: current_user.name)
       if URI(request.referer).path == '/leave_applications'
         redirect_to leave_applications_path, notice: 'Leaves Reject Succsesfully'
       else

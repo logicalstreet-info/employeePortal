@@ -66,6 +66,9 @@
                 <th>To Date</th>
                 <th>Total Days</th>
                 <th>Status</th>
+                <% if @user.has_role_admin %>
+                  <th>Apporved_By/ Rejected_By</th>
+                <% end %>
                 <th>
                   <% if @leave_applications.pluck(:status).include?("pending") %>
                     Actions
@@ -95,6 +98,9 @@
                     <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
                   <% end %>
                   <td><%= leave.status %></td>
+                  <% if leave.apporved_by.present? && @user.has_role_admin %>
+                    <td><%= leave.apporved_by %></td>
+                  <% end %>
                   <td>
                     <% if leave.pending? && @user.has_role_admin %>
                     <td>
