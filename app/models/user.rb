@@ -44,7 +44,7 @@ class User < ApplicationRecord
     self.has_role? :admin
   end
 
-  def check
+  def has_role_newuser
     self.has_role? :newuser
   end
 
