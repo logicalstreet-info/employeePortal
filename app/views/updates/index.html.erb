@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <% if @user.check %>
+          <% if @user.has_role_newuser %>
             <div class="col-md-12 text-end">
               <%=  link_to updates_new_path, target: '_top', class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update' } do %>
                 <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
@@ -46,7 +46,7 @@
                   <% end %>
                 </div>
                 <div class="reset">
-                  <%= link_to updates_path , class: 'btn btn-secondary' do %>
+                  <%= link_to updates_path , class: 'btn btn-secondary', target: "_top" do %>
                     <i class='bi bi-x-lg' aria-hidden='true'></i>
                   <% end %>
                 </div>
@@ -84,7 +84,7 @@
                       <% end %>
                     </td>
                     <td>
-                      <% if @user.check && date_format(update.created_at) == date_format(Date.today) %>
+                      <% if @user.has_role_newuser && date_format(update.created_at) == date_format(Date.today) %>
                         <%= link_to  edit_update_path(update), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                       <% end %>

@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @users = User.all_except(current_user)
+    @users = User.all_except(current_user).where(organization_id: current_user.organization_id)
 
     @group = Group.new
     @groups = Group.public_groups.where(organization_id: current_user.organization_id)
