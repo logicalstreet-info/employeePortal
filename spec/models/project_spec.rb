@@ -18,7 +18,13 @@ RSpec.describe Project, type: :model do
       expect(project).to be_invalid
       expect(project.errors.messages[:name]).to include("can't be blank")
     end
-  
+
+    it "should be valid name" do 
+      organization = create(:organization)
+      project = Project.create(name: :employee_poratal, organization: organization)
+      expect(project).to be_valid
+    end
+    
   end
 
 end
