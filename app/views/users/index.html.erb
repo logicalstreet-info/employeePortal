@@ -36,11 +36,11 @@
                     <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, user, class: "btn btn-danger", form: { data: { turbo_confirm: "Are you sure?" } }, title: 'Delete User', method: :delete %>
                   </td>
                   <td class="reset">
-                    <% if user.check && user.roles.count == 1 %>
+                    <% if user.has_role_newuser && user.roles.count == 1 %>
                       <%= link_to assign_admin_role_user_path(user.id), data: {turbo_method: :post, turbo_confirm: 'Are you sure to assign role admin to user?'}, class: "btn btn-info", toggle: 'tooltip', placement: 'top', title: 'Assign Role' do %>
                         <i class='bi bi-check-square-fill' aria-hidden='true'></i>
                       <% end %>
-                    <% elsif user.check && user.roles.count == 2 %>
+                    <% elsif user.has_role_newuser && user.roles.count == 2 %>
                       <%= link_to remove_admin_role_user_path(user.id), data: {turbo_method: :post, turbo_confirm: 'Are you sure to remove role admin to user?'}, class: "btn btn-info", toggle: 'tooltip', placement: 'top', title: 'Remove Role' do %>
                         <i class='bi bi-x-square-fill' aria-hidden='true'></i>
                       <% end %>
