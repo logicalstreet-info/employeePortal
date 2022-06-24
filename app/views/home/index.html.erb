@@ -125,10 +125,10 @@
                             <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
                           <% end %>
                           <td>
-                            <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                            <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Approve Leave' do %>
                               <i class='bi bi-check-lg' aria-hidden='true'></i>
                             <% end %>
-                            <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                            <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Reject Leave' do %>
                               <i class='bi bi-x' aria-hidden='true'></i>
                             <% end %>
                           </td>
