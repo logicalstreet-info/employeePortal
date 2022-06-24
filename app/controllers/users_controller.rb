@@ -79,6 +79,18 @@ class UsersController < ApplicationController
     @properties = Property.where(user_id: current_user.id)
   end
 
+  def assign_admin_role
+    @user = User.find(params[:id])
+    @user.add_role :admin
+    redirect_to users_index_path, notice: "Successfully Assign Admin Role To '#{@user.name}'!"
+  end
+
+  def remove_admin_role
+    @user = User.find(params[:id])
+    @user.remove_role :admin
+    redirect_to users_index_path, notice: "Successfully Remove Admin Role To '#{@user.name}'!"
+  end
+
   private
 
   def find_user
