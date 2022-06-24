@@ -32,6 +32,8 @@ class UsersController < ApplicationController
     if @user.organization_id
       @user.add_role :admin
       @user.remove_role :newuser
+    else
+      @user.organization_id = current_user.organization_id
     end
     if @user.save!
       redirect_to params[:redirect_url]

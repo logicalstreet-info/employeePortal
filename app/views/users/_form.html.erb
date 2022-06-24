@@ -6,7 +6,7 @@
           <h1>Create User</h1>
           <%= form_for User.new, :url => {:action => "add_user"} do |form| %>
             <div>
-              <%= form.hidden_field :organization_id, :value => current_user.organization_id %>
+              <%= form.hidden_field :organization_id %>
             </div>
             <div>
               <%= hidden_field_tag :redirect_url, users_path %>
