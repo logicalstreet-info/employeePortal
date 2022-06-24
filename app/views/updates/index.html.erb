@@ -3,13 +3,13 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <% if @user.check %>
+          <% if has_role_newuser? %>
             <div class="col-md-12 text-end">
               <%=  link_to updates_new_path, target: '_top', class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update' } do %>
                 <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
               <% end %>
             </div>
-          <% else%>
+          <% elsif has_role_admin? %>
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 CSV Export
@@ -41,7 +41,7 @@
                   </div>
                 </div>
                 <div class="col-1">
-                  <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Find'} do %>
+                  <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
                     <i class='bi bi-search' aria-hidden='true'></i>
                   <% end %>
                 </div>
@@ -57,7 +57,7 @@
           <table class="table">
             <thead class="thead-light">
               <tr>
-                <% if @user.has_role_admin %>
+                <% if has_role_admin? %>
                   <th>Name</th>
                 <% end %>
                 <th class="col-6">Description</th>
@@ -71,7 +71,7 @@
             <tbody>
               <% @daily_updates.each do |update| %>
                 <tr>
-                  <% if @user.has_role_admin%> 
+                  <% if has_role_admin? %> 
                     <td><%= User.find(update.user_id).name %></td><% end %>
                     <td><%= update.description %></td>
                     <td><%= date_format(update.created_at) %></td>
@@ -84,7 +84,7 @@
                       <% end %>
                     </td>
                     <td>
-                      <% if @user.check && date_format(update.created_at) == date_format(Date.today) %>
+                      <% if has_role_newuser? && date_format(update.created_at) == date_format(Date.today) %>
                         <%= link_to  edit_update_path(update), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                       <% end %>

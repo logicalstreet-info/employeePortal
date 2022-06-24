@@ -3,14 +3,19 @@
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
+          <div class="col-md-12 text-end">
+            <%= link_to leave_days_path, target: "_top" ,class: "btn btn-primary", title: 'Back' do %> 
+              <i class='bi bi-arrow-left' aria-hidden='true'></i> 
+            <% end %>
+          </div> 
           <h1>Add Holiday</h1>
           <%= form_with model: [leave_day] do |form| %>
             <div class="field">
               <div class="input-group date" data-provide="date" >
                 <%= form.text_field :holiday, class: "form-control datepicker-input" %><br>
-                  <div class="input-group-append">
-                    <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                  </div>
+                <div class="input-group-append">
+                  <div class="input-group-text"><i class="bi bi-calendar3"></i></div>
+                </div>
               </div><br>
             </div>
             <div class="col-md-12 text-end">

@@ -4,9 +4,13 @@
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <% if current_user.has_role? :superadmin%>
           <%= render 'shared/super_admin_navbar'%>
-        <% elsif current_user.has_role? :admin%>
-          <%= render 'shared/admin_navbar'%>
-        <% elsif current_user.has_role? :newuser%>
+        <% elsif current_user.has_role? :admin %>
+          <% if cookies[:is_user_view].present? %>
+            <%= render 'shared/user_navbar'%>
+          <% else %>
+            <%= render 'shared/admin_navbar'%>
+          <% end %>
+        <% elsif current_user.has_role? :newuser || cookies[:is_user_view].present?%>
           <%= render 'shared/user_navbar'%>
         <% end %>
       </ul>
@@ -22,6 +26,10 @@
               <%= link_to "Your Profile", user_profile_user_path(current_user.id), class: "dropdown-item text-primary"%>
               <%= link_to "Change Password", passwords_edit_path, class: "dropdown-item text-primary"%>
               <li><div class="dropdown-divider"></div></li>
+              <% if current_user.has_all_roles? :admin, :newuser %>
+                <%= link_to "Switch Role", users_switch_and_redirect_view_path, class: "dropdown-item text-primary"%>
+                <li><div class="dropdown-divider"></div></li>
+              <% end %>
               <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item text-primary"%>
             </ul>
           </li>
@@ -29,7 +37,7 @@
       </div>
     </div>
   <% else %>
-    <div class="container-fluid">  
+    <div class="container-fluid">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <div class="collapse navbar-collapse" id=""> 
           <span class="mr-auto" style="color:white">Employee Portal</span>

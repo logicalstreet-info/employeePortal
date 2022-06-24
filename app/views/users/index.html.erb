@@ -4,7 +4,7 @@
       <div class="card my-5 shadow">
         <div class="card-body">
           <div class="col-md-12 text-end">
-            <%= link_to new_user_path(),class: "btn btn-primary", target: "_top" do%> 
+            <%= link_to new_user_path(),class: "btn btn-primary", target: "_top", title: 'New User' do%> 
               <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
             <% end %>
           </div> 
@@ -23,17 +23,17 @@
                     <%= link_to user.name, user_profile_user_path(user.id)%>
                   </td>
                   <td class="reset">
-                    <%= link_to edit_user_user_path(user.id), class: "btn btn-success", target: "_top", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                    <%= link_to edit_user_user_path(user.id), class: "btn btn-success", target: "_top", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit User' do %>
                       <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                     <% end %>
                   </td>
                   <td class="reset">
-                    <%= link_to edit_password_password_path(user.id), class: "btn btn-warning", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                    <%= link_to edit_password_password_path(user.id), class: "btn btn-warning", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Password' do %>
                       <i class='bi bi-eye-fill' aria-hidden='true'></i>
                     <% end %>
                   </td>
                   <td class="reset">
-                    <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, user, class: "btn btn-danger", form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
+                    <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, user, class: "btn btn-danger", form: { data: { turbo_confirm: "Are you sure?" } }, title: 'Delete User', method: :delete %>
                   </td>
                   <td class="reset">
                     <% if user.check && user.roles.count == 1 %>

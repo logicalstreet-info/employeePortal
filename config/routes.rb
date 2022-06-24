@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get  'employees',  to: 'users#new'
   post 'employees',  to: 'users#add_user'
   get 'leave_balances/index'
-  
+  get 'users/switch_and_redirect_view'
   resources :passwords do
     member do
       get 'edit_password'
@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get 'user_profile'
+        get 'user_profile'
       get 'edit_user'
       patch 'edit_user'
       patch 'update_user'

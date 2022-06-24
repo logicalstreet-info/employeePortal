@@ -156,6 +156,17 @@ RSpec.describe "UsersController", type: :request do
       end
       
     end
+
+    describe "organization" do
+      
+      it "not valid other organization user" do
+        organization = create(:organization, name: :google)
+        user2 = create(:user, organization: organization)
+        get users_path
+        expect(response).not_to include(user2.email)
+      end
+
+    end
     
   end
 

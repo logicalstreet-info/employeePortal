@@ -22,15 +22,11 @@ class PropertiesController < ApplicationController
   end
 
   def create
-    @property = Property.create(property_params.merge(
-      organization_id: current_user.organization_id)
-    )
-    respond_to do |format|
-      if @property.save
-        format.html { redirect_to properties_index_path, notice: 'Property was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    @property = Property.create(property_params.merge(organization_id: current_user.organization_id))
+    if @property.save
+      redirect_to properties_index_path, notice: 'Property was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -50,7 +46,6 @@ class PropertiesController < ApplicationController
   def destroy
     @property = Property.find(params[:id])
     @property.destroy
-
     redirect_to properties_index_path, notice: 'Property was successfully destroyed.'
   end
 

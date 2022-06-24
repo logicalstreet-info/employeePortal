@@ -19,7 +19,7 @@ RSpec.describe "LeaveDaysController", type: :request do
     end
 
     it "should show leave_day" do
-      get leave_days_path, params: @params, as: :turbo_stream
+      get leave_days_path
       expect(response).to be_successful
     end
     

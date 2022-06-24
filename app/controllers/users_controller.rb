@@ -4,6 +4,19 @@ class UsersController < ApplicationController
   def index
     @users = User.all_except(current_user).where(organization_id: current_user.organization_id).page(params[:page]).per(5)
   end
+   
+  def switch_and_redirect_view
+    if cookies[:is_admin_view].present?
+      cookies.delete :is_admin_view
+      cookies[:is_user_view] = true
+    elsif cookies[:is_user_view].present?
+      cookies.delete :is_user_view
+      cookies[:is_admin_view] = true
+    else
+      cookies[:is_user_view] = true
+    end
+    redirect_to root_path
+  end
 
   def show
     @user = User.find(params[:id])

@@ -44,7 +44,7 @@ class User < ApplicationRecord
     self.has_role? :admin
   end
 
-  def check
+  def has_role_newuser
     self.has_role? :newuser
   end
 
@@ -55,7 +55,7 @@ class User < ApplicationRecord
 
   def validate_age
     if birth_date.present? && birth_date > 18.years.ago
-        errors.add(:birth_date, 'should be over 18 years old.')
+      errors.add(:birth_date, 'should be over 18 years old.')
     end
   end
 end
