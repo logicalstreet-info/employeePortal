@@ -3,7 +3,6 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: %i[edit update destroy]
   before_action :get_users, only: [:new, :create, :edit, :update]
 
-  # GET /projects or /projects.json
   def index
     @projects = if current_user.has_role? :admin
                   Project.where(organization_id: current_user.organization_id)
@@ -28,37 +27,25 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params.merge(organization_id: current_user.organization_id))
-    respond_to do |format|
-      if @project.save!
-        format.html { redirect_to projects_url, notice: 'Project was successfully created.' }
-        format.json { render :show, status: :created, location: @project }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
-    end
+    if @project.save!
+      redirect_to projects_url, notice: 'Project was successfully created.'
+    else
+      render :new, status: :unprocessable_entity 
+    end 
   end
 
   def update
     @project = Project.find(params[:id])
-    respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to projects_url, notice: 'Project was successfully updated.' }
-        format.json { render :show, status: :ok, location: @project }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.update(project_params)
+      redirect_to projects_url, notice: 'Project was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @project.destroy
-
-    respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to projects_url, notice: 'Project was successfully destroyed.'
   end
 
   private
