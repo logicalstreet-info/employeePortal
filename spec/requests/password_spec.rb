@@ -37,7 +37,7 @@ RSpec.describe "PasswordsController", type: :request do
         expect(response.body).to redirect_to(root_path)
         expect(flash[:notice]).to match('Your Password Is Successfully Updated!')
       end
-    
+
     end
 
     describe "PATCH /Password" do

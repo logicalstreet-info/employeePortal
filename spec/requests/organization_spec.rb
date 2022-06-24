@@ -15,11 +15,21 @@ RSpec.describe "OrganizationsController", type: :request do
           weekly_off: "sunday"  
         } 
       }
-    
     end
 
-    it "should show organization" do
-      get organizations_path, params: @params, as: :turbo_stream
+    it "should show organization for super admin" do
+      get organizations_path
+      expect(response).to be_successful
+    end
+
+    it "should a show organization for admin" do
+      get organizations_admin_index_path, params: @params, as: :turbo_stream
+      expect(response).to be_successful
+    end
+
+    it "show the organization" do
+      organization = create(:organization)
+      get organization_path(organization)
       expect(response).to be_successful
     end
     

@@ -19,7 +19,7 @@ RSpec.describe 'UpdatesController', type: :request do
     end
     
     it "redirects to update index page" do
-      post updates_path, params: @params, as: :turbo_stream
+      get updates_path
       expect(response).to be_successful
     end
 
@@ -118,7 +118,7 @@ RSpec.describe 'UpdatesController', type: :request do
   
     it 'update' do
       update = create(:update)
-      put update_path(update), params: { update: { in_time: Time.now } }, as: :turbo_stream
+      put update_path(update), params: { update: {  description: 'hee' } }, as: :turbo_stream
       expect(response.body).to redirect_to(updates_path)
       expect(flash[:notice]).to match('Your Daily update was successfully updated.')
     end
