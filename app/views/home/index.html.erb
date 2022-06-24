@@ -1,4 +1,4 @@
-<% if current_user.has_role_admin %>
+<% if has_role_admin? %>
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
@@ -150,7 +150,7 @@
       </div>
     </div>
   </div>
-<% else %><br/ ><br /><br/ ><br /><br/ ><br /><br/ ><br />
+<% elsif has_role_newuser? %><br/ ><br /><br/ ><br /><br/ ><br /><br/ ><br />
   <div class="display-2 text-center text-uppercase">
     Welcome To <%= current_user.organization.name %> Organization!!! <br/><br/>
     <h1><%= current_user.name %></h1>

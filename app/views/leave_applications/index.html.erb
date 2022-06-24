@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <% if @user.has_role_newuser %>
+          <% if has_role_newuser? %>
             <div class="col-md-12 text-end">
               <%= link_to new_leave_application_path, target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'New Leave Application'} do %>
               <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
@@ -57,7 +57,7 @@
           <table class="table">
             <thead class="thead-light">
               <tr>
-                <% if @user.has_role_admin %>
+                <% if has_role_admin? %>
                   <th>Name</th>
                 <% end %>
                 <th>Leave Type</th>
@@ -66,7 +66,7 @@
                 <th>To Date</th>
                 <th>Total Days</th>
                 <th>Status</th>
-                <% if @user.has_role_admin %>
+                <% if has_role_admin? %>
                   <th>Apporved_By/ Rejected_By</th>
                 <% end %>
                 <th>
@@ -79,7 +79,7 @@
             <tbody>
               <% @leaves.each do |leave| %>
                 <tr>
-                  <% if @user.has_role_admin%>
+                  <% if has_role_admin? %>
                     <td><%= User.find(leave.user_id).name %></td>
                   <% end %>
                   <td><%= leave.leave_type %></td>
@@ -98,11 +98,11 @@
                     <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
                   <% end %>
                   <td><%= leave.status %></td>
-                  <% if leave.apporved_by.present? && @user.has_role_admin %>
+                  <% if leave.apporved_by.present? && has_role_admin? %>
                     <td><%= leave.apporved_by %></td>
                   <% end %>
                   <td>
-                    <% if leave.pending? && @user.has_role_admin %>
+                    <% if leave.pending? && has_role_admin? %>
                     <td>
                       <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-check-lg' aria-hidden='true'></i>
@@ -113,7 +113,7 @@
                         <i class='bi bi-x' aria-hidden='true'></i>
                       <% end %>
                     </td>
-                    <% elsif leave.pending? && @user.has_role_newuser %>
+                    <% elsif leave.pending? && has_role_newuser? %>
                       <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                       <% end %>
