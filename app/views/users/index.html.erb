@@ -19,35 +19,33 @@
             <tbody>
               <% @users.each do |user| %>
                 <tr>
-                  <td class="col-8">
+                  <td class="col-9">
                     <%= link_to user.name, user_profile_user_path(user.id)%>
                   </td>
-                  <td class="reset">
-                    <%= link_to edit_user_user_path(user.id), class: "btn btn-success", target: "_top", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit User' do %>
+                  <td class="col-3">
+                    <%= link_to edit_user_user_path(user.id), class: "btn btn-sm btn-success", target: "_top", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit User' do %>
                       <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                     <% end %>
-                  </td>
-                  <td class="reset">
-                    <%= link_to edit_password_password_path(user.id), class: "btn btn-warning", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Password' do %>
+                  
+                    <%= link_to edit_password_password_path(user.id), class: "btn btn-sm btn-warning", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Password' do %>
                       <i class='bi bi-eye-fill' aria-hidden='true'></i>
                     <% end %>
-                  </td>
-                  <td class="reset">
-                    <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, user, class: "btn btn-danger", form: { data: { turbo_confirm: "Are you sure?" } }, title: 'Delete User', method: :delete %>
-                  </td>
-                  <td class="reset">
+                    <%= link_to users_path(user.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm btn-danger", toggle: 'tooltip', placement: 'top', title: 'Destroy category' do %>
+                      <i class='bi bi-trash3-fill' aria-hidden='true'></i>
+                    <% end %>
+                  
+                  
                     <% if user.has_role_newuser && user.roles.count == 1 %>
-                      <%= link_to assign_admin_role_user_path(user.id), data: {turbo_method: :post, turbo_confirm: 'Are you sure to assign role admin to user?'}, class: "btn btn-info", toggle: 'tooltip', placement: 'top', title: 'Assign Role' do %>
+                      <%= link_to assign_admin_role_user_path(user.id), data: {turbo_method: :post, turbo_confirm: 'Are you sure to assign role admin to user?'}, class: "btn btn-sm btn-info", toggle: 'tooltip', placement: 'top', title: 'Assign Role' do %>
                         <i class='bi bi-check-square-fill' aria-hidden='true'></i>
                       <% end %>
                     <% elsif user.has_role_newuser && user.roles.count == 2 %>
-                      <%= link_to remove_admin_role_user_path(user.id), data: {turbo_method: :post, turbo_confirm: 'Are you sure to remove role admin to user?'}, class: "btn btn-info", toggle: 'tooltip', placement: 'top', title: 'Remove Role' do %>
+                      <%= link_to remove_admin_role_user_path(user.id), data: {turbo_method: :post, turbo_confirm: 'Are you sure to remove role admin to user?'}, class: "btn btn-sm btn-info", toggle: 'tooltip', placement: 'top', title: 'Remove Role' do %>
                         <i class='bi bi-x-square-fill' aria-hidden='true'></i>
                       <% end %>
                     <% end %>
-                  </td>
-                  <td class="reset">
-                    <a tabindex="0" class="btn btn-secondary" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Project" data-bs-content="
+                  
+                    <a tabindex="0" class="btn btn-sm btn-secondary" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Project" data-bs-content="
                     <% user.projects.each do |a| %>
                       <%= a.name + "," %>
                     <% end %>"><i class='bi bi-person-workspace' aria-hidden='true'></i></a>
