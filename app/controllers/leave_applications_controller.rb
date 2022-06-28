@@ -5,7 +5,7 @@ class LeaveApplicationsController < ApplicationController
   def index
     q = []
     s = []
-    @leave_applications = if current_user.has_role? :admin
+    @leave_applications = if has_role_admin?
                             LeaveApplication.joins(:user).where(
                               users: { organization_id: current_user.organization_id }
                             ).order('leave_applications.from_date DESC')
