@@ -60,7 +60,6 @@ class PropertiesController < ApplicationController
   def destroy
     @property = Property.find(params[:id])
     @property.destroy
-
     redirect_to properties_index_path, notice: 'Property was successfully destroyed.'
   end
 

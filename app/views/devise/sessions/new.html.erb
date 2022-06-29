@@ -35,7 +35,7 @@
             <% end %>
 
             <div class="actions">
-              <%= f.button "Log in", class:"btn btn-lg btn-primary btn-block form-control col-md-3 mr-1"%>
+              <%= f.button "Log in", class:"btn btn-lg btn-primary btn-block form-control col-md-3 mr-1", id: 'btnFetch' %>
             </div>
           <% end %>
         </div>
@@ -43,3 +43,13 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    $("#btnFetch").click(function() {
+      $(this).delay(400).hide(0);
+      $(this).html(
+      `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+      );
+    });
+  });
+</script>

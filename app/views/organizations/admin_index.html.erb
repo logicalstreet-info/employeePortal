@@ -6,7 +6,7 @@
           <div class="col-md-12 text-right">
             <h1>Organizations</h1>
             <div class="reset float-end">
-              <%= link_to organizations_admin_index_path, target: "_top" ,class: "btn btn-secondary"  do%> 
+              <%= link_to organizations_admin_index_path, target: "_top" ,class: "btn btn-secondary", title: 'Clean'  do%> 
                 <i class='bi bi-x-lg' aria-hidden='true'></i>                  
               <% end %>
             </div>
@@ -29,7 +29,7 @@
                   </td>
                   <div class="actions">
                     <td>
-                      <%= link_to new_user_path(organization_id: @organizations.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
+                      <%= link_to new_user_path(organization_id: @organizations.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Create Admin' do %>
                         <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
                       <% end %>
                     </td>

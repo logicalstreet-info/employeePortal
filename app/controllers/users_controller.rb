@@ -4,6 +4,19 @@ class UsersController < ApplicationController
   def index
     @users = User.all_except(current_user).where(organization_id: current_user.organization_id).page(params[:page]).per(5)
   end
+   
+  def switch_and_redirect_view
+    if cookies[:is_admin_view].present?
+      cookies.delete :is_admin_view
+      cookies[:is_user_view] = true
+    elsif cookies[:is_user_view].present?
+      cookies.delete :is_user_view
+      cookies[:is_admin_view] = true
+    else
+      cookies[:is_user_view] = true
+    end
+    redirect_to root_path
+  end
 
   def show
     @user = User.find(params[:id])
@@ -33,6 +46,8 @@ class UsersController < ApplicationController
     if @user.organization_id
       @user.add_role :admin
       @user.remove_role :newuser
+    else
+      @user.organization_id = current_user.organization_id
     end
 
     respond_to do |format|
@@ -101,6 +116,18 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @leaves = LeaveApplication.where(user_id: current_user).order('created_at DESC')
     @properties = Property.where(user_id: current_user.id)
+  end
+
+  def assign_admin_role
+    @user = User.find(params[:id])
+    @user.add_role :admin
+    redirect_to users_index_path, notice: "Successfully Assign Admin Role To '#{@user.name}'!"
+  end
+
+  def remove_admin_role
+    @user = User.find(params[:id])
+    @user.remove_role :admin
+    redirect_to users_index_path, notice: "Successfully Remove Admin Role To '#{@user.name}'!"
   end
 
   private

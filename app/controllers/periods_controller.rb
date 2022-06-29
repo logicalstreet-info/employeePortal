@@ -3,6 +3,5 @@ class PeriodsController < ApplicationController
     @periods = Period.all
   end
 
-  def new
-  end
+  def new;end
 end

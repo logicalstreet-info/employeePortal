@@ -3,7 +3,7 @@ class UpdatesController < ApplicationController
   before_action :get_users, only: %i[index]
 
   def index
-    if current_user.has_role_admin
+    if has_role_admin?
       @updates = Update.joins(:user).where(users: { organization_id: current_user.organization_id }).order(
         'updates.created_at DESC')
       if params[:type] == 'day'

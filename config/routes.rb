@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get  'employees',  to: 'users#new'
   post 'employees',  to: 'users#add_user'
   get 'leave_balances/index'
-  
+  get 'users/switch_and_redirect_view'
   resources :passwords do
     member do
       get 'edit_password'
@@ -37,6 +37,8 @@ Rails.application.routes.draw do
       get 'edit_user'
       patch 'edit_user'
       patch 'update_user'
+      post 'assign_admin_role'
+      post 'remove_admin_role'
       resources :projects
     end
   end
@@ -53,6 +55,13 @@ Rails.application.routes.draw do
       get 'reject'
     end
   end
+
+  namespace :api, defaults: { format: 'json' } do
+    namespace :v1 do
+      resources :projects
+    end
+  end
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

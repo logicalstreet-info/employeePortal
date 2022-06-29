@@ -8,7 +8,7 @@
               <i class='bi bi-arrow-left' aria-hidden='true'></i>
             <% end %>
           </div>
-          <h1>New project</h1>
+          <h1>project</h1>
           <%= form_with model: [project] do |form| %>
             <% if project.errors.any? %>
               <div style="color: red">
@@ -20,14 +20,17 @@
                 </ul>
               </div>
             <% end %>
-            <div class="field">
-              <%= form.label :Project_name%>
-              <%= form.text_field :name, class: "form-control" %><br>
+            <div class="row">
+              <div class="col-6">
+                <%= form.text_field :name, class: "form-control", placeholder: "Name" %><br>
+              </div>
+              <div class="col-6">
+                <div id="typeaheadmulti">
+                 <%= text_field_tag "project[user_ids][]", params[:name], class: "typeahead", type: "text", placeholder: "Search Users" %>
+                </div>
+              </div>
             </div>
-            <h4>User Listing</h4>
-            <%= form.collection_check_boxes(:user_ids, User.where(:organization_id => current_user.organization_id), :id, :name) do |b| %>
-            <%= b.label { b.check_box + b.text  } %></br>
-          <% end %>
+            
             <div>
               <%= form.button "Save", class:"btn btn-lg btn-primary btn-block form-control col-md-3 mr-1"%>
             </div>
@@ -37,3 +40,48 @@
     </div>
   </div>
 </div>
+
+<script src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+<script src="https://rawgit.com/ahmohamed/typeahead-multiselect/master/typeahead-multiselect.min.js"></script>
+
+<script>
+  $(".js-remove").click(function(evt, item){
+    alert(item)
+  });
+
+  var users = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: '/api/v1/projects?name=',
+      cache: false,
+      prepare: function (query, settings) {
+        settings.url = this.url + query.replace(/[_\W]+/g, " ")
+        return settings;
+      },
+      filter: function(response) {
+        return response.data;
+      },
+      wildcard: '%SEARCH'
+    }
+  });
+
+  $('#typeaheadmulti .typeahead').typeaheadmulti(
+    {
+      hint: true,
+      highlight: true,
+      minLength: 1
+    },
+    {
+      name: 'users',
+      display: 'name',
+      source: users.ttAdapter(),
+    }
+  );
+  $('#typeaheadmulti .typeahead').on('typeahead:selected', function (evt, item)    
+    {
+      $('.ttmulti-selections li:contains("'+ item.name +'") i').after(
+        "</div><input type='hidden' name='project[user_ids][]' id= " + item.id + " value=" + item.id + ">");
+    }
+  );
+</script>
