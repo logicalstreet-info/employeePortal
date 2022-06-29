@@ -40,13 +40,19 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def create
-    @leave_application = LeaveApplication.create!(
+    @leave_application = LeaveApplication.new(
       leave_params.merge(organization_id: current_user.organization_id, user_id: current_user.id)
     )
-    if @leave_application.save
-      redirect_to leave_applications_path, notice: 'Leave Application Created Sucessfully'
-    else
-      render :new
+    respond_to do |format|
+      if @leave_application.save
+        format.html { redirect_to leave_applications_path, notice: 'Leave Application Created Sucessfully' }
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('leave_application_form',
+          partial: 'leave_applications/form',
+          locals: { leave_application: @leave_application })
+        end
+      end
     end
   end
 
@@ -56,10 +62,16 @@ class LeaveApplicationsController < ApplicationController
 
   def update
     @leave_application = LeaveApplication.find(params[:id])
-    if @leave_application.update(leave_params)
-      redirect_to leave_applications_path, notice: 'Your LeaveApplication Was Successfully Updated.'
-    else
-      render :edit
+    respond_to do |format|
+      if @leave_application.update(leave_params)
+        format.html { redirect_to leave_applications_path, notice: 'Your LeaveApplication Was Successfully Updated.' }
+        format.json { render :show, status: :ok, location: @leave_application }
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('leave_application_form', partial: 'leave_applications/form',
+            locals: { leave_application: @leave_application })
+        end
+      end
     end
   end
 

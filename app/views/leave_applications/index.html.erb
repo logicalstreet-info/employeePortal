@@ -13,7 +13,7 @@
             <div class="col-md-12 text-end">
               <!-- %= button_to raw("<i class=\"bi bi-calendar2-week-fill\"></i>"), {:controller => :leave_applications, :action => :get_calculated_leaves}, {class: 'btn btn-success'} -----! % -->
             </div>
-            <%= form_tag leave_applications_path, data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'},  method: :get do %>
+            <%= form_tag leave_applications_path, target: "_top", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'},  method: :get do %>
               <div class="row mt-4">
                 <div class="col-2"> 
                   <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
@@ -41,7 +41,7 @@
                   </div>
                 </div><br>
                 <div class="col-1">
-                  <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Find'} do %>
+                  <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Find', target: '_top'} do %>
                     <i class='bi bi-search' aria-hidden='true'></i>
                   <% end %>
                 </div>
