@@ -5,7 +5,7 @@
         <div class="card-body">
           <div class="col-md-12 text-end">
             <% if has_role_admin? %>
-              <%= link_to new_project_path(@user),class: "btn btn-primary", title: 'New Project'  do%> 
+              <%= link_to new_project_path(@user), class: "btn btn-primary", title: 'New Project', target: "_top" do%> 
                 <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
               <% end %>
             <% end %>
