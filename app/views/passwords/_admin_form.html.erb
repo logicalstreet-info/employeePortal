@@ -6,28 +6,36 @@
           <div class="card-body">
             <h2>Update Password</h2>
             <%= form_for @user, url: update_password_password_path do |f| %>
-              <% invalid = @user.errors.include?(:password) %>
-              <div class="form-group">
-                <%= f.text_field :password, class: "form-control #{'is-invalid' if invalid}",placeholder: "Password" %>
-                <% if invalid %>
-                  <div class="invalid-feedback d-block">
-                    <% @user.errors.full_messages_for(:password).each do |error_message| %>
-                      <%= error_message %>.
+              <div class="row">
+                <div class="field col-12">
+                  <% invalid = @user.errors.include?(:password) %>
+                  <div class="form-group">
+                    <%= f.text_field :password, class: "form-control #{'is-invalid' if invalid}", placeholder: "Password" %>
+                    <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% @user.errors.full_messages_for(:password).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
                     <% end %>
-                  </div>
-                <% end %>
-              </div><br>
-              <% invalid = @user.errors.include?(:password_confirmation) %>
-              <div class="form-group">
-                <%= f.text_field :password_confirmation, class: "form-control #{'is-invalid' if invalid}",placeholder: "Confirm Password" %>
-                <% if invalid %>
-                  <div class="invalid-feedback d-block">
-                    <% @user.errors.full_messages_for(:password_confirmation).each do |error_message| %>
-                      <%= error_message %>.
+                  </div><br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="field col-12">
+                  <% invalid = @user.errors.include?(:password_confirmation) %>
+                  <div class="form-group">
+                    <%= f.text_field :password_confirmation, class: "form-control #{'is-invalid' if invalid}",placeholder: "Confirm Password" %>
+                    <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% @user.errors.full_messages_for(:password_confirmation).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
+                      </div>
                     <% end %>
-                  </div>
-                <% end %>
-              </div><br>
+                  </div><br>
+                </div>
+              </div>
               <div class="actions">
                 <%= f.button "Save", class:"btn btn-lg btn-primary btn-block form-control col-md-3 mr-1"%>
               </div><br />
