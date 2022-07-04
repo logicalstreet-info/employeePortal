@@ -7,7 +7,37 @@
             <%= link_to projects_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Back' do %>
               <i class='bi bi-arrow-left' aria-hidden='true' aria-hidden='true'></i>
             <% end %>
-          </div> 
+          </div>
+          <%= form_tag project_path(@project.id), data: {toggle: 'tooltip', placement: 'top' }, method: :get do %>
+            <div class="row mt-4">
+              <div class ="col-2">
+                <div class="input-group date col-3" data-provide="date" >
+                  <%= text_field_tag :from_date, params[:from_date], class: "form-control datepicker-input" %>
+                  <div class="input-group-append">
+                    <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class ="col-2">
+                <div class="input-group date col-3" data-provide="date" >
+                  <%= text_field_tag :to_date, params[:to_date], class: "form-control datepicker-input" %>
+                  <div class="input-group-append">
+                    <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                  </div>
+                </div>
+              </div><br>
+              <div class="col-1">
+                <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
+                  <i class='bi bi-search' aria-hidden='true'></i>
+                <% end %>
+              </div>
+              <div class="reset">
+                <%= link_to project_path(@project.id), class: 'btn btn-secondary', target: "_top", title: 'Clean' do %>
+                  <i class='bi bi-x-lg' aria-hidden='true'></i>
+                <% end %>
+              </div>
+            </div><br>
+          <% end %>
           <h1><%= @project.name %></h1>
           <table class="table">
             <thead class="thead-light">
@@ -23,7 +53,7 @@
                     <%= user.name %>
                   </td>
                   <td class="col-3">
-                    <%= Project.count_hour(@project.id, user.id) %>
+                    <%= Project.count_hour(@project.id, user.id, params[:from_date], params[:to_date]) %>
                   </td>
                 </tr>
               <% end %>
