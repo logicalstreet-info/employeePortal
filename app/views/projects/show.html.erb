@@ -1,3 +1,36 @@
-  <p>
-    <%= @project.name %>
-  </p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <div class="col-md-12 text-end">
+            <%= link_to projects_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Back' do %>
+              <i class='bi bi-arrow-left' aria-hidden='true' aria-hidden='true'></i>
+            <% end %>
+          </div> 
+          <h1><%= @project.name %></h1>
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th>Employee-Name</th>
+                <th>Spended Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td class="col-9">
+                    <%= user.name %>
+                  </td>
+                  <td class="col-3">
+                    <%= Project.count_hour(@project.id, user.id) %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
