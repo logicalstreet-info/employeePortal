@@ -6,6 +6,20 @@ class OrganizationsController < ApplicationController
   def admin_index
     @organizations = current_user.organization
   end
+
+  def super_fetaure_edit
+    @organization = Organization.find(params[:id])
+    @feature_flag = FeatureFlag.find_or_create_by(organization_id: @organization.id)
+  end
+
+  def super_fetaure_update
+    @organization = Organization.find(params[:id])
+    if @organization.update!(organization_params)
+      redirect_to organizations_index_path, notice: 'Organization was successfully updated'
+    else
+      render :super_fetaure_edit
+    end
+  end
   
   def show
     @organization = Organization.find(params[:id])
@@ -54,6 +68,6 @@ class OrganizationsController < ApplicationController
   private
 
   def organization_params
-    params.require(:organization).permit(:name, weekly_off: [])
+    params.require(:organization).permit(:name, weekly_off: [], feature_flag_attributes: [:id, :employee_bond, :organization_id] )
   end
 end

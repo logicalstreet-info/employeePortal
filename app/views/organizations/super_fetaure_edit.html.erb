@@ -1,0 +1,43 @@
+<%= form_for :organization, url: { controller: "organizations", action: "super_fetaure_update" }, method: :patch do |f| %>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <div class="row mt-3">
+              <div class="col">
+                <% invalid = @organization.errors.include?(:name) %>
+                <div class="form-group">
+                  <%= f.label :organization_name %>
+                  <%= f.text_field :name, class: "form-control #{'is-invalid' if invalid}",placeholder: "name", :readonly => (current_user.has_role_admin ? true : false) %>
+                  <% if invalid %>
+                    <div class="invalid-feedback d-block">
+                      <% organization.errors.full_messages_for(:name).each do |error_message| %>
+                        <%= error_message %>.
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div><br/>
+              </div>
+              <div class="col">
+                <% if current_user.has_role? :superadmin %>
+                  <% FEATURE_FLAGS.each do |feature| %>
+                    <%= f.fields_for :feature_flag_attributes do |attr_flag| %>
+                      <%= hidden_field_tag "organization[feature_flag_attributes][id]", @feature_flag.id %>
+                      <%= hidden_field_tag "organization[feature_flag_attributes][organization_id]", @feature_flag.organization_id %>
+                      <%= feature %>
+                      <%= attr_flag.select feature.to_sym, ["off", "on"], {selected: @feature_flag.employee_bond}, class: "form-control" %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div><br />
+            <div class="col float-end">
+              <%= f.submit "Update organization",class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

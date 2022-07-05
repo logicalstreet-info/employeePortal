@@ -9,6 +9,10 @@ class Organization < ActiveRecord::Base
   has_many :notifications, dependent: :destroy
   has_many :groups, dependent: :destroy
   has_many :leave_balances, dependent: :destroy
+  has_one :feature_flag, dependent: :destroy
+  has_many :bonds, dependent: :destroy
+
+  accepts_nested_attributes_for :feature_flag
   
   validates :name, presence: true, uniqueness: true
 
@@ -25,6 +29,19 @@ class Organization < ActiveRecord::Base
         u.update(lefted_leave: total) 
       else
         u.update(lefted_leave: 0.0)
+      end
+    end
+  end
+
+  FEATURE_FLAGS.each do |flag|
+    define_method("#{flag}_on?") do
+      fg = feature_flag
+      if fg.respond_to?("#{flag}_on?")
+        if fg.send(flag) == 'on'
+          true
+        else 
+          false
+        end
       end
     end
   end
