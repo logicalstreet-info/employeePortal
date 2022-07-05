@@ -37,13 +37,11 @@
                       <% end %>
                     </td>
                     <div class="actions">
-                      <% if organization.specified_role_users(:admin).present? %>
-                        <td>
-                          <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
-                            <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
-                          <% end %>
-                        </td>
-                      <% end %>
+                      <td>
+                        <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
+                          <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                        <% end %>
+                      </td>
                     </div>
                   </tr>
                 <% end %>

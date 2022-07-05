@@ -4,7 +4,7 @@
       <div class="card my-5 shadow">
         <div class="card-body">
           <h1>Edit Your Profile</h1>
-          <%= form_for(@user) do |form| %>
+          <%= form_for(@user), data: {turbo: false} do |form| %>
             <div class="row">
               <div class="field col-6">
                 <%= form.label :Gender %><br />
@@ -67,7 +67,7 @@
               <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
             </div><br>              
             <div>
-              <%= form.button "Update", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+              <%= form.button "Update User", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
             </div>
           <% end %>
         </div>

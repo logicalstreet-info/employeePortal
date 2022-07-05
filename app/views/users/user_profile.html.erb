@@ -3,7 +3,22 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <h1>Profile</h1>
+          <div class="row">
+            <% if current_user.has_role_admin %>
+              <div class="col-md-12 text-end">
+                <% if @user.has_role_newuser && @user.roles.count == 1 %>
+                  <%= link_to "Assign Role", assign_admin_role_user_path(@user.id), data: {turbo_method: :post, turbo_confirm: "Are you sure to assign role admin to '#{@user.name}' ?"}, class: "btn btn-sm btn-info", toggle: 'tooltip', placement: 'top', title: 'Assign Role' %>
+                <% elsif @user.has_role_newuser && @user.roles.count == 2 %>
+                  <%= link_to "Remove Role", remove_admin_role_user_path(@user.id), data: {turbo_method: :post, turbo_confirm: "Are you sure to remove role admin to '#{@user.name}' ?"}, class: "btn btn-sm btn-info", toggle: 'tooltip', placement: 'top', title: 'Remove Role' %>
+                <% end %>
+                <a tabindex="0" class="btn btn-sm btn-secondary" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Project" data-bs-content="
+                  <% @user.projects.each do |a| %>
+                    <%= a.name + "," %>
+                  <% end %>"><i class='bi bi-person-workspace' aria-hidden='true'></i>
+                </a>
+              </div>
+            <% end %>
+          </div>
           <dl class="row">
             <dt class="col-sm-3">Name</dt>
             <dd class="col-sm-9"><%= @user.name %></dd>
@@ -145,6 +160,67 @@
               </table>
             <% else %>
               <h2>There Are No Assets</h2>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <% if @user.projects.present? %>
+              <%= form_tag user_profile_user_path(@user.id), data: {toggle: 'tooltip', placement: 'top' }, method: :get do %>
+                <div class="row mt-4">
+                  <div class ="col-2">
+                    <div class="input-group date col-3" data-provide="date" >
+                      <%= text_field_tag :from_date, params[:from_date], class: "form-control datepicker-input" %>
+                      <div class="input-group-append">
+                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class ="col-2">
+                    <div class="input-group date col-3" data-provide="date" >
+                      <%= text_field_tag :to_date, params[:to_date], class: "form-control datepicker-input" %>
+                      <div class="input-group-append">
+                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                      </div>
+                    </div>
+                  </div><br>
+                  <div class="col-1">
+                    <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
+                      <i class='bi bi-search' aria-hidden='true'></i>
+                    <% end %>
+                  </div>
+                  <div class="reset">
+                    <%= link_to user_profile_user_path(@user.id), class: 'btn btn-secondary', target: "_top", title: 'Clean' do %>
+                      <i class='bi bi-x-lg' aria-hidden='true'></i>
+                    <% end %>
+                  </div>
+                </div><br>
+              <% end %>
+              <h1>Projects</h1>
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Spended Hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @user.projects.each do |project| %>
+                    <tr>
+                      <td><%= project.name %></td>
+                    <td><%= Project.count_hour(project.id, @user.id, params[:from_date], params[:to_date]) %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <h2>There Are No Projects</h2>
             <% end %>
           </div>
         </div>

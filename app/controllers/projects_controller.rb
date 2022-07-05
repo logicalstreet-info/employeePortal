@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   before_action :get_users, only: [:new, :create, :edit, :update]
 
   def index
-    @projects = if current_user.has_role? :admin
+    @projects = if has_role_admin?
                   Project.where(organization_id: current_user.organization_id)
                 else
                   current_user.projects
@@ -14,7 +14,8 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = current_user.projects
+    @project = Project.find(params[:id])
+    @users = @project.users
   end
 
   def new

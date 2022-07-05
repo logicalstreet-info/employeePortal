@@ -3,7 +3,7 @@ class UpdatesController < ApplicationController
   before_action :get_users, only: %i[index]
 
   def index
-    if current_user.has_role_admin
+    if has_role_admin?
       @updates = Update.joins(:user).where(users: { organization_id: current_user.organization_id }).order(
         'updates.created_at DESC')
       if params[:type] == 'day'
@@ -46,6 +46,7 @@ class UpdatesController < ApplicationController
           partial: 'updates/form',
           locals: { update: @update })
         end
+        format.html { render :new, status: :unprocessable_entity}
       end
     end
   end
@@ -66,6 +67,7 @@ class UpdatesController < ApplicationController
           render turbo_stream: turbo_stream.replace('update_form', partial: 'updates/form',
             locals: { update: @update })
         end
+        format.html { render :edit, status: :unprocessable_entity}
       end
     end
   end

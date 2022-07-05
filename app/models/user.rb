@@ -19,7 +19,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
-  validates :email, presence: true
+  validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
   validates_format_of :mobile_number, :parent_mobile_number,
     :with => /[0-9]{9}/,
@@ -31,7 +31,8 @@ class User < ApplicationRecord
   validates_confirmation_of :password
 
   enum user_type: {trainee: 1, employee: 2}
-  
+  enum employee_positions: {senior: 1, mid: 2, junior:3 }
+
   after_create :assign_default_role
   after_create_commit {broadcast_append_to "users"}
 

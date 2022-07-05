@@ -10,7 +10,7 @@
               <% end %>
             </div>
             <h1>Add Update</h1>
-            <%= form_with model: @update do |form| %>
+            <%= form_with model: @update, data: {turbo: false} do |form| %>
               <div class="row">
                 <div class="field col-4">
                   <% invalid = update.errors.include?(:in_time) %>
@@ -79,7 +79,7 @@
                   </div><br>
                 </div>
                 <div class="col-md-12 text-end">
-                  <%= form.button "Save", class: "btn btn-primary" %>
+                  <%= form.button form.object.persisted? ? "Update Daily Update" : "Create Daily Update", type: :submit, class: "btn btn-primary" %>
                 </div>
               </div>
             <% end %>

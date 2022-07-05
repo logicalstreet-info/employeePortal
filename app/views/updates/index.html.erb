@@ -77,7 +77,7 @@
                     <td><%= date_format(update.created_at) %></td>
                     <td><%= time_format(update.in_time) %></td>
                     <td><%= time_format(update.out_time) %></td>
-                    <td><%= total_time(update.in_time,update.out_time) %></td>
+                    <td><%= update.total_hours %></td>
                     <td>  
                       <% if update.project.present? %>
                         <%= update.project.name %>

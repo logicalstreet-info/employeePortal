@@ -3,9 +3,7 @@ class LeaveApplicationsController < ApplicationController
   before_action :get_users, only: %i[index]
 
   def index
-    q = []
-    s = []
-    @leave_applications = if current_user.has_role? :admin
+    @leave_applications = if has_role_admin?
                             LeaveApplication.joins(:user).where(
                               users: { organization_id: current_user.organization_id }
                             ).order('leave_applications.from_date DESC')
@@ -24,10 +22,7 @@ class LeaveApplicationsController < ApplicationController
               elsif params[:from_date].present? && params[:to_date].present?
                 @leave_applications.where("((DATE(from_date) BETWEEN ? AND ?) AND (DATE(to_date) BETWEEN ? AND ?)) OR ((? BETWEEN DATE(from_date) AND DATE(to_date)) OR (? BETWEEN DATE(from_date) AND DATE(to_date)))", set_format(params[:from_date]), set_format(params[:to_date]), set_format(params[:from_date]), set_format(params[:to_date]), set_format(params[:from_date]), set_format(params[:to_date]))
               elsif params[:from_date].present?
-                q << "from_date <= ? AND to_date >= ?"
-                s << set_format(params[:from_date])
-                s << set_format(params[:from_date])
-                @leave_applications.where(q.join(' AND '), *s)
+                @leave_applications.where("? BETWEEN from_date AND to_date ", set_format(params[:from_date]))
               else 
                 @leave_applications.all
               end
@@ -40,13 +35,20 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def create
-    @leave_application = LeaveApplication.create!(
+    @leave_application = LeaveApplication.new(
       leave_params.merge(organization_id: current_user.organization_id, user_id: current_user.id)
     )
-    if @leave_application.save
-      redirect_to leave_applications_path, notice: 'Leave Application Created Sucessfully'
-    else
-      render :new
+    respond_to do |format|
+      if @leave_application.save
+        format.html { redirect_to leave_applications_path, notice: 'Leave Application Created Sucessfully' }
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('leave_application_form',
+          partial: 'leave_applications/form',
+          locals: { leave_application: @leave_application })
+        end
+        format.html { render :new, status: :unprocessable_entity}
+      end
     end
   end
 
@@ -56,10 +58,17 @@ class LeaveApplicationsController < ApplicationController
 
   def update
     @leave_application = LeaveApplication.find(params[:id])
-    if @leave_application.update(leave_params)
-      redirect_to leave_applications_path, notice: 'Your LeaveApplication Was Successfully Updated.'
-    else
-      render :edit
+    respond_to do |format|
+      if @leave_application.update(leave_params)
+        format.html { redirect_to leave_applications_path, notice: 'Your LeaveApplication Was Successfully Updated.' }
+        format.json { render :show, status: :ok, location: @leave_application }
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('leave_application_form', partial: 'leave_applications/form',
+            locals: { leave_application: @leave_application })
+        end
+        format.html { render :edit, status: :unprocessable_entity}
+      end
     end
   end
 
