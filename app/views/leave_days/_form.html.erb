@@ -8,23 +8,38 @@
             <%= form_with model: [leave_day] do |form| %>
               <div class="row">
                 <div class="field col-12">
-                  <% invalid = leave_day.errors.include?(:holiday) %>
-                    <div class="form-group">
-                      <div class="input-group date" data-provide="date" >
-                        <%= form.text_field :holiday, class: "form-control datepicker-input #{'is-invalid' if invalid}" %>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                          </div>
-                          <% if invalid %>
-                            <div class="invalid-feedback d-block">
-                              <% leave_day.errors.full_messages_for(:holiday).each do |error_message| %>
-                                <%= error_message %>.
-                              <% end %>
-                            </div>
-                          <% end %>
+                  <% invalid = @leave_day.errors.include?(:name) %>
+                  <div class="form-group">
+                    <%=form.label :Name%>
+                    <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}", placeholder: 'name' %>
+                    <% if invalid %>
+                      <div class="invalid-feedback d-block">
+                        <% @leave_day.errors.full_messages_for(:name).each do |error_message| %>
+                          <%= error_message %>.
+                        <% end %>
                       </div>
-                    </div><br>
+                    <% end %>
+                  </div><br />
+                </div>
+                <div class="field col-12">
+                  <% invalid = leave_day.errors.include?(:holiday) %>
+                  <div class="form-group">
+                    <div class="input-group date" data-provide="date" >
+                      <%= form.text_field :holiday, class: "form-control datepicker-input #{'is-invalid' if invalid}" %>
+                        <div class="input-group-append">
+                          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                        </div>
+                        <% if invalid %>
+                          <div class="invalid-feedback d-block">
+                            <% leave_day.errors.full_messages_for(:holiday).each do |error_message| %>
+                              <%= error_message %>.
+                            <% end %>
+                          </div>
+                        <% end %>
+                    </div>
                   </div>
+                </div>  
+              </div><br />
               <div class="col-md-12 text-end">
                 <%= form.button "Save", class: "btn btn-primary"%>
               </div>

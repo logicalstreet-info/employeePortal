@@ -12,16 +12,18 @@
           <table class="table">
             <thead class="thead-light">
               <tr>
-                <th>Holiday</th>
+                <th>Name</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
               <% @leave_days.each do |day| %>
                 <% if day.organization_id == current_user.organization_id%>
                   <tr>
-                  <% if day.holiday.present?%>
-                    <td><%= date_format(day.holiday) %></td>
-                  <% end %>
+                    <% if day.holiday.present?%>
+                      <td><%= day.name %></td>
+                      <td><%= date_format(day.holiday) %></td>
+                    <% end %>
                   </tr>
                 <% end %>
               <% end %>

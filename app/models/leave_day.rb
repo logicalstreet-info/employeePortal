@@ -1,5 +1,5 @@
 class LeaveDay < ApplicationRecord
   belongs_to :organization
 
-  validates :holiday, presence: true
+  validates :holiday, :name, presence: true
 end
