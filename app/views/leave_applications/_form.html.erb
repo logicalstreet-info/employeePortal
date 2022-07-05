@@ -31,7 +31,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="field col-5">
                   <% invalid = leave_application.errors.include?(:to_date) %>
                     <div class="form-group">
@@ -126,7 +125,7 @@
 								</div><br>
 							</div>
                 <div class="col-md-12 text-end">
-                  <%= form.button "Save", class: "btn btn-primary" %>
+                  <%= form.button form.object.persisted? ? "Update Leave" : "Create Leave", type: :submit, class: "btn btn-primary" %>
                 </div>
               </div>
             <% end %>

@@ -79,7 +79,7 @@
                   </div><br>
                 </div>
                 <div class="col-md-12 text-end">
-                  <%= form.button "Save", class: "btn btn-primary" %>
+                  <%= form.button form.object.persisted? ? "Update Daily Update" : "Create Daily Update", type: :submit, class: "btn btn-primary" %>
                 </div>
               </div>
             <% end %>

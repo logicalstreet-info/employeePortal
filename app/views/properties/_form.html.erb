@@ -94,7 +94,7 @@
                     <% end %> 
                   </div><br>          
               <div class="col-md-12 text-end">
-                <%= form.button "Save", class: "btn btn-primary" %>
+                <%=form.button form.object.persisted? ? "Update Asset" : "Create Asset", type: :submit, class: "btn btn-primary" %>
               </div>
             <% end %>
           </div>
