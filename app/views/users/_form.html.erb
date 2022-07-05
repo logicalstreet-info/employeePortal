@@ -5,7 +5,7 @@
         <div class="card my-5 shadow">
           <div class="card-body">
             <h1>Create User</h1>
-            <%= form_for User.new, :url => {:action => "add_user"} do |form| %>
+            <%= form_for User.new, :url => {:action => "add_user"}, data: {turbo: false} do |form| %>
               <div>
                 <%= form.hidden_field :organization_id, :value => current_user.organization_id %>
               </div>

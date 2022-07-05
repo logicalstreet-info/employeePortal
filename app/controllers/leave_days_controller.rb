@@ -20,6 +20,7 @@ class LeaveDaysController < ApplicationController
           partial: 'leave_days/form',
           locals: { leave_day: @leave_day })
         end
+        format.html { render :new, status: :unprocessable_entity}
       end
     end
   end

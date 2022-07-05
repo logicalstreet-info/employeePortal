@@ -38,7 +38,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id])
     respond_to do |format|
       if @organization.update(organization_params)
-        format.html { redirect_to organizations_index_path,  notice: 'Organization was successfully created.' }
+        format.html { redirect_to organizations_index_path,  notice: 'Organization was successfully updated.' }
       else
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace('organization_form',

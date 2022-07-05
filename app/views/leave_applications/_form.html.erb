@@ -10,7 +10,7 @@
               <% end %>
             </div>
             <h2>Leave</h2>
-            <%= form_with model: @leave_application do |form| %>
+            <%= form_with model: @leave_application, data: {turbo: false} do |form| %>
               <div class="row">
                 <div class="field col-5">
                   <% invalid = leave_application.errors.include?(:from_date) %>

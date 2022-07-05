@@ -52,6 +52,7 @@ class LeaveApplicationsController < ApplicationController
           partial: 'leave_applications/form',
           locals: { leave_application: @leave_application })
         end
+        format.html { render :new, status: :unprocessable_entity}
       end
     end
   end
@@ -71,6 +72,7 @@ class LeaveApplicationsController < ApplicationController
           render turbo_stream: turbo_stream.replace('leave_application_form', partial: 'leave_applications/form',
             locals: { leave_application: @leave_application })
         end
+        format.html { render :edit, status: :unprocessable_entity}
       end
     end
   end

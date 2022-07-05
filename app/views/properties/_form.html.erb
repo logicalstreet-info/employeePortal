@@ -10,7 +10,7 @@
               <% end %>
             </div>
             <h1>Assets</h1>
-            <%= form_with model: @property do |form| %>
+            <%= form_with model: @property, data: {turbo: false} do |form| %>
               <div class="field col-12">
                   <% invalid = property.errors.include?(:name) %>
                     <div class="form-group">

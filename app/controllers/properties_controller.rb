@@ -34,6 +34,7 @@ class PropertiesController < ApplicationController
           partial: 'properties/form',
           locals: { property: @property })
         end
+        format.html { render :new, status: :unprocessable_entity}
       end
     end
   end
@@ -53,6 +54,7 @@ class PropertiesController < ApplicationController
           partial: 'properties/form',
           locals: { property: @property })
         end
+        format.html { render :edit, status: :unprocessable_entity}
       end
     end
   end

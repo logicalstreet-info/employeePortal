@@ -4,7 +4,7 @@
       <div class="card my-5 shadow">
         <div class="card-body">
           <h1>Edit Your Profile</h1>
-          <%= form_for(@user) do |form| %>
+          <%= form_for(@user), data: {turbo: false} do |form| %>
             <div class="row">
               <div class="field col-6">
                 <%= form.label :Gender %><br />

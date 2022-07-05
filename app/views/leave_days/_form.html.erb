@@ -5,7 +5,7 @@
         <div class="card my-5 shadow">
           <div class="card-body">
             <h1>Add Holiday</h1>
-            <%= form_with model: [leave_day] do |form| %>
+            <%= form_with model: [leave_day], data: {turbo: false} do |form| %>
               <div class="row">
                 <div class="field col-12">
                   <% invalid = leave_day.errors.include?(:holiday) %>

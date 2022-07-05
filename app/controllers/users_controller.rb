@@ -65,6 +65,7 @@ class UsersController < ApplicationController
             locals: { user: @user })
           end
         end
+        format.html { render :new, status: :unprocessable_entity}
       end
     end
   end
@@ -82,6 +83,7 @@ class UsersController < ApplicationController
           partial: 'users/form',
           locals: { user: @user })
         end
+        format.html { render :edit, status: :unprocessable_entity}
       end
     end
   end
@@ -101,6 +103,7 @@ class UsersController < ApplicationController
           template: 'users/edit_user',
           locals: { user: @user })
         end
+        format.html { render :edit_user, status: :unprocessable_entity}
       end
     end
   end

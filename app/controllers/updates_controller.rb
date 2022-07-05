@@ -46,6 +46,7 @@ class UpdatesController < ApplicationController
           partial: 'updates/form',
           locals: { update: @update })
         end
+        format.html { render :new, status: :unprocessable_entity}
       end
     end
   end
@@ -66,6 +67,7 @@ class UpdatesController < ApplicationController
           render turbo_stream: turbo_stream.replace('update_form', partial: 'updates/form',
             locals: { update: @update })
         end
+        format.html { render :edit, status: :unprocessable_entity}
       end
     end
   end
