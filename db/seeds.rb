@@ -52,12 +52,12 @@ Property.create!(assets_type:"CPU", name: "Propertys9", description: "Propertys 
 Property.create!(assets_type:"cable", name: "Propertys10", description: "Propertys description 5", purchase_date: Date.today, warranty_month: 2, user_id: user10.id, organization_id: orgs.id)
 
 #Orgnization's Leave Days
-LeaveDay.create!(holiday: Date.today + 1.month, organization_id: org.id)
-LeaveDay.create!(holiday: Date.today + 1.month, organization_id: org.id)
-LeaveDay.create!(holiday: Date.today + 1.month, organization_id: org.id)
-LeaveDay.create!(holiday: Date.today + 1.month, organization_id: orgs.id)
-LeaveDay.create!(holiday: Date.today + 1.month, organization_id: orgs.id)
-LeaveDay.create!(holiday: Date.today + 1.month, organization_id: orgs.id)
+LeaveDay.create!(name:'Diwali', holiday: Date.today + 1.month, organization_id: org.id)
+LeaveDay.create!(name:'Christmas', holiday: Date.today + 1.month, organization_id: org.id)
+LeaveDay.create!(name:'Uttrayan', holiday: Date.today + 1.month, organization_id: org.id)
+LeaveDay.create!(name:'Diwali', holiday: Date.today + 1.month, organization_id: orgs.id)
+LeaveDay.create!(name:'Christmas', holiday: Date.today + 1.month, organization_id: orgs.id)
+LeaveDay.create!(name:'Uttrayan', holiday: Date.today + 1.month, organization_id: orgs.id)
 
 #Organization's Project's
 #For user1
