@@ -17,7 +17,7 @@
                     <div class="form-group">
                       <%= form.label :From_Date%>
                       <div class="input-group date">
-                        <%= form.text_field :from_date, class: "form-control datepicker-input #{'is-invalid' if invalid}" %>
+                        <%= form.text_field :from_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", value: @leave_application.from_date&.strftime("%d-%m-%Y") %>
                         <div class="input-group-append">
                           <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                         </div>
@@ -37,7 +37,7 @@
                     <div class="form-group">
                       <%= form.label :To_Date%>
                       <div class="input-group date" data-provide="date">
-                        <%= form.text_field :to_date, class: "form-control datepicker-input #{'is-invalid' if invalid}" %>
+                        <%= form.text_field :to_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", value: @leave_application.to_date&.strftime("%d-%m-%Y") %>
                         <div class="input-group-append">
                           <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                         </div>
