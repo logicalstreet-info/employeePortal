@@ -39,7 +39,7 @@
                 <div class="field col-6">
                   <%= form_group_for form, :birth_date, label: true do %>
                     <div class="input-group date" data-provide="date" >
-                      <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
+                      <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'Birth Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
                         <div class="input-group-append">
                           <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                         </div>  
@@ -49,7 +49,7 @@
                 <div class="field col-6">
                   <%= form_group_for form, :joining_date, label: true do %>
                     <div class="input-group date" data-provide="date" >
-                      <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
+                      <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'Joining Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
                       <div class="input-group-append">
                         <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                       </div>  
@@ -57,7 +57,7 @@
                   <% end %>
                 </div><br>
                 <div class="field col-6">
-                  <%=form.label :Mobile_number%>
+                  <%=form.label :Mobile_number %>
                   <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>
                 </div>                
                 <div class="field col-6">
@@ -65,8 +65,12 @@
                   <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
                 </div>
                 <div class="field col-6">
-                  <%=form.label :Type%>
-                  <%= form.select :user_type, options_for_select(User.user_types.keys ,selected: form.object.user_type ) ,{ include_blank: "Select Type"}, {class: "form-control"} %><br>
+                  <%=form.label :Type %>
+                  <%= form.select :user_type, options_for_select(User.user_types.keys, selected: form.object.user_type), { include_blank: "Select Type"}, {class: "form-control"} %><br>
+                </div><br>
+                <div class="field col-6">
+                  <%= form.label :Position %>
+                  <%= form.select :employee_positions, options_for_select(User.employee_positions.keys, selected: form.object.employee_positions), { include_blank: "Select Possition"}, {class: "form-control"} %><br>
                 </div><br>
               </div>
               <div class="col">

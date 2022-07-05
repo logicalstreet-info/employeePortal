@@ -98,6 +98,10 @@
                   <%=form.label :Parent_mobile_number%>
                   <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
                 </div><br>
+                <div class="field col-6">
+                  <%= form.label :Position %>
+                  <%= form.select :employee_positions, options_for_select(User.employee_positions.keys ,selected: form.object.employee_positions ) ,{ include_blank: "Select Possition"}, {class: "form-control"} %><br>
+                </div><br>
               </div>
               <div class="col">
                 <%= form.label :address, style: "display: block" %>

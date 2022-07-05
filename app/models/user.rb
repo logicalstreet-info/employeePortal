@@ -30,7 +30,8 @@ class User < ApplicationRecord
   validates_confirmation_of :password
 
   enum user_type: {trainee: 1, employee: 2}
-  
+  enum employee_positions: {senior: 1, mid: 2, junior:3 }
+
   after_create :assign_default_role
   after_create_commit {broadcast_append_to "users"}
 
