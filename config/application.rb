@@ -19,5 +19,7 @@ module EmployeePortal
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.action_text.attachment_tag_name = "saeloun-rich-text-attachment"
+    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('/config/initializers/feature_flags.rb')
   end
 end

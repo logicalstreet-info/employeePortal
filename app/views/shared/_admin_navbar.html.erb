@@ -22,6 +22,11 @@
 <li class="nav-item">
   <%= link_to 'Chat', groups_path, class: "nav-link active mr-auto" %>
 </li>
+<% if current_user.organization.feature_flag.present? && current_user.organization.feature_flag.employee_bond == 'on' %>
+  <li class="nav-item">
+    <%= link_to 'Bond', bonds_path ,class: "nav-link active mr-auto" %>
+  <li>
+<% end %>
 <li class="nav-item">
   <%= link_to pending_leave > 0 ? "Leaves <span class='badge badge-light'>#{pending_leave}</span>".html_safe : "Leaves",
   leave_applications_path , target: "_top",

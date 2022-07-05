@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
   get 'organizations/index'
   get 'organizations/admin_index'
+  get 'organizations/:id/super_fetaure_edit', to: 'organizations#super_fetaure_edit', as: :super_fetaure_edit
+  patch 'organizations/:id', to: 'organizations#super_fetaure_update', as: :super_fetaure_update
   get 'properties/index'
   get 'users/index'
   get 'periods/index'
@@ -26,6 +28,7 @@ Rails.application.routes.draw do
   resources :notifications 
   resources :organizations
   resources :properties
+  resources :bonds
 
   resources :groups do 
     resources :messages
@@ -33,7 +36,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-        get 'user_profile'
+      get 'user_profile'
       get 'edit_user'
       patch 'edit_user'
       patch 'update_user'
