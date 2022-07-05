@@ -28,7 +28,7 @@ class LeaveDaysController < ApplicationController
   private
 
   def leave_params
-    params.require(:leave_day).permit(:holiday, :organization_id)
+    params.require(:leave_day).permit(:holiday, :name, :organization_id)
   end
 
   def find_user

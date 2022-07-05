@@ -3,8 +3,6 @@ class LeaveApplicationsController < ApplicationController
   before_action :get_users, only: %i[index]
 
   def index
-    q = []
-    s = []
     @leave_applications = if has_role_admin?
                             LeaveApplication.joins(:user).where(
                               users: { organization_id: current_user.organization_id }
@@ -24,10 +22,7 @@ class LeaveApplicationsController < ApplicationController
               elsif params[:from_date].present? && params[:to_date].present?
                 @leave_applications.where("((DATE(from_date) BETWEEN ? AND ?) AND (DATE(to_date) BETWEEN ? AND ?)) OR ((? BETWEEN DATE(from_date) AND DATE(to_date)) OR (? BETWEEN DATE(from_date) AND DATE(to_date)))", set_format(params[:from_date]), set_format(params[:to_date]), set_format(params[:from_date]), set_format(params[:to_date]), set_format(params[:from_date]), set_format(params[:to_date]))
               elsif params[:from_date].present?
-                q << "from_date <= ? AND to_date >= ?"
-                s << set_format(params[:from_date])
-                s << set_format(params[:from_date])
-                @leave_applications.where(q.join(' AND '), *s)
+                @leave_applications.where("? BETWEEN from_date AND to_date ", set_format(params[:from_date]))
               else 
                 @leave_applications.all
               end

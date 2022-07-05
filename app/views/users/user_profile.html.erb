@@ -166,4 +166,65 @@
       </div>
     </div>
   </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <% if @user.projects.present? %>
+              <%= form_tag user_profile_user_path(@user.id), data: {toggle: 'tooltip', placement: 'top' }, method: :get do %>
+                <div class="row mt-4">
+                  <div class ="col-2">
+                    <div class="input-group date col-3" data-provide="date" >
+                      <%= text_field_tag :from_date, params[:from_date], class: "form-control datepicker-input" %>
+                      <div class="input-group-append">
+                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class ="col-2">
+                    <div class="input-group date col-3" data-provide="date" >
+                      <%= text_field_tag :to_date, params[:to_date], class: "form-control datepicker-input" %>
+                      <div class="input-group-append">
+                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                      </div>
+                    </div>
+                  </div><br>
+                  <div class="col-1">
+                    <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
+                      <i class='bi bi-search' aria-hidden='true'></i>
+                    <% end %>
+                  </div>
+                  <div class="reset">
+                    <%= link_to user_profile_user_path(@user.id), class: 'btn btn-secondary', target: "_top", title: 'Clean' do %>
+                      <i class='bi bi-x-lg' aria-hidden='true'></i>
+                    <% end %>
+                  </div>
+                </div><br>
+              <% end %>
+              <h1>Projects</h1>
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Spended Hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @user.projects.each do |project| %>
+                    <tr>
+                      <td><%= project.name %></td>
+                    <td><%= Project.count_hour(project.id, @user.id, params[:from_date], params[:to_date]) %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <h2>There Are No Projects</h2>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

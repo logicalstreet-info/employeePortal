@@ -4,6 +4,11 @@
       <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
         <div class="card my-5 shadow">
           <div class="card-body">
+            <div class="col-md-12 text-end">
+              <%= link_to  users_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Back' do %>
+                <i class='bi bi-arrow-left' aria-hidden='true'></i>
+              <% end %>
+            </div>
             <h1>Edit Your Profile</h1>
             <%= form_for(@user, url: update_user_user_path, data: {turbo: false} ) do |form| %>
               <div class="row">
@@ -39,7 +44,7 @@
                 <div class="field col-6">
                   <%= form_group_for form, :birth_date, label: true do %>
                     <div class="input-group date" data-provide="date" >
-                      <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
+                      <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'Birth Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
                         <div class="input-group-append">
                           <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                         </div>  
@@ -49,7 +54,7 @@
                 <div class="field col-6">
                   <%= form_group_for form, :joining_date, label: true do %>
                     <div class="input-group date" data-provide="date" >
-                      <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
+                      <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'Joining Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
                       <div class="input-group-append">
                         <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                       </div>  
@@ -57,7 +62,7 @@
                   <% end %>
                 </div><br>
                 <div class="field col-6">
-                  <%=form.label :Mobile_number%>
+                  <%=form.label :Mobile_number %>
                   <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>
                 </div>                
                 <div class="field col-6">
@@ -65,8 +70,12 @@
                   <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
                 </div>
                 <div class="field col-6">
-                  <%=form.label :Type%>
-                  <%= form.select :user_type, options_for_select(User.user_types.keys ,selected: form.object.user_type ) ,{ include_blank: "Select Type"}, {class: "form-control"} %><br>
+                  <%=form.label :Type %>
+                  <%= form.select :user_type, options_for_select(User.user_types.keys, selected: form.object.user_type), { include_blank: "Select Type"}, {class: "form-control"} %><br>
+                </div><br>
+                <div class="field col-6">
+                  <%= form.label :Position %>
+                  <%= form.select :employee_positions, options_for_select(User.employee_positions.keys, selected: form.object.employee_positions), { include_blank: "Select Possition"}, {class: "form-control"} %><br>
                 </div><br>
               </div>
               <div class="col">
@@ -78,7 +87,7 @@
                 <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
               </div><br>              
               <div>
-                <%= form.button "Update", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+                <%= form.button "Update User", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
               </div>
             <% end %>
           </div>

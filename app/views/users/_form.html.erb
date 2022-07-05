@@ -4,6 +4,11 @@
       <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
         <div class="card my-5 shadow">
           <div class="card-body">
+            <div class="col-md-12 text-end">
+              <%= link_to  users_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Back' do %>
+                <i class='bi bi-arrow-left' aria-hidden='true'></i>
+              <% end %>
+            </div>
             <h1>Create User</h1>
             <%= form_for User.new, :url => {:action => "add_user"}, data: {turbo: false} do |form| %>
               <div>
@@ -73,7 +78,7 @@
                 <div class="field col-6">
                   <%= form_group_for form, :birth_date, label: true do %>
                     <div class="input-group date" data-provide="date" >
-                      <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
+                      <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'birth Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
                         <div class="input-group-append">
                           <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                         </div>  
@@ -83,7 +88,7 @@
                 <div class="field col-6">
                   <%= form_group_for form, :joining_date, label: true do %>
                     <div class="input-group date" data-provide="date" >
-                      <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
+                      <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'joining Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
                       <div class="input-group-append">
                         <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                       </div>  
@@ -92,11 +97,15 @@
                 </div><br>
                 <div class="field col-6">
                   <%=form.label :Mobile_number%>
-                  <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>
+                  <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'mobile number'%>
                 </div>                
                 <div class="field col-6">
                   <%=form.label :Parent_mobile_number%>
-                  <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
+                  <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'parent mobile number'%><br>
+                </div><br>
+                <div class="field col-6">
+                  <%= form.label :Position %>
+                  <%= form.select :employee_positions, options_for_select(User.employee_positions.keys ,selected: form.object.employee_positions ) ,{ include_blank: "Select Possition"}, {class: "form-control"} %><br>
                 </div><br>
               </div>
               <div class="col">
@@ -108,7 +117,7 @@
                 <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
               </div><br>              
               <div>
-                <%= form.button "Add", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+                <%= form.button "Create User", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
               </div>
             <% end %>
           </div>

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: %i[edit update destroy]
 
   def index
-    @users = User.all_except(current_user).where(organization_id: current_user.organization_id).page(params[:page]).per(5)
+    @users = User.all_except(current_user).where(organization_id: current_user.organization_id).order(name: "ASC").page(params[:page]).per(5)
   end
    
   def switch_and_redirect_view
@@ -148,6 +148,6 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :joining_date, :birth_date, :gender, :qualification, :mobile_number,
     :native_address, :address, :parent_mobile_number, :user_type, :email, :password, :password_confirmation,
-    :organization_id)
+    :organization_id, :employee_positions)
   end
 end
