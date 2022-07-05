@@ -1,90 +1,117 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
-      <div class="card my-5 shadow">
-        <div class="card-body">
-          <div class="col-md-12 text-end">
-            <%= link_to users_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Back' do %>
-            <i class='bi bi-arrow-left' aria-hidden='true' aria-hidden='true'></i>
-            <% end %>
-          </div>
-          <h1>Create User</h1>
-          <%= form_for User.new, :url => {:action => "add_user"} do |form| %>
-            <div>
-              <%= form.hidden_field :organization_id %>
-            </div>
-            <div>
-              <%= hidden_field_tag :redirect_url, users_path %>
-            </div>
-            <div class="row">
-              <div class="field col-6">
-                <%= form.label :Gender %><br />
-                <%= form.label :Gender, "Male", :value => "true"  %>
-                <%= form.radio_button :gender, true %>
-                <%= form.label :gender, "Female", :value => "false" %>
-                <%= form.radio_button :gender, false, :checked => true %>
+<div id="user_form">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card my-5 shadow">
+          <div class="card-body">
+            <h1>Create User</h1>
+            <%= form_for User.new, :url => {:action => "add_user"} do |form| %>
+              <div>
+                <%= form.hidden_field :organization_id, :value => current_user.organization_id %>
               </div>
-              <div class="field col-6">
-                <%=form.label :Type%>
-                <%= form.select :user_type, options_for_select(User.user_types.keys ,selected: form.object.user_type ) ,{ include_blank: "Select Type"}, {class: "form-control"} %><br>
+              <div>
+                <%= hidden_field_tag :redirect_url, users_path %>
               </div>
-              <div class="field col-6">
-                <%=form.label :Email%>
-                <%= form.text_field :email, class: 'form-control', placeholder: 'email'%><br>
-              </div>
-              <div class="field col-6">
-                <%=form.label :password%>
-                <%= form.password_field :password, class: 'form-control', placeholder: 'password'%><br>
-              </div>
-              <div class="field col-6">
-                <%=form.label :Name%>
-                <%= form.text_field :name, class: 'form-control', placeholder: 'name' %>
-              </div>              
-              <div class="field col-6">
-                <%=form.label :Qualification%>
-                <%= form.text_field :qualification, class: 'form-control', placeholder: 'qualification'%><br>
-              </div>
-              <div class="field col-6">
-                <%= form_group_for form, :birth_date, label: true do %>
-                  <div class="input-group date" data-provide="date" >
-                    <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
+              <div class="row">
+                <div class="field col-6">
+                  <%= form.label :Gender %><br />
+                  <%= form.label :Gender, "Male", :value => "true"  %>
+                  <%= form.radio_button :gender, true %>
+                  <%= form.label :gender, "Female", :value => "false" %>
+                  <%= form.radio_button :gender, false, :checked => true %>
+                </div>
+                <div class="field col-6">
+                  <%=form.label :Type%>
+                  <%= form.select :user_type, options_for_select(User.user_types.keys ,selected: form.object.user_type ) ,{ include_blank: "Select Type"}, {class: "form-control"} %><br>
+                </div>
+                <div class="field col-6">
+                  <% invalid = @user.errors.include?(:email) %>
+                    <div class="form-group">
+                      <%=form.label :Email%>
+                      <%= form.text_field :email, class: "form-control #{'is-invalid' if invalid}", placeholder: 'email'%>
+                      <% if invalid %>
+                        <div class="invalid-feedback d-block">
+                          <% @user.errors.full_messages_for(:email).each do |error_message| %>
+                            <%= error_message %>.
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div><br>
+                </div>
+                <div class="field col-6">
+                  <% invalid = @user.errors.include?(:password) %>
+                    <div class="form-group">
+                      <%=form.label :password %>
+                      <%= form.password_field :password, class: "form-control #{'is-invalid' if invalid}", placeholder: 'password'%>
+                      <% if invalid %>
+                        <div class="invalid-feedback d-block">
+                          <% @user.errors.full_messages_for(:password).each do |error_message| %>
+                            <%= error_message %>.
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
+                </div>
+                <div class="field col-6">
+                  <% invalid = @user.errors.include?(:name) %>
+                    <div class="form-group">
+                      <%=form.label :Name%>
+                      <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}", placeholder: 'name' %>
+                      <% if invalid %>
+                        <div class="invalid-feedback d-block">
+                          <% @user.errors.full_messages_for(:name).each do |error_message| %>
+                            <%= error_message %>.
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
+                </div>              
+                <div class="field col-6">
+                  <%=form.label :Qualification%>
+                  <%= form.text_field :qualification, class: 'form-control', placeholder: 'qualification'%><br>
+                </div>
+                <div class="field col-6">
+                  <%= form_group_for form, :birth_date, label: true do %>
+                    <div class="input-group date" data-provide="date" >
+                      <%= form.text_field :birth_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.birth_date&.strftime("%d-%m-%Y") %>
+                        <div class="input-group-append">
+                          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                        </div>  
+                    </div>      
+                  <% end %>
+                </div><br>
+                <div class="field col-6">
+                  <%= form_group_for form, :joining_date, label: true do %>
+                    <div class="input-group date" data-provide="date" >
+                      <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
                       <div class="input-group-append">
                         <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
                       </div>  
-                  </div>      
-                <% end %>
+                    </div>      
+                  <% end %>
+                </div><br>
+                <div class="field col-6">
+                  <%=form.label :Mobile_number%>
+                  <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>
+                </div>                
+                <div class="field col-6">
+                  <%=form.label :Parent_mobile_number%>
+                  <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
+                </div><br>
+              </div>
+              <div class="col">
+                <%= form.label :address, style: "display: block" %>
+                <%= form.text_area :address, class: 'form-control', :rows => 5 %>
               </div><br>
-              <div class="field col-6">
-                <%= form_group_for form, :joining_date, label: true do %>
-                  <div class="input-group date" data-provide="date" >
-                    <%= form.text_field :joining_date, class: 'form-control datepicker-input', placeholder: 'Purchase Date', value: @user.joining_date&.strftime("%d-%m-%Y") %>
-                    <div class="input-group-append">
-                      <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                    </div>  
-                  </div>      
-                <% end %>
-              </div><br>
-              <div class="field col-6">
-                <%=form.label :Mobile_number%>
-                <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>
-              </div>                
-              <div class="field col-6">
-                <%=form.label :Parent_mobile_number%>
-                <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
-              </div><br>
-            </div>
-            <div class="col">
-              <%= form.label :address, style: "display: block" %>
-              <%= form.text_area :address, class: 'form-control', :rows => 5 %>
-            </div><br>
-            <div class="col">
-              <%= form.label :native_address, style: "display: block" %>
-              <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
-            </div><br>              
-            <div>
-              <%= form.button "Add", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
-            </div>
-          <% end %>
+              <div class="col">
+                <%= form.label :native_address, style: "display: block" %>
+                <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
+              </div><br>              
+              <div>
+                <%= form.button "Add", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@
               <li><span class="dropdown-item"><%= current_user.email%></span></li>
               <li><div class="dropdown-divider"></div></li>
               <%= link_to "Your Profile", user_profile_user_path(current_user.id), class: "dropdown-item text-primary"%>
-              <%= link_to "Change Password", passwords_edit_path, class: "dropdown-item text-primary"%>
+              <%= link_to "Change Password", edit_password_path(current_user.id), class: "dropdown-item text-primary"%>
               <li><div class="dropdown-divider"></div></li>
               <% if current_user.has_all_roles? :admin, :newuser %>
                 <%= link_to "Switch Role", users_switch_and_redirect_view_path, class: "dropdown-item text-primary"%>

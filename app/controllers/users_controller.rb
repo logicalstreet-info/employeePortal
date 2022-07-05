@@ -42,16 +42,30 @@ class UsersController < ApplicationController
 
   def add_user
     @user = User.new(user_params)  
+    
     if @user.organization_id
       @user.add_role :admin
       @user.remove_role :newuser
     else
       @user.organization_id = current_user.organization_id
     end
-    if @user.save!
-      redirect_to params[:redirect_url]
-    else
-      render :new
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to params[:redirect_url], notice: 'User was successfully created.' }
+      else
+        format.turbo_stream do
+          if  params[:redirect_url] == "/users"
+            render turbo_stream: turbo_stream.replace('user_form',
+            partial: 'users/form',
+            locals: { user: @user })
+          else
+            render turbo_stream: turbo_stream.replace('super_admin_form',
+            partial: 'users/super_admin_form',
+            locals: { user: @user })
+          end
+        end
+      end
     end
   end
 
@@ -59,10 +73,16 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update!(user_params)
-      redirect_to users_path, notice: 'User was successfully updated.'
-    else
-      render :edit
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('user_form',
+          partial: 'users/form',
+          locals: { user: @user })
+        end
+      end
     end
   end
 
@@ -72,10 +92,16 @@ class UsersController < ApplicationController
 
   def update_user
     @user = User.find(params[:id])
-    if @user.update!(user_params)
-      redirect_to users_path, notice: 'User was successfully updated.'
-    else
-      render :edit
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('edit_user_form',
+          template: 'users/edit_user',
+          locals: { user: @user })
+        end
+      end
     end
   end
 
