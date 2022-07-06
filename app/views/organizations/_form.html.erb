@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col">
             <% invalid = organization.errors.include?(:name) %>
-            <div class="form-group">
+            <div class="form-group col-8">
               <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}",placeholder: "name", :readonly => (current_user.has_role_admin ? true : false) %>
               <% if invalid %>
                 <div class="invalid-feedback d-block">
