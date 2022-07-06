@@ -103,18 +103,16 @@
                   <% end %>
                   <td>
                     <% if leave.pending? && has_role_admin? %>
-                    <td>
-                      <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top'}, title: 'Approve Leave' do %>
+                    <td class="col-1">
+                      <%= link_to approve_leave_application_path(leave.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Approve Leave' do %>
                         <i class='bi bi-check-lg' aria-hidden='true'></i>
                       <% end %>
-                    </td>
-                    <td>
-                      <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger", data: {toggle: 'tooltip', placement: 'top'}, title: 'Reject Leave' do %>
+                      <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Reject Leave' do %>
                         <i class='bi bi-x' aria-hidden='true'></i>
                       <% end %>
                     </td>
                     <% elsif leave.pending? && has_role_newuser? %>
-                      <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Leave' do %>
+                      <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Leave' do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                       <% end %>
                     <% end %>
