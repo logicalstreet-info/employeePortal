@@ -149,7 +149,7 @@
       </div>
     </div>
   </div>
-<% elsif has_role_newuser? %><br/ ><br /><br/ ><br /><br/ ><br /><br/ ><br />
+<% elsif current_user.has_role? :superadmin || has_role_newuser? %><br/ ><br /><br/ ><br /><br/ ><br /><br/ ><br />
   <div class="display-2 text-center text-uppercase">
     Welcome To <%= current_user.organization.name %> Organization!!! <br/><br/>
     <h1><%= current_user.name %></h1>
