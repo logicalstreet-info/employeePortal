@@ -7,9 +7,9 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 #Organization
-org = Organization.create!(name: "organation1")
-orgs = Organization.create!(name: "organation2")
-orgz = Organization.create!(name: "admin_organation")
+org = Organization.create!(name: "organization1")
+orgs = Organization.create!(name: "organization2")
+orgz = Organization.create!(name: "super_organization")
 
 #Organizations super-admin
 user = User.create!(email: "superadmin@gmail.com", password: "123456", name: "superadmin", organization_id: orgz.id)
@@ -43,7 +43,7 @@ user10 = User.create!(email: "user10@gmail.com", password: "123456", name:"user1
 Property.create!(assets_type:"Laptop", name: "Propertys1", description: "Propertys description 1", purchase_date: Date.today, warranty_month: 2, user_id: user1.id, organization_id: org.id)
 Property.create!(assets_type:"LED", name: "Propertys2", description: "Propertys description 2", purchase_date: Date.today, warranty_month: 2, user_id: user2.id, organization_id: org.id)
 Property.create!(assets_type:"Mouse", name: "Propertys3", description: "Propertys description 3", purchase_date: Date.today, warranty_month: 2, user_id: user3.id, organization_id: org.id)
-Property.create!(assets_type:"CPU", name: "Propertys4", description: "Propertys description 3", purchase_date: Date.today, warranty_month: 2, user_id: user4.id, organization_id: org.id)
+Property.create!(assets_type:"CPU", name: "Propertys4", description: "Propertys description 4", purchase_date: Date.today, warranty_month: 2, user_id: user4.id, organization_id: org.id)
 Property.create!(assets_type:"cable", name: "Propertys5", description: "Propertys description 5", purchase_date: Date.today, warranty_month: 2, user_id: user5.id, organization_id: org.id)
 Property.create!(assets_type:"Laptop", name: "Propertys6", description: "Propertys description 1", purchase_date: Date.today, warranty_month: 2, user_id: user6.id, organization_id: orgs.id)
 Property.create!(assets_type:"LED", name: "Propertys7", description: "Propertys description 2", purchase_date: Date.today, warranty_month: 2, user_id: user7.id, organization_id: orgs.id)
