@@ -35,8 +35,10 @@
                       <%= link_to super_fetaure_edit_path(organization.id), target: "_top", class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                       <% end %>
-                      <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
-                        <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                      <% if !organization.users.with_role(:superadmin).present? %>
+                        <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
+                          <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                        <% end %>
                       <% end %>
                     </td>
                   </tr>
