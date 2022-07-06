@@ -9,7 +9,7 @@
                 <i class='bi bi-arrow-left' aria-hidden='true'></i>
               <% end %>
             </div>
-            <h1>Create User</h1>
+            <h1>Create Employee</h1>
             <%= form_for User.new, :url => {:action => "add_user"}, data: {turbo: false} do |form| %>
               <div>
                 <%= hidden_field_tag :redirect_url, users_path %>
