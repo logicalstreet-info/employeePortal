@@ -36,6 +36,13 @@
               <dd class="col-sm-9"><%= date_format(@user.joining_date) %></dd>
             <% end %>
 
+            <% if @user.bond.present? %>
+              <dt class="col-sm-3">Bond Start Duration</dt>
+              <dd class="col-sm-9"><%= @user.bond.start_date %></dd>
+              <dt class="col-sm-3">Bond End Duration</dt>
+              <dd class="col-sm-9"><%= @user.bond.end_date %></dd>
+            <% end %>
+
             <% if !@user.gender.nil? %>
               <dt class="col-sm-3">Gender</dt>
               <dd class="col-sm-9"><%= @user.gender ? 'Male' : 'Female' %></dd>
