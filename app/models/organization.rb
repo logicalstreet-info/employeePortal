@@ -35,8 +35,8 @@ class Organization < ActiveRecord::Base
 
   FEATURE_FLAGS.each do |flag|
     define_method("#{flag}_on?") do
-      fg = feature_flag
-      if fg.respond_to?("#{flag}_on?")
+      if self.respond_to?("#{flag}_on?")
+        fg = feature_flag
         if fg.send(flag) == 'on'
           true
         else 
