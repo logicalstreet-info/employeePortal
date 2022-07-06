@@ -30,7 +30,7 @@
                     <%= link_to edit_password_password_path(user.id), class: "btn btn-sm btn-warning", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Password' do %>
                       <i class='bi bi-eye-fill' aria-hidden='true'></i>
                     <% end %>
-                    <%= link_to users_path(user.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm btn-danger", toggle: 'tooltip', placement: 'top', title: 'Destroy category' do %>
+                    <%= link_to user_path(user.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm btn-danger", toggle: 'tooltip', placement: 'top', title: 'Destroy category' do %>
                       <i class='bi bi-trash3-fill' aria-hidden='true'></i>
                     <% end %>
                     
