@@ -88,7 +88,7 @@
                         </div>  
                     </div>      
                   <% end %>
-                </div><br>
+                </div>
 
                 <div class="field col-6">
                   <%= form_group_for form, :joining_date, label: true do %>
@@ -99,7 +99,7 @@
                       </div>  
                     </div>      
                   <% end %>
-                </div><br>
+                </div>
 
                 <div class="field col-6">
                   <%=form.label :Mobile_number%>
@@ -109,28 +109,28 @@
                 <div class="field col-6">
                   <%=form.label :Parent_mobile_number%>
                   <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'parent mobile number'%><br>
-                </div><br>
+                </div>
 
                 <div class="field col-6">
                   <%= form.label :Position %>
-                  <%= form.select :employee_positions, options_for_select(User.employee_positions.keys ,selected: form.object.employee_positions ) ,{ include_blank: "Select Possition"}, {class: "form-control"} %><br>
-                </div><br>
+                  <%= form.select :employee_positions, options_for_select(User.employee_positions.keys ,selected: form.object.employee_positions ) ,{ include_blank: "Select Possition"}, {class: "form-control"} %>
+                </div>
 
                 <div class="field col-6">
                   <%= form.label :Skill %>
-                  <%= form.text_field :skills, value: user.skills.map(&:name).join(","), class: "form-control" %><br>
-                </div><br>
-              </div>
+                  <%= form.text_field :skills, value: user.skills.map(&:name).join(","), class: "form-control" %>
+                </div>
+              </div><br/>
 
               <div class="col">
                 <%= form.label :address, style: "display: block" %>
                 <%= form.text_area :address, class: 'form-control', :rows => 5 %>
-              </div><br>
+              </div><br/>
 
               <div class="col">
                 <%= form.label :native_address, style: "display: block" %>
                 <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
-              </div><br>
+              </div><br/>
                          
               <div>
                 <div class="col-md-12 text-end">
