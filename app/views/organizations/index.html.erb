@@ -28,21 +28,17 @@
                     <td>
                       <%= organization.specified_role_users(:admin).pluck(:email).join(', ') %>
                     </td>
-                    <td>
-                      <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, organization, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-                    </td>
-                    <td>
-                      <%= link_to super_fetaure_edit_path(organization.id), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
+                    <td class="col-2">
+                      <%= link_to organization_path(organization.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm btn-danger", toggle: 'tooltip', placement: 'top', title: 'Destroy Organization' do %>
+                        <i class='bi bi-trash3-fill' aria-hidden='true'></i>
+                      <% end %>
+                      <%= link_to super_fetaure_edit_path(organization.id), target: "_top", class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                       <% end %>
+                      <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary btn-sm", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
+                        <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                      <% end %>
                     </td>
-                    <div class="actions">
-                      <td>
-                        <%= link_to new_user_path(organization_id: organization.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Create Admin'} do %>
-                          <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
-                        <% end %>
-                      </td>
-                    </div>
                   </tr>
                 <% end %>
               </div>

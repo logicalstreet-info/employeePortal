@@ -26,10 +26,10 @@
                 <% if current_user.has_role_admin %>
                     <td><%= link_to project.name, project_path(project.id) %></td>
                     <td class="col-3">
-                      <%= link_to edit_project_path(project.id), class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Project' do %>
+                      <%= link_to edit_project_path(project.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Project' do %>
                         <i class='bi bi-pencil-fill' aria-hidden='true'></i>
                       <% end %>
-                      <%= link_to project_path(project.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-danger", toggle: 'tooltip', placement: 'top', title: 'Destroy category' do %>
+                      <%= link_to project_path(project.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-danger btn-sm", toggle: 'tooltip', placement: 'top', title: 'Destroy Project' do %>
                         <i class='bi bi-trash3-fill' aria-hidden='true'></i>
                       <% end %>
                     </td>
