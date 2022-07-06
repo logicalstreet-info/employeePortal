@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params.merge(organization_id: current_user.organization_id))
-    if @project.save!
+    if @project.save
       redirect_to projects_url, notice: 'Project was successfully created.'
     else
       render :new, status: :unprocessable_entity 
