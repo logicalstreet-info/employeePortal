@@ -124,8 +124,8 @@
                           <% if leave.from_date && leave.to_date? || leave.from_time && leave.to_time?%>
                             <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
                           <% end %>
-                          <td>
-                            <%= button_to approve_leave_application_path(leave.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Approve Leave' do %>
+                          <td class="col-1">
+                            <%= link_to approve_leave_application_path(leave.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Approve Leave' do %>
                               <i class='bi bi-check-lg' aria-hidden='true'></i>
                             <% end %>
                             <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Reject Leave' do %>
@@ -149,7 +149,7 @@
       </div>
     </div>
   </div>
-<% elsif has_role_newuser? %><br/ ><br /><br/ ><br /><br/ ><br /><br/ ><br />
+<% elsif current_user.has_role_super_admin || has_role_newuser? %><br/ ><br /><br/ ><br /><br/ ><br /><br/ ><br />
   <div class="display-2 text-center text-uppercase">
     Welcome To <%= current_user.organization.name %> Organization!!! <br/><br/>
     <h1><%= current_user.name %></h1>
