@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   resources :leave_applications do
     member do
       patch 'approve'
-      post 'approve'
+      get 'approve'
       patch 'reject'
       get 'reject'
     end

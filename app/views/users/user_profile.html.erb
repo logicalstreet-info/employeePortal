@@ -16,6 +16,9 @@
                     <%= a.name + "," %>
                   <% end %>"><i class='bi bi-person-workspace' aria-hidden='true'></i>
                 </a>
+                <%= link_to users_path, class: "btn btn-sm btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Back' do %>
+                  <i class='bi bi-arrow-left' aria-hidden='true'></i>
+                <% end %>
               </div>
             <% end %>
           </div>
@@ -34,6 +37,13 @@
             <% if @user.joining_date %>
               <dt class="col-sm-3">Joining Date</dt>
               <dd class="col-sm-9"><%= date_format(@user.joining_date) %></dd>
+            <% end %>
+
+            <% if @user.bond.present? %>
+              <dt class="col-sm-3">Bond Start Duration</dt>
+              <dd class="col-sm-9"><%= date_format(@user.bond.start_date) %></dd>
+              <dt class="col-sm-3">Bond End Duration</dt>
+              <dd class="col-sm-9"><%= date_format(@user.bond.end_date) %></dd>
             <% end %>
 
             <% if !@user.gender.nil? %>
@@ -69,6 +79,13 @@
             <% if @user.native_address.present? %>
               <dt class="col-sm-3">Native Address</dt>
               <dd class="col-sm-9"><%= @user.native_address %></dd>
+            <% end %>
+            
+            <% if @user.skills.present? %>
+              <dt class="col-sm-3">Skills</dt>
+              <dd class="col-sm-9">
+                <%= @user.skills.pluck(:name).join(',') %>
+              </dd>
             <% end %>
           </dl>
         </div>

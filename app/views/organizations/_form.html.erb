@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col">
             <% invalid = organization.errors.include?(:name) %>
-            <div class="form-group">
+            <div class="form-group col-8">
               <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}",placeholder: "name", :readonly => (current_user.has_role_admin ? true : false) %>
               <% if invalid %>
                 <div class="invalid-feedback d-block">
@@ -18,7 +18,8 @@
           </div>
         </div>
         <% if current_user.has_role_admin %>
-          <div class="col dropdown">
+         <div class="row">
+          <div class="col-5  btn-group dropup">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               Select weekly off days
             </button>
@@ -31,9 +32,10 @@
             </ul>
           </div>
         <% end %>
-        <div class="col">
+        <div class="col-6">
           <%= form.submit class: "btn btn-primary" %>
         </div>
+      </div>
       </div>
     </div>
   <% end %>

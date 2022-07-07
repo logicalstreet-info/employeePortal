@@ -4,8 +4,10 @@
       <div class="card my-5 shadow">
         <div class="card-body">
           <div class="col-md-12 text-end">
-            <%= link_to new_leave_day_path, target: "_top" ,class: "btn btn-primary", title: 'New Holiday'  do%> 
-              <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
+            <% if has_role_admin? %>
+              <%= link_to new_leave_day_path, target: "_top" ,class: "btn btn-primary", title: 'New Holiday'  do%> 
+                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
+              <% end %>
             <% end %>
           </div> 
           <h1>Holiday List</h1>

@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :groups, through: :participants
   has_many :leave_balances, dependent: :destroy
   has_one :bond, dependent: :destroy
+  has_many :taggables, dependent: :destroy
+  has_many :skills, through: :taggables
   belongs_to :organization
 
   devise :database_authenticatable, :registerable,
@@ -48,6 +50,10 @@ class User < ApplicationRecord
 
   def has_role_newuser
     self.has_role? :newuser
+  end
+
+  def has_role_super_admin
+    self.has_role? :superadmin
   end
 
   def gravatar_url

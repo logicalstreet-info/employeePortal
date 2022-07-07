@@ -24,12 +24,12 @@
                       <%= link_to @organizations.name, edit_organization_path(@organizations.id), class: 'btn btn-link', disabled: :disabled %>
                     <% end %>
                   </td>
-                  <td>
+                  <td class="col-3-admin-list">
                     <%= @organizations.specified_role_users(:admin).pluck(:email).join(', ') %>
                   </td>
                   <div class="actions">
                     <td>
-                      <%= link_to new_user_path(organization_id: @organizations.id), target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Create Admin' do %>
+                      <%= link_to new_user_path(organization_id: @organizations.id), target: "_top", class: "btn btn-primary btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Create Admin' do %>
                         <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
                       <% end %>
                     </td>

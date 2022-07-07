@@ -11,10 +11,10 @@
                 <% end %>
               </div><br>
               <div class="row">
-                <div class="col-5"> 
+                <div class="col-4"> 
                   <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
                 </div>
-                <div class="col-5">
+                <div class="col-4">
                   <%= select_tag :assets_type, options_for_select(@asset_types, selected: params[:assets_type]),{ include_blank: "All Asset Type", class: "form-control col-md-3 mr-1" } %>
                 </div>
                 <div class="col-1">
@@ -61,14 +61,13 @@
                             <%= property.user.name %>
                           <% end %>
                         </td>
-                        <td>
-                          <%= link_to edit_property_path(property.id), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Asset' do %>
+                        <td class="col-1">
+                          <%= link_to edit_property_path(property.id), target: "_top", class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Asset' do %>
                             <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                          <% end %>           
+                          <%= link_to property_path(property.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm btn-danger", toggle: 'tooltip', placement: 'top', title: 'Destroy Assets' do %>
+                              <i class='bi bi-trash3-fill' aria-hidden='true'></i>
                           <% end %>
-                        </td>
-                        <td>
-                          <%= button_to "<i class=\"bi bi-trash3-fill\"></i>".html_safe, property, class: "btn btn-danger", method: :delete,
-                          data: { confirm: 'Are you sure?' }, title: 'Delete Asset' %>
                         </td>
                       <% end %>
                     </tr>

@@ -9,9 +9,10 @@
                 <i class='bi bi-arrow-left' aria-hidden='true'></i>
               <% end %>
             </div>
-            <h1>Edit Your Profile</h1>
+            <h1>Edit Employee Profile</h1>
             <%= form_for(@user, url: update_user_user_path, data: {turbo: false} ) do |form| %>
               <div class="row">
+
                 <div class="field col-6">
                   <%= form.label :Gender %><br />
                   <%= form.label :Gender, "Male", :value => "true"  %>
@@ -19,10 +20,12 @@
                   <%= form.label :gender, "Female", :value => "false" %>
                   <%= form.radio_button :gender, false, :checked => true %>
                 </div>
+
                 <div class="field col-6">
                   <%=form.label :Email%>
                   <%= form.text_field :email, class: 'form-control', placeholder: 'email', disabled: :disabled %><br>
                 </div>
+
                 <div class="field col-6">
                   <% invalid = @user.errors.include?(:name) %>
                     <div class="form-group">
@@ -36,11 +39,13 @@
                         </div>
                       <% end %>
                     </div>   
-                </div>          
+                </div>   
+
                 <div class="field col-6">
                   <%=form.label :Qualification%>
                   <%= form.text_field :qualification, class: 'form-control', placeholder: 'qualification'%><br>
-                </div>          
+                </div>
+                      
                 <div class="field col-6">
                   <%= form_group_for form, :birth_date, label: true do %>
                     <div class="input-group date" data-provide="date" >
@@ -50,7 +55,8 @@
                         </div>  
                     </div>      
                   <% end %>
-                </div><br>
+                </div>
+
                 <div class="field col-6">
                   <%= form_group_for form, :joining_date, label: true do %>
                     <div class="input-group date" data-provide="date" >
@@ -60,34 +66,45 @@
                       </div>  
                     </div>      
                   <% end %>
-                </div><br>
+                </div>
+
                 <div class="field col-6">
                   <%=form.label :Mobile_number %>
                   <%= form.text_field :mobile_number, class: 'form-control', placeholder: 'Mobile Number'%>
-                </div>                
+                </div>
+
                 <div class="field col-6">
                   <%=form.label :Parent_mobile_number%>
                   <%= form.text_field :parent_mobile_number, class: 'form-control', placeholder: 'Parent Mobile Number'%><br>
                 </div>
-                <div class="field col-6">
+
+                <div class="field col-4">
                   <%=form.label :Type %>
                   <%= form.select :user_type, options_for_select(User.user_types.keys, selected: form.object.user_type), { include_blank: "Select Type"}, {class: "form-control"} %><br>
-                </div><br>
-                <div class="field col-6">
+                </div>
+
+                <div class="field col-4">
                   <%= form.label :Position %>
                   <%= form.select :employee_positions, options_for_select(User.employee_positions.keys, selected: form.object.employee_positions), { include_blank: "Select Possition"}, {class: "form-control"} %><br>
-                </div><br>
+                </div>
+                <div class="field col-4">
+                  <%= form.label :Skill %>
+                  <%= form.text_field :skills, value: @user.skills.map(&:name).join(","), class: "form-control" %><br>
+                </div>
               </div>
+
               <div class="col">
                 <%= form.label :address, style: "display: block" %>
                 <%= form.text_area :address, class: 'form-control', :rows => 5 %>
               </div><br>
+              
               <div class="col">
                 <%= form.label :native_address, style: "display: block" %>
                 <%= form.text_area :native_address, class: 'form-control', :rows => 5 %>
-              </div><br>              
-              <div>
-                <%= form.button "Update User", class: "btn btn-lg btn-primary btn-block form-control col-md-3 mr-1" %>
+              </div><br>
+
+              <div class="col-md-12 text-end">
+                <%= form.button "Update User", class: "btn btn-primary" %>
               </div>
             <% end %>
           </div>

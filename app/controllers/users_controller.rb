@@ -41,13 +41,14 @@ class UsersController < ApplicationController
   end
 
   def add_user
-    @user = User.new(user_params)  
+    @user = User.new(user_params.except(:skills))  
     
     if @user.organization_id
       @user.add_role :admin
       @user.remove_role :newuser
     else
       @user.organization_id = current_user.organization_id
+      create_or_delete_users_skills(@user, params[:user][:skills])
     end
 
     respond_to do |format|
@@ -94,8 +95,10 @@ class UsersController < ApplicationController
 
   def update_user
     @user = User.find(params[:id])
+    create_or_delete_users_skills(@user, params[:user][:skills])
+
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update(user_params.except(:skills))
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }
       else
         format.turbo_stream do
@@ -135,6 +138,14 @@ class UsersController < ApplicationController
 
   private
 
+  def create_or_delete_users_skills(user, skills)
+    user.taggables.destroy_all
+    skills = skills.strip.split(',')
+    skills.each do |skill|
+      user.skills << Skill.find_or_create_by(name: skill)
+    end
+  end
+
   def find_user
     @user = current_user
   end
@@ -148,6 +159,6 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :joining_date, :birth_date, :gender, :qualification, :mobile_number,
     :native_address, :address, :parent_mobile_number, :user_type, :email, :password, :password_confirmation,
-    :organization_id, :employee_positions)
+    :organization_id, :employee_positions, :skills)
   end
 end
