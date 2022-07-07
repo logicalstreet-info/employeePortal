@@ -3,45 +3,49 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <div class="col-md-12 text-end">
-            <% if has_role_admin? %>
-              <%= link_to new_bond_path, target: "_top",class: "btn btn-primary", title: 'New Bond'  do%> 
-                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
-              <% end %>
-            <% end %>
-          </div>
-          <h1>Bond Of Employee</h1>
-            <table class="table">
-              <thead class="thead-light">
-                <tr>
-                  <% if has_role_admin?%>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Employee Name</th>
-                    <th>Action</th>
-                  <% end %>
-                </tr>
-              </thead>
-              <tbody>
-                <% @bonds.each do |bond| %>
-                  <tr>
-                    <td><%= date_format(bond.start_date) %></td>
-                    <td><%= date_format(bond.end_date) %></td>
-                    <td><%= bond.user.name %></td>
-                    <% if has_role_admin? %>
-                      <td>
-                        <%= link_to edit_bond_path(bond.id), target: "_top", class: "btn btn-success btn-sm", toggle: 'tooltip', placement: 'top', title: 'Edit bond' do %>
-                          <i class='bi bi-pencil-fill' aria-hidden='true'></i>
-                        <% end %>
-                        <%= link_to bond_path(bond.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-danger btn-sm", toggle: 'tooltip', placement: 'top', title: 'Destroy Bond' do %>
-                          <i class='bi bi-trash3-fill' aria-hidden='true'></i>
-                        <% end %>
-                      </td>
-                    <% end %>
-                  <th>
+          <div class="row">
+              <div class="col">
+                <h2>Bond Of Employee</h2><br>
+              </div>
+            <div class="col-md-7 text-end">
+              <% if has_role_admin? %>
+                <%= link_to new_bond_path, target: "_top",class: "btn btn-primary", title: 'New Bond'  do%> 
+                  <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
                 <% end %>
-              </tbody>
-            </table>
+              <% end %>
+            </div>
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <% if has_role_admin?%>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Employee Name</th>
+                      <th>Action</th>
+                    <% end %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @bonds.each do |bond| %>
+                    <tr>
+                      <td><%= date_format(bond.start_date) %></td>
+                      <td><%= date_format(bond.end_date) %></td>
+                      <td><%= bond.user.name %></td>
+                      <% if has_role_admin? %>
+                        <td>
+                          <%= link_to edit_bond_path(bond.id), target: "_top", class: "btn btn-success btn-sm", toggle: 'tooltip', placement: 'top', title: 'Edit bond' do %>
+                            <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                          <% end %>
+                          <%= link_to bond_path(bond.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-danger btn-sm", toggle: 'tooltip', placement: 'top', title: 'Destroy Bond' do %>
+                            <i class='bi bi-trash3-fill' aria-hidden='true'></i>
+                          <% end %>
+                        </td>
+                      <% end %>
+                    <th>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

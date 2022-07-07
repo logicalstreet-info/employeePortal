@@ -3,36 +3,40 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <div class="col-md-12 text-end">
-            <% if has_role_admin? %>
-              <%= link_to new_leave_day_path, target: "_top" ,class: "btn btn-primary", title: 'New Holiday'  do%> 
-                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
-              <% end %>
-            <% end %>
-          </div> 
-          <h1>Holiday List</h1>
-          <table class="table">
-            <thead class="thead-light">
-              <tr>
-                <th>Name</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @leave_days.each do |day| %>
-                <% if day.organization_id == current_user.organization_id%>
-                  <tr>
-                    <% if day.holiday.present?%>
-                      <td><%= day.name %></td>
-                      <td><%= date_format(day.holiday) %></td>
-                    <% end %>
-                  </tr>
+          <div class="row">
+            <div class="col">
+              <h2>Holiday List</h2><br>
+            </div>
+            <div class="col-md-7 text-end">
+              <% if has_role_admin? %>
+                <%= link_to new_leave_day_path, target: "_top" ,class: "btn btn-primary", title: 'New Holiday'  do%> 
+                  <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
                 <% end %>
               <% end %>
-            </tbody>
-          </table>
-          <div class="pagination justify-content-center">
-            <%= paginate @leave_days, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+            </div>
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @leave_days.each do |day| %>
+                  <% if day.organization_id == current_user.organization_id%>
+                    <tr>
+                      <% if day.holiday.present?%>
+                        <td><%= day.name %></td>
+                        <td><%= date_format(day.holiday) %></td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+            <div class="pagination justify-content-center">
+              <%= paginate @leave_days, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+            </div>
           </div>
         </div>
       </div>

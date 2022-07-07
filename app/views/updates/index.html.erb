@@ -3,99 +3,103 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <% if has_role_newuser? %>
-            <div class="col-md-12 text-end">
-              <%=  link_to updates_new_path, target: '_top', class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update' } do %>
-                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
-              <% end %>
+          <div class="row">
+            <div class="col">
+              <h2>Listing All Daily Update</h2><br>
             </div>
-          <% elsif has_role_admin? %>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                CSV Export
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li>
-                  <%= link_to "Last Day CSV", updates_path( @updates, format: "csv", type: "day"), class: 'dropdown-item text-primary' %>
-                </li>
-                <li>
-                  <%= link_to "This Month CSV", updates_path( @updates, format: "csv", type: "month"), class: 'dropdown-item text-primary' %>
-                </li>
-              </ul>
-            </div><br>
-            <%= form_tag import_updates_path, multipart: true do %>
-              <%= file_field_tag :file %><br><br>
-              <%= submit_tag "CSV Import", class: "btn btn-info"  %>
-            <% end %>
-            <%= form_tag updates_path, data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'}, method: :get do %>
-              <div class="row mt-4">
-                <div class="col-2"> 
-                  <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
-                </div>
-                <div class ="col-2">
-                  <div class="input-group date col-3" data-provide="date" >
-                    <%= text_field_tag :date, params[:date], class: "form-control datepicker-input" %>
-                    <div class="input-group-append">
-                      <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+            <% if has_role_newuser? %>
+              <div class="col-md-7 text-end">
+                <%=  link_to updates_new_path, target: '_top', class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update' } do %>
+                  <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                <% end %>
+              </div>
+            <% elsif has_role_admin? %>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  CSV Export
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <%= link_to "Last Day CSV", updates_path( @updates, format: "csv", type: "day"), class: 'dropdown-item text-primary' %>
+                  </li>
+                  <li>
+                    <%= link_to "This Month CSV", updates_path( @updates, format: "csv", type: "month"), class: 'dropdown-item text-primary' %>
+                  </li>
+                </ul>
+              </div><br>
+              <%= form_tag import_updates_path, multipart: true do %>
+                <%= file_field_tag :file %><br><br>
+                <%= submit_tag "CSV Import", class: "btn btn-info"  %>
+              <% end %>
+              <%= form_tag updates_path, data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'}, method: :get do %>
+                <div class="row mt-4">
+                  <div class="col-2"> 
+                    <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
+                  </div>
+                  <div class ="col-2">
+                    <div class="input-group date col-3" data-provide="date" >
+                      <%= text_field_tag :date, params[:date], class: "form-control datepicker-input" %>
+                      <div class="input-group-append">
+                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                      </div>
                     </div>
                   </div>
+                  <div class="col-1">
+                    <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
+                      <i class='bi bi-search' aria-hidden='true'></i>
+                    <% end %>
+                  </div>
+                  <div class="reset">
+                    <%= link_to updates_path , class: 'btn btn-secondary', target: "_top" do %>
+                      <i class='bi bi-x-lg' aria-hidden='true'></i>
+                    <% end %>
+                  </div>
                 </div>
-                <div class="col-1">
-                  <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
-                    <i class='bi bi-search' aria-hidden='true'></i>
-                  <% end %>
-                </div>
-                <div class="reset">
-                  <%= link_to updates_path , class: 'btn btn-secondary', target: "_top" do %>
-                    <i class='bi bi-x-lg' aria-hidden='true'></i>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
-          <% end %><br>
-          <h1>Listing All Daily Update</h1>
-          <table class="table">
-            <thead class="thead-light">
-              <tr>
-                <% if has_role_admin? %>
-                  <th>Name</th>
-                <% end %>
-                <th class="col-6">Description</th>
-                <th>Created Date</th>
-                <th>Start Time</th>
-                <th>Out Time</th>
-                <th>Total Hour</th>
-                <th>Project</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @daily_updates.each do |update| %>
-                <tr>
-                  <% if has_role_admin? %> 
-                    <td><%= User.find(update.user_id).name %></td><% end %>
-                    <td><%= update.description %></td>
-                    <td><%= date_format(update.created_at) %></td>
-                    <td><%= time_format(update.in_time) %></td>
-                    <td><%= time_format(update.out_time) %></td>
-                    <td><%= update.total_hours %></td>
-                    <td>  
-                      <% if update.project.present? %>
-                        <%= update.project.name %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <% if has_role_newuser? && date_format(update.created_at) == date_format(Date.today) %>
-                        <%= link_to  edit_update_path(update), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
-                        <i class='bi bi-pencil-fill' aria-hidden='true'></i>
-                      <% end %>
-                    </td>
-                  <% end %>
-                </tr> 
               <% end %>
-            </tbody>
-          </table>
-          <div class="pagination justify-content-center">
-            <%= paginate @daily_updates, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+            <% end %><br>
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <% if has_role_admin? %>
+                    <th>Name</th>
+                  <% end %>
+                  <th class="col-6">Description</th>
+                  <th>Created Date</th>
+                  <th>Start Time</th>
+                  <th>Out Time</th>
+                  <th>Total Hour</th>
+                  <th>Project</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @daily_updates.each do |update| %>
+                  <tr>
+                    <% if has_role_admin? %> 
+                      <td><%= User.find(update.user_id).name %></td><% end %>
+                      <td><%= update.description %></td>
+                      <td><%= date_format(update.created_at) %></td>
+                      <td><%= time_format(update.in_time) %></td>
+                      <td><%= time_format(update.out_time) %></td>
+                      <td><%= update.total_hours %></td>
+                      <td>  
+                        <% if update.project.present? %>
+                          <%= update.project.name %>
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if has_role_newuser? && date_format(update.created_at) == date_format(Date.today) %>
+                          <%= link_to  edit_update_path(update), target: "_top", class: "btn btn-success", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
+                          <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                        <% end %>
+                      </td>
+                    <% end %>
+                  </tr> 
+                <% end %>
+              </tbody>
+            </table>
+            <div class="pagination justify-content-center">
+              <%= paginate @daily_updates, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+            </div>
           </div>
         </div>
       </div>

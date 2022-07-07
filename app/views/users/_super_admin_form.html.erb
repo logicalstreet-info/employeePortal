@@ -4,7 +4,7 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card my-5 shadow">
           <div class="card-body">
-            <h1>Create Admin</h1>
+            <h2>Create Admin</h2><br>
             <%= form_for User.new, :url => {:action => "add_user"} do |form| %>
               <div>
                 <%= form.hidden_field :organization_id, :value => params[:organization_id] %>

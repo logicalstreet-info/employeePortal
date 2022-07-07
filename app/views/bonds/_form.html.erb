@@ -19,7 +19,6 @@
         <% end %>
       </div>
   </div>
-  
   <div class="field col-4">
     <% invalid = @bond.errors.include?(:end_date) %>
       <%= form.label :End_date%>
@@ -37,13 +36,11 @@
         <% end %>
       </div>
   </div>
-
   <div class="field col-4" >
     <%= form.label :User_name%>
     <%= form.select :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User"}, class: "form-control col-md-3 mr-1" %>
   </div>
-</div>
-
+</div><br />
 <div class="row">
   <div class="col">
     <%= form.label :description %>

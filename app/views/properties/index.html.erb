@@ -3,81 +3,85 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <% if has_role_admin? %>
-            <%= form_tag properties_path, method: :get do %>
-              <div class="col-md-12 text-end">
+          <div class="row">
+            <div class="col">
+              <h2>Assets</h2><br>
+            </div>
+            <% if has_role_admin? %>
+              <div class="col-md-7 text-end">
                 <%= link_to new_property_path, target: "_top" ,class: "btn btn-primary", title: 'New Asset'  do%> 
                   <i class='bi bi-plus-circle-fill' aria-hidden='true'></i> 
                 <% end %>
               </div><br>
-              <div class="row">
-                <div class="col-4"> 
-                  <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
-                </div>
-                <div class="col-4">
-                  <%= select_tag :assets_type, options_for_select(@asset_types, selected: params[:assets_type]),{ include_blank: "All Asset Type", class: "form-control col-md-3 mr-1" } %>
-                </div>
-                <div class="col-1">
-                  <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
-                    <i class='bi bi-search' aria-hidden='true'></i>
-                  <% end %>
-                </div>
-                <div class="reset">
-                  <%= link_to properties_path, target: "_top" ,class: "btn btn-secondary", title: 'Clean'  do%> 
-                    <i class='bi bi-x-lg' aria-hidden='true'></i>                  
-                  <% end %>
-                </div>
-              </div></br>
+              <%= form_tag properties_path, method: :get do %>
+                <div class="row">
+                  <div class="col-4"> 
+                    <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
+                  </div>
+                  <div class="col-4">
+                    <%= select_tag :assets_type, options_for_select(@asset_types, selected: params[:assets_type]),{ include_blank: "All Asset Type", class: "form-control col-md-3 mr-1" } %>
+                  </div>
+                  <div class="col-1">
+                    <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
+                      <i class='bi bi-search' aria-hidden='true'></i>
+                    <% end %>
+                  </div>
+                  <div class="reset">
+                    <%= link_to properties_path, target: "_top" ,class: "btn btn-secondary", title: 'Clean'  do%> 
+                      <i class='bi bi-x-lg' aria-hidden='true'></i>                  
+                    <% end %>
+                  </div>
+                </div></br>
+              <% end %>
             <% end %>
-          <% end %>
-          <h1>Assets</h1>
-          <table class="table">
-            <thead class="thead-light">
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Purchase Date</th>
-                <th>Warranty Month</th>
-                <th>Assets Type</th>
-                <% if has_role_admin? %>
-                  <th>User Name</th>
-                  <th>Action</th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <div id="projects">
-                <% @properties.each do |property| %>
-                  <% if has_role_admin? || property.user_id == current_user.id %>
-                    <tr>
-                      <td><%= property.name %></td>
-                      <td><%= property.description %></td>
-                      <td><%= date_format(property.purchase_date) %></td>
-                      <td><%= property.warranty_month %></td>
-                      <td><%= property.assets_type %></td>
-                      <% if has_role_admin? %>
-                        <td>  
-                          <% if property.user_id.present? %>
-                            <%= property.user.name %>
-                          <% end %>
-                        </td>
-                        <td class="col-1">
-                          <%= link_to edit_property_path(property.id), target: "_top", class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Asset' do %>
-                            <i class='bi bi-pencil-fill' aria-hidden='true'></i>
-                          <% end %>           
-                          <%= link_to property_path(property.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm btn-danger", toggle: 'tooltip', placement: 'top', title: 'Destroy Assets' do %>
-                              <i class='bi bi-trash3-fill' aria-hidden='true'></i>
-                          <% end %>
-                        </td>
-                      <% end %>
-                    </tr>
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Purchase Date</th>
+                  <th>Warranty Month</th>
+                  <th>Assets Type</th>
+                  <% if has_role_admin? %>
+                    <th>User Name</th>
+                    <th>Action</th>
                   <% end %>
-                <% end %>
-              </div>
-            </tbody>
-          </table>
-          <div class="pagination justify-content-center">
-            <%= paginate @properties, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+                </tr>
+              </thead>
+              <tbody>
+                <div id="projects">
+                  <% @properties.each do |property| %>
+                    <% if has_role_admin? || property.user_id == current_user.id %>
+                      <tr>
+                        <td><%= property.name %></td>
+                        <td><%= property.description %></td>
+                        <td><%= date_format(property.purchase_date) %></td>
+                        <td><%= property.warranty_month %></td>
+                        <td><%= property.assets_type %></td>
+                        <% if has_role_admin? %>
+                          <td>  
+                            <% if property.user_id.present? %>
+                              <%= property.user.name %>
+                            <% end %>
+                          </td>
+                          <td class="col-1">
+                            <%= link_to edit_property_path(property.id), target: "_top", class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Asset' do %>
+                              <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                            <% end %>           
+                            <%= link_to property_path(property.id), method: :delete , data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm btn-danger", toggle: 'tooltip', placement: 'top', title: 'Destroy Assets' do %>
+                                <i class='bi bi-trash3-fill' aria-hidden='true'></i>
+                            <% end %>
+                          </td>
+                        <% end %>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                </div>
+              </tbody>
+            </table>
+            <div class="pagination justify-content-center">
+              <%= paginate @properties, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
+            </div>
           </div>
         </div>
       </div>

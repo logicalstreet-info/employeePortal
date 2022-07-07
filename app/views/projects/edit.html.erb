@@ -1,1 +1,27 @@
-<%= render "form", project: @project %><br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h3>Edit Project</h3><br>
+            </div>
+            <div class="col-md-7 text-end">
+              <%= link_to projects_path, class: "btn btn-primary", toggle: 'tooltip', placement: 'top', title: 'Back' do %>
+                <i class='bi bi-arrow-left' aria-hidden='true'></i>
+              <% end %>
+            </div>
+            <%= form_for @project, :url => {:controller => 'projects',:action => 'update'}, data: {turbo: false} do |form| %>
+              <%= render 'form', :form => form %>
+              <div class="col-md-12 text-end"><br />
+                <%= form.submit "Update", class: "btn btn-primary", toggle: 'tooltip', placement: 'top', title: 'Update' %>
+              </div>
+            <% end %>
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
