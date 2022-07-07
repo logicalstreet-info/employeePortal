@@ -15,10 +15,12 @@ class BondsController < ApplicationController
 
   def create
     @bond = Bond.new(bond_params.merge(organization_id: current_user.organization_id))
-    if @bond.save!
-      redirect_to bonds_path
-    else 
-      render :new
+    respond_to do |format|
+      if @bond.save
+        format.html { redirect_to bonds_path, notice: 'Bond Sucessfully Created ' }
+      else
+        format.html { render :new, status: :unprocessable_entity}
+      end
     end
   end
 

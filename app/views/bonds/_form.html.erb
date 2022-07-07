@@ -1,25 +1,41 @@
 <div class="row">
   <div class="field col-4">
-    <%= form.label :Start_date%>
-    <div class="input-group date">
-      <%= form.text_field :start_date, data: {
-          controller: "flatpickr",
-          flatpickr_enable_time: true
-        }, class: "form-control datepicker-input", value: @bond.start_date&.strftime("%d-%m-%Y") %>
-      <div class="input-group-append">
-        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+    <% invalid = @bond.errors.include?(:start_date) %>
+      <%= form.label :Start_date%>
+      <div class="input-group date">
+        <%= form.text_field :start_date, data: {
+            controller: "flatpickr",
+            flatpickr_enable_time: true
+          }, class: "form-control datepicker-input #{'is-invalid' if invalid}", value: @bond.start_date&.strftime("%d-%m-%Y") %>
+        <div class="input-group-append">
+          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+        </div>
+        <% if invalid %>
+          <div class="invalid-feedback d-block">
+            <% @bond.errors.full_messages_for(:start_date).each do |error_message| %>
+              <%= error_message %>.
+            <% end %>
+          </div>
+        <% end %>
       </div>
-    </div>
   </div>
   
   <div class="field col-4">
-    <%= form.label :End_date%>
-    <div class="input-group date" data-provide="date">
-      <%= form.text_field :end_date, class: "form-control datepicker-input", value: @bond.end_date&.strftime("%d-%m-%Y") %>
-      <div class="input-group-append">
-        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+    <% invalid = @bond.errors.include?(:end_date) %>
+      <%= form.label :End_date%>
+      <div class="input-group date" data-provide="date">
+        <%= form.text_field :end_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", value: @bond.end_date&.strftime("%d-%m-%Y") %>
+        <div class="input-group-append">
+          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+        </div>
+        <% if invalid %>
+          <div class="invalid-feedback d-block">
+            <% @bond.errors.full_messages_for(:end_date).each do |error_message| %>
+              <%= error_message %>.
+            <% end %>
+          </div>
+        <% end %>
       </div>
-    </div>
   </div>
 
   <div class="field col-4" >

@@ -12,7 +12,7 @@
                 <i class='bi bi-arrow-left' aria-hidden='true'></i>
               <% end %>
             </div>
-            <%= form_for @bond, url: bonds_path, method: :post do |form| %>
+            <%= form_for @bond, url: bonds_path, data: {turbo: false}, method: :post do |form| %>
               <%= render 'form', :form => form %></br >
               <div class="col-md-12 text-end">
                 <%= form.submit "Save", class: "btn btn-primary", toggle: 'tooltip', placement: 'top', title: 'Save' %>
