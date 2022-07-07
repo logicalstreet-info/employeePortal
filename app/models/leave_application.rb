@@ -6,7 +6,7 @@ class LeaveApplication < ApplicationRecord
   enum leave_type: { Other: 0, Personal: 1, Medical: 2, Family_Emergency: 3, Govt_Work: 4, Religious: 5, Bad_Weather: 6, Maternity: 7, Occasional:8 }
   enum :status, [:pending, :approved, :rejected], default: :pending
   validates :description, :to_date, :from_date, :leave_type, presence: true
-  validate :date_scope, on: :create
+  validate :date_scope, on: [:create, :update]
   before_create :set_default_status 
   after_update :add_leave_balance
 
