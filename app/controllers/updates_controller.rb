@@ -9,8 +9,8 @@ class UpdatesController < ApplicationController
       if params[:type] == 'day'
         @updates = Update.where('DATE(created_at) = ? ', Date.yesterday)
       elsif params[:type] == 'month'
-        @updates = Update.where("DATE_PART('month', created_at) = ? OR  DATE_PART('year', created_at) = ? ",
-          Date.current.month, Date.current.year)
+        @updates = Update.where("(DATE_PART('month', created_at) = ? OR  DATE_PART('year', created_at) = ?) AND organization_id = ?",
+          Date.current.month, Date.current.year, current_user.organization_id)
       end
     else
       @updates = Update.where(user_id: current_user).order('created_at DESC')
