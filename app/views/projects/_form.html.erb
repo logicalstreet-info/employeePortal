@@ -12,67 +12,12 @@
       <% end %>
     </div><br>
   </div>
-  </div>
-  <div class="row">
-    <div id="typeaheadmulti">
-      <%= text_field_tag "project[user_ids][]", params[:name], class: "typeahead", type: "text", placeholder: "Search Users" %>
-    </div>
-  </div><br>
-  <input type="hidden" name="elems" value="[]" />
 </div>
-    
 
-<script src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
-<script src="https://rawgit.com/ahmohamed/typeahead-multiselect/master/typeahead-multiselect.min.js"></script>
+<div class="row">
+  <div class="col-md-12">
+    <%= form.select :user_ids, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: false}, id:"choices-multiple-remove-button", class: "form-control", multiple: true, placeholder: "select user" %>
+  </div>
+</div><br>  
 
-<script>
-  $(".js-remove").click(function(evt, item){
-    alert(item)
-  });
-
-  var users = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.whitespace,
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: {
-      url: '/api/v1/projects?name=',
-      cache: false,
-      prepare: function (query, settings) {
-        settings.url = this.url + query.replace(/[_\W]+/g, " ")
-        return settings;
-      },
-      filter: function(response) {
-        return response.data;
-      },
-      wildcard: '%SEARCH'
-    }
-  });
-
-  $('#typeaheadmulti .typeahead').typeaheadmulti(
-    {
-      hint: true,
-      highlight: true,
-      minLength: 1
-    },
-    {
-      name: 'users',
-      display: 'name',
-      source: users.ttAdapter(),
-    }
-  );
-    var abc = []
-  $('#typeaheadmulti .typeahead').on('typeahead:selected', function (evt, item)    
-    {
-      console.log(abc)
-      console.log(!abc.includes(item.id))
-
-      if(!abc.includes(item.id)){
-       abc.push(item.id);
-       console.log(abc);
-       ($('.ttmulti-selections li:contains("'+ item.name +'") i').after(
-        "</div><input class='xyz' type='hidden' name='project[user_ids][]' id= " + item.id + " value=" + item.id + ">"));
-       console.log(abc);
-
-      }
-    }
-  );
-</script>
+            

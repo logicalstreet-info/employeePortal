@@ -5,22 +5,16 @@
         <div class="card-body">
           <%= form_for @group do |form| %>
             <div class="row">
-              <div class="col-9">
-                <%= form.text_field :name, class: 'form-control',placeholder: 'Enter Name' %>
+              <div class="col-md-12">
+                <%= form.text_field :name, class: 'form-control', placeholder: 'Enter Name' %>
               </div>
-              <div class="col-3">
-                <div class="col dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    select
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <%= form.collection_check_boxes(:user_ids, User.where(:organization_id => current_user.organization_id), :id, :name) do |b| %>
-                    <%= b.label { b.check_box + " " + b.text  } %></br>
-                  <% end %>
-                  </ul>
-                </div>
+            </div></br>
+            <div class="row">
+              <div class="col-md-12">
+                <%= form.select :user_ids, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: false}, id:"choices-multiple-remove-button", class: "form-control", multiple: true, placeholder: "select user" %>
               </div>
-            </div><br/>
+            </div></br>
+
             <div class="row">
               <div class="col-2">
                 <%= form.submit "Save", class: 'btn btn-success' %>

@@ -57,18 +57,21 @@ class UpdatesController < ApplicationController
 
   def update
     @update = Update.find(params[:id])
-    @update.user_id = current_user.id
-    respond_to do |format|
-      if @update.update(update_params)
-        format.html { redirect_to updates_url, notice: 'Your Daily update was successfully updated.' }
-        format.json { render :show, status: :ok, location: @update }
-      else
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('update_form', partial: 'updates/form',
-            locals: { update: @update })
+    if current_user.id == @update.user_id
+      respond_to do |format|
+        if @update.update(update_params)
+          format.html { redirect_to updates_url, notice: 'Your Daily update was successfully updated.' }
+          format.json { render :show, status: :ok, location: @update }
+        else
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace('update_form', partial: 'updates/form',
+              locals: { update: @update })
+          end
+          format.html { render :edit, status: :unprocessable_entity}
         end
-        format.html { render :edit, status: :unprocessable_entity}
       end
+    else
+      redirect_to updates_path
     end
   end
 

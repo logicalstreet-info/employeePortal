@@ -58,17 +58,21 @@ class LeaveApplicationsController < ApplicationController
 
   def update
     @leave_application = LeaveApplication.find(params[:id])
-    respond_to do |format|
-      if @leave_application.update(leave_params)
-        format.html { redirect_to leave_applications_path, notice: 'Your LeaveApplication Was Successfully Updated.' }
-        format.json { render :show, status: :ok, location: @leave_application }
-      else
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('leave_application_form', partial: 'leave_applications/form',
-            locals: { leave_application: @leave_application })
+    if current_user.id == @leave_application.user_id
+      respond_to do |format|
+        if @leave_application.update(leave_params)
+          format.html { redirect_to leave_applications_path, notice: 'Your LeaveApplication Was Successfully Updated.' }
+          format.json { render :show, status: :ok, location: @leave_application }
+        else
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace('leave_application_form', partial: 'leave_applications/form',
+              locals: { leave_application: @leave_application })
+          end
+          format.html { render :edit, status: :unprocessable_entity}
         end
-        format.html { render :edit, status: :unprocessable_entity}
       end
+    else
+      redirect_to leave_applications_path
     end
   end
 
