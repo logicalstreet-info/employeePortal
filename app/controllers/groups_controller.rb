@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  before_action :get_users, only: %i[new create edit update index]
+
   def index
     @group = Group.new
     @groups = Group.public_groups.joins(:participants).where(participants: { user_id: current_user.id })
@@ -32,6 +34,12 @@ class GroupsController < ApplicationController
     else
       render :new
     end
+  end
+
+  private
+
+  def get_users
+    @users_array = User.where(organization_id: current_user.organization_id).order(name: :asc).map { |c| [c.name, c.id] }
   end
 
   def group_params
