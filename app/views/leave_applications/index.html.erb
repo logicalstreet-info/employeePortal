@@ -4,10 +4,15 @@
       <div class="card my-5 shadow">
         <div class="card-body">
           <% if has_role_newuser? %>
-            <div class="col-md-7 text-end">
-              <%= link_to new_leave_application_path, target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'New Leave Application' do %>
-              <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
-              <% end %>
+            <div class="row mt-8">
+              <div class="col-9">
+                <h2>Listing All Leaves</h2><br>
+              </div>
+              <div class="col-3 text-end">
+                <%= link_to new_leave_application_path, target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'New Leave Application' do %>
+                  <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                <% end %>
+              </div>
             </div>
           <% else %>
             <div class="col-md-12 text-end">
@@ -51,9 +56,10 @@
                   <% end %>
                 </div>
               </div></br>
-            <% end %>
-          <% end %><br>
-          <h2>Listing All Leaves</h2>
+            <% end %><br>
+            <h2>Listing All Leaves</h2>
+          <% end %>
+          
           <table class="table">
             <thead class="thead-light">
               <tr>

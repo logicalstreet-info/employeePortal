@@ -4,10 +4,15 @@
       <div class="card my-5 shadow">
         <div class="card-body">
           <% if has_role_newuser? %>
-            <div class="col-md-12 text-end">
-              <%=  link_to updates_new_path, target: '_top', class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update' } do %>
-                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
-              <% end %>
+            <div class="row mt-8">
+              <div class="col-9">
+                <h2>Listing All Daily Update</h2><br>
+              </div>
+              <div class="col-3 text-end">
+                <%=  link_to updates_new_path, target: '_top', class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update' } do %>
+                  <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
+                <% end %>
+              </div>
             </div>
           <% elsif has_role_admin? %>
             <div class="dropdown">
@@ -51,9 +56,9 @@
                   <% end %>
                 </div>
               </div>
-            <% end %>
-          <% end %><br>
-          <h2>Listing All Daily Update</h2>
+            <% end %><br>
+            <h2>Listing All Daily Update</h2>
+          <% end %>
           <table class="table">
             <thead class="thead-light">
               <tr>
