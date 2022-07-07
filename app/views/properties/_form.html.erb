@@ -1,105 +1,85 @@
-<div id="property_form">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
-        <div class="card my-5 shadow">
-          <div class="card-body">
-            <div class="col-md-12 text-end">
-              <%= link_to properties_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'} do %>
-                <i class='bi bi-arrow-left' aria-hidden='true'></i>
+<div class="row">
+  <div class="field col-12">
+      <% invalid = @property.errors.include?(:name) %>
+        <div class="form-group">
+          <%=form.label :Name%>
+          <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}", placeholder: 'name' %>
+          <% if invalid %>
+            <div class="invalid-feedback d-block">
+              <% @property.errors.full_messages_for(:name).each do |error_message| %>
+                <%= error_message %>.
               <% end %>
             </div>
-            <h1>Assets</h1>
-            <%= form_with model: @property, data: {turbo: false} do |form| %>
-              <div class="field col-12">
-                  <% invalid = property.errors.include?(:name) %>
-                    <div class="form-group">
-                      <%=form.label :Name%>
-                      <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}", placeholder: 'name' %>
-                      <% if invalid %>
-                        <div class="invalid-feedback d-block">
-                          <% property.errors.full_messages_for(:name).each do |error_message| %>
-                            <%= error_message %>.
-                          <% end %>
-                        </div>
-                      <% end %>
-                    </div><br>
-                </div>              
-              <div class="row">
-                <div class="field col-6">
-                  <%= form_group_for form, :User_listing, label: true do %>
-                    <%= form.select :user_id, options_for_select(@users_array, selected: form.object.user_id), { include_blank: "Please select User"}, {class: "form-control"} %>
-                  <% end %>
-                </div>        
-                <div class="field col-6">
-                  <% invalid = property.errors.include?(:assets_type) %>
-                    <div class="form-group">
-                      <%=form.label :assets_type %>
-                      <%= form.select :assets_type, options_for_select(Property.assets_types.keys ,selected: form.object.assets_type ) ,{ include_blank: "Select Asset Type"}, {class: "form-control #{'is-invalid' if invalid}"} %>
-                      <% if invalid %>
-                        <div class="invalid-feedback d-block">
-                          <% property.errors.full_messages_for(:assets_type).each do |error_message| %>
-                            <%= error_message %>.
-                          <% end %>
-                        </div>
-                      <% end %>
-                    </div>
-                </div>          
-                <div class="field col-6">
-                  <% invalid = property.errors.include?(:warranty_month) %>
-                    <div class="form-group">
-                      <%=form.label :warranty_month %>
-                      <%= form.text_field :warranty_month, class: "form-control #{'is-invalid' if invalid}", placeholder: 'Warranty Month'%>
-                      <% if invalid %>
-                        <div class="invalid-feedback d-block">
-                          <% property.errors.full_messages_for(:warranty_month).each do |error_message| %>
-                            <%= error_message %>.
-                          <% end %>
-                        </div>
-                      <% end %>
-                    </div>
-                </div>              
-                <div class="field col-6">
-                  <% invalid = property.errors.include?(:purchase_date) %>
-                    <div class="form-group">
-                      <%=form.label :purchase_date %>
-                      <div class="input-group date" data-provide="date" >
-                        <%= form.text_field :purchase_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", placeholder: 'Purchase Date', value: @property.purchase_date&.strftime("%d-%m-%Y") %>
-                        <div class="input-group-append">
-                          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                        </div>
-                        <% if invalid %>
-                        <div class="invalid-feedback d-block">
-                          <% property.errors.full_messages_for(:purchase_date).each do |error_message| %>
-                            <%= error_message %>.
-                          <% end %>
-                        </div>
-                      <% end %> 
-                      </div> 
-                    </div>      
-                  
-                </div><br>
-              </div>          
-              <div class="col">
-                <% invalid = property.errors.include?(:description) %>
-                  <div class="form-group">
-                    <%= form.label :description %>
-                    <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}", row: 5%>
-                    <% if invalid %>
-                      <div class="invalid-feedback d-block">
-                        <% property.errors.full_messages_for(:description).each do |error_message| %>
-                          <%= error_message %>.
-                        <% end %>
-                      </div>
-                    <% end %> 
-                  </div><br>          
-              <div class="col-md-12 text-end">
-                <%=form.button form.object.persisted? ? "Update Asset" : "Create Asset", type: :submit, class: "btn btn-primary" %>
-              </div>
+          <% end %>
+        </div><br>
+    </div>              
+  <div class="row">
+    <div class="field col-6">
+      <%= form_group_for form, :User_listing, label: true do %>
+        <%= form.select :user_id, options_for_select(@users_array, selected: form.object.user_id), { include_blank: "Please select User"}, {class: "form-control"} %>
+      <% end %>
+    </div>        
+    <div class="field col-6">
+      <% invalid = @property.errors.include?(:assets_type) %>
+        <div class="form-group">
+          <%=form.label :assets_type %>
+          <%= form.select :assets_type, options_for_select(Property.assets_types.keys ,selected: form.object.assets_type ) ,{ include_blank: "Select Asset Type"}, {class: "form-control #{'is-invalid' if invalid}"} %>
+          <% if invalid %>
+            <div class="invalid-feedback d-block">
+              <% @property.errors.full_messages_for(:assets_type).each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+    </div>          
+    <div class="field col-6">
+      <% invalid = @property.errors.include?(:warranty_month) %>
+        <div class="form-group">
+          <%=form.label :warranty_month %>
+          <%= form.text_field :warranty_month, class: "form-control #{'is-invalid' if invalid}", placeholder: 'Warranty Month'%>
+          <% if invalid %>
+            <div class="invalid-feedback d-block">
+              <% @property.errors.full_messages_for(:warranty_month).each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+    </div>              
+    <div class="field col-6">
+      <% invalid = @property.errors.include?(:purchase_date) %>
+        <div class="form-group">
+          <%=form.label :purchase_date %>
+          <div class="input-group date" data-provide="date" >
+            <%= form.text_field :purchase_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", placeholder: 'Purchase Date', value: @property.purchase_date&.strftime("%d-%m-%Y") %>
+            <div class="input-group-append">
+              <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+            </div>
+            <% if invalid %>
+            <div class="invalid-feedback d-block">
+              <% @property.errors.full_messages_for(:purchase_date).each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %> 
+          </div> 
+        </div>      
+      
+    </div><br>
+  </div>          
+  <div class="col">
+    <% invalid = @property.errors.include?(:description) %>
+      <div class="form-group">
+        <%= form.label :description %>
+        <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}", row: 5%>
+        <% if invalid %>
+          <div class="invalid-feedback d-block">
+            <% @property.errors.full_messages_for(:description).each do |error_message| %>
+              <%= error_message %>.
             <% end %>
           </div>
-        </div>
-      </div>
-    </div>
+        <% end %> 
+      </div><br>          
   </div>
 </div>

@@ -1,1 +1,26 @@
-<%= render "form", property: @property %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg mx-auto">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h3>New Property</h3>
+            </div>
+            <div class="col-md-1 text-end">
+              <%= link_to properties_path, class: "btn btn-primary", toggle: 'tooltip', placement: 'top', title: 'Back' do %>
+                <i class='bi bi-arrow-left' aria-hidden='true'></i>
+              <% end %>
+            </div>
+            <%= form_for @property, url: properties_path, data: {turbo: false}, method: :post do |form| %>
+              <%= render 'form', :form => form %></br >
+              <div class="col-md-12 text-end">
+                <%= form.submit "Save", class: "btn btn-primary", toggle: 'tooltip', placement: 'top', title: 'Save' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

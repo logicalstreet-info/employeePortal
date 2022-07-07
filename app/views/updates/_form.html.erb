@@ -1,91 +1,69 @@
-<div id="update_form">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
-        <div class="card my-5 shadow">
-          <div class="card-body">
-            <div class="col-md-12 text-end">
-              <%= link_to  updates_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Back' do %>
-                <i class='bi bi-arrow-left' aria-hidden='true'></i>
+<div class="row">
+  <div class="field col-4">
+    <% invalid = @update.errors.include?(:in_time) %>
+      <div class="form-group">
+        <%= form.label :Start_time %>
+        <div class="input-group date" >
+          <%= form.text_field :in_time, class: "form-control timepicker-input #{'is-invalid' if invalid}", value: @update.in_time&.strftime('%I:%M %p') %>
+          <div class="input-group-append" >
+            <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
+          </div>
+          <% if invalid %>
+            <div class="invalid-feedback d-block">
+              <% @update.errors.full_messages_for(:in_time).each do |error_message| %>
+                <%= error_message %>.
               <% end %>
             </div>
-            <h1>Add Update</h1>
-            <%= form_with model: @update, data: {turbo: false} do |form| %>
-              <div class="row">
-                <div class="field col-4">
-                  <% invalid = update.errors.include?(:in_time) %>
-                  <div class="form-group">
-                    <%= form.label :Start_time %>
-                    <div class="input-group date" data-target="#daily_update_start_time" data-toggle="datetimepicker" >
-                      <%= form.text_field :in_time, class: "form-control timepicker-input #{'is-invalid' if invalid}", value: @update.in_time&.strftime('%I:%M %p') %>
-                      <div class="input-group-append" >
-                        <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
-                      </div>
-                      <% if invalid %>
-                        <div class="invalid-feedback d-block">
-                          <% update.errors.full_messages_for(:in_time).each do |error_message| %>
-                            <%= error_message %>.
-                          <% end %>
-                        </div>
-                      <% end %>
-                    </div><br>
-                  </div>
-                </div>
-                <div class="field col-4">
-                  <% invalid = update.errors.include?(:out_time) %>
-                  <div class="form-group">
-                    <%= form.label :End_time %>
-                    <div class="input-group date" data-target="#daily_update_start_time" data-toggle="datetimepicker" >
-                      <%= form.text_field :out_time, class: "form-control timepicker-input #{'is-invalid' if invalid}", value: @update.out_time&.strftime('%I:%M %p') %>
-                      <div class="input-group-append" >
-                        <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
-                      </div>
-                      <% if invalid %>
-                        <div class="invalid-feedback d-block">
-                          <% update.errors.full_messages_for(:out_time).each do |error_message| %>
-                            <%= error_message %>.
-                          <% end %>
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-                <div class="field col-4">
-                  <% invalid = update.errors.include?(:project_id) %>
-                  <div class="form-group">
-                    <%= form.label :project %>
-                    <%= form.collection_select :project_id, @project, :id, :name, {prompt: "Select Project"}, { class: "form-control #{'is-invalid' if invalid}" } %>
-                    <% if invalid %>
-                      <div class="invalid-feedback d-block">
-                        <% update.errors.full_messages_for(:project_id).each do |error_message| %>
-                          <%= error_message %>.
-                        <% end %>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-                <div class="field">
-                  <% invalid = update.errors.include?(:description) %>
-                  <div class="form-group">
-                    <%= form.label :description %>
-                    <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}" %>
-                    <% if invalid %>
-                      <div class="invalid-feedback d-block">
-                        <% update.errors.full_messages_for(:description).each do |error_message| %>
-                          <%= error_message %>.
-                        <% end %>
-                      </div>
-                    <% end %>
-                  </div><br>
-                </div>
-                <div class="col-md-12 text-end">
-                  <%= form.button form.object.persisted? ? "Update Daily Update" : "Create Daily Update", type: :submit, class: "btn btn-primary" %>
-                </div>
-              </div>
+          <% end %>
+        </div><br>
+      </div>
+  </div>
+  <div class="field col-4">
+    <% invalid = @update.errors.include?(:out_time) %>
+    <div class="form-group">
+      <%= form.label :End_time %>
+      <div class="input-group date" data-target="#daily_update_start_time" data-toggle="datetimepicker" >
+        <%= form.text_field :out_time, class: "form-control timepicker-input #{'is-invalid' if invalid}", value: @update.out_time&.strftime('%I:%M %p') %>
+        <div class="input-group-append" >
+          <div class="input-group-text"><i class: "i class="bi bi-stopwatch""></i></div>
+        </div>
+        <% if invalid %>
+          <div class="invalid-feedback d-block">
+            <% @update.errors.full_messages_for(:out_time).each do |error_message| %>
+              <%= error_message %>.
             <% end %>
           </div>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
+  <div class="field col-4">
+    <% invalid = @update.errors.include?(:project_id) %>
+    <div class="form-group">
+      <%= form.label :project %>
+      <%= form.collection_select :project_id, @project, :id, :name, {prompt: "Select Project"}, { class: "form-control #{'is-invalid' if invalid}" } %>
+      <% if invalid %>
+        <div class="invalid-feedback d-block">
+          <% @update.errors.full_messages_for(:project_id).each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="field">
+    <% invalid = @update.errors.include?(:description) %>
+    <div class="form-group">
+      <%= form.label :description %>
+      <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}" %>
+      <% if invalid %>
+        <div class="invalid-feedback d-block">
+          <% @update.errors.full_messages_for(:description).each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div><br>
+  </div>
 </div>
+            

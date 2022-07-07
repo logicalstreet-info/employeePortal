@@ -1,137 +1,113 @@
-<div id="leave_application_form">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
-        <div class="card my-5 shadow">
-          <div class="card-body">
-            <div class="col-md-12 text-end">
-              <%= link_to leave_applications_path, class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Back' do %>
-              <i class='bi bi-arrow-left' aria-hidden='true' aria-hidden='true'></i>
+<div class="row">
+  <div class="field col-5">
+    <% invalid = @leave_application.errors.include?(:from_date) %>
+      <div class="form-group">
+        <%= form.label :From_Date%>
+        <div class="input-group date">
+          <%= form.text_field :from_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", value: @leave_application.from_date&.strftime("%d-%m-%Y") %>
+          <div class="input-group-append">
+            <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+          </div>
+          <% if invalid %>
+            <div class="invalid-feedback d-block">
+              <% @leave_application.errors.full_messages_for(:from_date).each do |error_message| %>
+                <%= error_message %>.
               <% end %>
             </div>
-            <h2>Leave</h2>
-            <%= form_with model: @leave_application, data: {turbo: false} do |form| %>
-              <div class="row">
-                <div class="field col-5">
-                  <% invalid = leave_application.errors.include?(:from_date) %>
-                    <div class="form-group">
-                      <%= form.label :From_Date%>
-                      <div class="input-group date">
-                        <%= form.text_field :from_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", value: @leave_application.from_date&.strftime("%d-%m-%Y") %>
-                        <div class="input-group-append">
-                          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                        </div>
-                        <% if invalid %>
-                          <div class="invalid-feedback d-block">
-                            <% leave_application.errors.full_messages_for(:from_date).each do |error_message| %>
-                              <%= error_message %>.
-                            <% end %>
-                          </div>
-                        <% end %>
-                    </div>
-                  </div>
-                </div>
-                <div class="field col-5">
-                  <% invalid = leave_application.errors.include?(:to_date) %>
-                    <div class="form-group">
-                      <%= form.label :To_Date%>
-                      <div class="input-group date" data-provide="date">
-                        <%= form.text_field :to_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", value: @leave_application.to_date&.strftime("%d-%m-%Y") %>
-                        <div class="input-group-append">
-                          <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                        </div>
-                        <% if invalid %>
-                          <div class="invalid-feedback d-block">
-                            <% leave_application.errors.full_messages_for(:to_date).each do |error_message| %>
-                              <%= error_message %>.
-                            <% end %>
-                          </div>
-                        <% end %>
-                      </div>
-                    </div>
-                </div>
-                <div class="field col-2">
-									<% invalid = leave_application.errors.include?(:leave_type) %>
-									  <div class="from-group">
-                  		<%= form.label :Leave_type%>
-                  		<%= form.select :leave_type, options_for_select(LeaveApplication.leave_types.keys ,selected: form.object.leave_type ) ,{ include_blank: "Select Leave Type"}, {class: "form-control #{'is-invalid' if invalid}"} %>
-											<% if invalid %>
-												<div class="invalid-feedback d-block">
-													<% leave_application.errors.full_messages_for(:leave_type).each do |error_message| %>
-														<%= error_message %>.
-													<% end %>
-												</div>
-                      <% end %>
-										</div>
-								</div>
-                <div class="field">
-                  <%= form.label :half_day %>
-                  <%= form.check_box :half_day, id: "checkbox" %>
-                </div>
-                <div id="half_day_div" class="<%= @leave_application.half_day ? 'd-block' : 'd-none' %>">
-                  <div class="row">
-                    <div class="col">
-											<% invalid = leave_application.errors.include?(:from_time) %>
-											<div class="from-group">
-												<%= form.label :from_time %>
-												<div class="input-group date" data-target-input="nearest">
-													<%= form.text_field :from_time, class: "form-control timepicker-input #{'is-invalid' if invalid}" %>
-													<div class="input-group-append">
-														<div class="input-group-text"><i class: "i class=" bi bi-stopwatch""></i></div>
-													</div>
-													<% if invalid %>
-														<div class="invalid-feedback d-block">
-															<% leave_application.errors.full_messages_for(:from_time).each do |error_message| %>
-																<%= error_message %>.
-															<% end %>
-														</div>
-                      		<% end %>
-												</div>
-											</div>
-                    </div>
-                    <div class="col">
-											<% invalid = leave_application.errors.include?(:to_time) %>
-											<div class="from-group">
-												<%= form.label :to_time %>
-												<div class="input-group date" data-target-input="nearest">
-													<%= form.text_field :to_time, class: "form-control timepicker-input #{'is-invalid' if invalid}" %>
-													<div class="input-group-append">
-														<div class="input-group-text"><i class: "i class=" bi bi-stopwatch""></i></div>
-													</div>
-													<% if invalid %>
-														<div class="invalid-feedback d-block">
-															<% leave_application.errors.full_messages_for(:from_time).each do |error_message| %>
-																<%= error_message %>.
-															<% end %>
-														</div>
-                      		<% end %>
-												</div>
-											</div>
-                    </div>
-                  </div>
-                </div><br />
-								<div class="field">
-								<% invalid = leave_application.errors.include?(:description) %>
-								<div class="form-group">
-									<%= form.label :description %>
-									<%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}" %>
-									<% if invalid %>
-										<div class="invalid-feedback d-block">
-											<% leave_application.errors.full_messages_for(:description).each do |error_message| %>
-												<%= error_message %>.
-											<% end %>
-										</div>
-									<% end %>
-								</div><br>
-							</div>
-                <div class="col-md-12 text-end">
-                  <%= form.button form.object.persisted? ? "Update Leave" : "Create Leave", type: :submit, class: "btn btn-primary" %>
-                </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="field col-5">
+    <% invalid = @leave_application.errors.include?(:to_date) %>
+      <div class="form-group">
+        <%= form.label :To_Date%>
+        <div class="input-group date" data-provide="date">
+          <%= form.text_field :to_date, class: "form-control datepicker-input #{'is-invalid' if invalid}", value: @leave_application.to_date&.strftime("%d-%m-%Y") %>
+          <div class="input-group-append">
+            <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+          </div>
+          <% if invalid %>
+            <div class="invalid-feedback d-block">
+              <% @leave_application.errors.full_messages_for(:to_date).each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+  </div>
+  <div class="field col-2">
+    <% invalid = @leave_application.errors.include?(:leave_type) %>
+      <div class="from-group">
+        <%= form.label :Leave_type%>
+        <%= form.select :leave_type, options_for_select(LeaveApplication.leave_types.keys ,selected: form.object.leave_type ) ,{ include_blank: "Select Leave Type"}, {class: "form-control #{'is-invalid' if invalid}"} %>
+        <% if invalid %>
+          <div class="invalid-feedback d-block">
+            <% @leave_application.errors.full_messages_for(:leave_type).each do |error_message| %>
+              <%= error_message %>.
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+  </div>
+  <div class="field">
+    <%= form.label :half_day %>
+    <%= form.check_box :half_day, id: "checkbox" %>
+  </div>
+  <div id="half_day_div" class="<%= @leave_application.half_day ? 'd-block' : 'd-none' %>">
+    <div class="row">
+      <div class="col">
+        <% invalid = @leave_application.errors.include?(:from_time) %>
+        <div class="from-group">
+          <%= form.label :from_time %>
+          <div class="input-group date" data-target-input="nearest">
+            <%= form.text_field :from_time, class: "form-control timepicker-input #{'is-invalid' if invalid}" %>
+            <div class="input-group-append">
+              <div class="input-group-text"><i class: "i class=" bi bi-stopwatch""></i></div>
+            </div>
+            <% if invalid %>
+              <div class="invalid-feedback d-block">
+                <% @leave_application.errors.full_messages_for(:from_time).each do |error_message| %>
+                  <%= error_message %>.
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <% invalid = @leave_application.errors.include?(:to_time) %>
+        <div class="from-group">
+          <%= form.label :to_time %>
+          <div class="input-group date" data-target-input="nearest">
+            <%= form.text_field :to_time, class: "form-control timepicker-input #{'is-invalid' if invalid}" %>
+            <div class="input-group-append">
+              <div class="input-group-text"><i class: "i class=" bi bi-stopwatch""></i></div>
+            </div>
+            <% if invalid %>
+              <div class="invalid-feedback d-block">
+                <% @leave_application.errors.full_messages_for(:from_time).each do |error_message| %>
+                  <%= error_message %>.
+                <% end %>
               </div>
             <% end %>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </div><br />
+  <div class="field">
+  <% invalid = @leave_application.errors.include?(:description) %>
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.rich_text_area :description, class: "form-control #{'is-invalid' if invalid}" %>
+    <% if invalid %>
+      <div class="invalid-feedback d-block">
+        <% @leave_application.errors.full_messages_for(:description).each do |error_message| %>
+          <%= error_message %>.
+        <% end %>
+      </div>
+    <% end %>
+  </div><br>
 </div>
