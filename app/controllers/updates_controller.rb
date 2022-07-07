@@ -76,8 +76,12 @@ class UpdatesController < ApplicationController
   end
 
   def import
-    Update.import(params[:file])
-    redirect_to updates_path, notice: 'successfully updated'
+    if params[:file].present?
+      Update.import(params[:file])
+      redirect_to updates_path, notice: 'Successfully updated'
+    else
+      redirect_to updates_path, alert: 'No file choosen'
+    end
   end
 
   private
