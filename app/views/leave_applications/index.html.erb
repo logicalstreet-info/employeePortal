@@ -3,130 +3,126 @@
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-5 shadow">
         <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h2>Listing All Leaves</h2><br>
-            </div>
-            <% if has_role_newuser? %>
-              <div class="col-md-7 text-end">
-                <%= link_to new_leave_application_path, target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'New Leave Application' do %>
-                <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
-                <% end %>
-              </div>
-            <% else %>
-              <div class="col-md-12 text-end">
-                <!-- %= button_to raw("<i class=\"bi bi-calendar2-week-fill\"></i>"), {:controller => :leave_applications, :action => :get_calculated_leaves}, {class: 'btn btn-success'} -----! % -->
-              </div>
-              <%= form_tag leave_applications_path, target: "_top", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'},  method: :get do %>
-                <div class="row mt-4">
-                  <div class="col-2"> 
-                    <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
-                  </div>
-                  <div class="col-2">
-                    <%= select_tag :status, options_for_select(@status, selected: params[:status]),{ include_blank: "All Leave Type", class: "form-control col-md-3 mr-1" } %>
-                  </div>
-                  <div class="col-2">
-                    <%= select_tag :order, options_for_select(@order, selected: params[:order]),{ include_blank: "By Order", class: "form-control col-md-3 mr-1" } %>
-                  </div>
-                  <div class ="col-2">
-                    <div class="input-group date col-3" data-provide="date" >
-                      <%= text_field_tag :from_date, params[:from_date], class: "form-control datepicker-input" %>
-                      <div class="input-group-append">
-                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class ="col-2">
-                    <div class="input-group date col-3" data-provide="date" >
-                      <%= text_field_tag :to_date, params[:to_date], class: "form-control datepicker-input" %>
-                      <div class="input-group-append">
-                        <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
-                      </div>
-                    </div>
-                  </div><br>
-                  <div class="col-1">
-                    <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
-                      <i class='bi bi-search' aria-hidden='true'></i>
-                    <% end %>
-                  </div>
-                  <div class="reset">
-                    <%= link_to leave_applications_path, class: 'btn btn-secondary', target: "_top", title: 'Clean' do %>
-                      <i class='bi bi-x-lg' aria-hidden='true'></i>
-                    <% end %>
-                  </div>
-                </div></br>
+          <% if has_role_newuser? %>
+            <div class="col-md-7 text-end">
+              <%= link_to new_leave_application_path, target: "_top", class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'New Leave Application' do %>
+              <i class='bi bi-plus-circle-fill' aria-hidden='true'></i>
               <% end %>
-            <% end %><br>
-            <table class="table">
-              <thead class="thead-light">
+            </div>
+          <% else %>
+            <div class="col-md-12 text-end">
+              <!-- %= button_to raw("<i class=\"bi bi-calendar2-week-fill\"></i>"), {:controller => :leave_applications, :action => :get_calculated_leaves}, {class: 'btn btn-success'} -----! % -->
+            </div>
+            <%= form_tag leave_applications_path, target: "_top", data: {toggle: 'tooltip', placement: 'top', title: 'Edit Update'},  method: :get do %>
+              <div class="row mt-4">
+                <div class="col-2"> 
+                  <%= select_tag :user_id, options_for_select(@users_array, selected: params[:user_id]),{ include_blank: "All User", class: "form-control col-md-3 mr-1"} %>
+                </div>
+                <div class="col-2">
+                  <%= select_tag :status, options_for_select(@status, selected: params[:status]),{ include_blank: "All Leave Type", class: "form-control col-md-3 mr-1" } %>
+                </div>
+                <div class="col-2">
+                  <%= select_tag :order, options_for_select(@order, selected: params[:order]),{ include_blank: "By Order", class: "form-control col-md-3 mr-1" } %>
+                </div>
+                <div class ="col-2">
+                  <div class="input-group date col-3" data-provide="date" >
+                    <%= text_field_tag :from_date, params[:from_date], class: "form-control datepicker-input" %>
+                    <div class="input-group-append">
+                      <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class ="col-2">
+                  <div class="input-group date col-3" data-provide="date" >
+                    <%= text_field_tag :to_date, params[:to_date], class: "form-control datepicker-input" %>
+                    <div class="input-group-append">
+                      <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
+                    </div>
+                  </div>
+                </div><br>
+                <div class="col-1">
+                  <%= button_tag class: "btn btn-primary", data: {toggle: 'tooltip', placement: 'top'}, title: 'Find' do %>
+                    <i class='bi bi-search' aria-hidden='true'></i>
+                  <% end %>
+                </div>
+                <div class="reset">
+                  <%= link_to leave_applications_path, class: 'btn btn-secondary', target: "_top", title: 'Clean' do %>
+                    <i class='bi bi-x-lg' aria-hidden='true'></i>
+                  <% end %>
+                </div>
+              </div></br>
+            <% end %>
+          <% end %><br>
+          <h2>Listing All Leaves</h2>
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <% if has_role_admin? %>
+                  <th>Name</th>
+                <% end %>
+                <th>Leave Type</th>
+                <th class="col-6">Description</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Total Days</th>
+                <th>Status</th>
+                <% if has_role_admin? %>
+                  <th>Apporved_By/ Rejected_By</th>
+                <% end %>
+                <th>
+                  <% if @leave_applications.pluck(:status).include?("pending") %>
+                    Actions
+                  <% end %>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @leaves.each do |leave| %>
                 <tr>
                   <% if has_role_admin? %>
-                    <th>Name</th>
+                    <td><%= User.find(leave.user_id).name %></td>
                   <% end %>
-                  <th>Leave Type</th>
-                  <th class="col-6">Description</th>
-                  <th>From Date</th>
-                  <th>To Date</th>
-                  <th>Total Days</th>
-                  <th>Status</th>
-                  <% if has_role_admin? %>
-                    <th>Apporved_By/ Rejected_By</th>
-                  <% end %>
-                  <th>
-                    <% if @leave_applications.pluck(:status).include?("pending") %>
-                      Actions
-                    <% end %>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @leaves.each do |leave| %>
-                  <tr>
-                    <% if has_role_admin? %>
-                      <td><%= User.find(leave.user_id).name %></td>
-                    <% end %>
-                    <td><%= leave.leave_type %></td>
-                    <td><%= leave.description %></td>
-                    <% if leave.from_date.present? || leave.from_time.present?%>
-                      <td>
-                        <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
-                      </td>  
-                    <% end %>
-                    <% if leave.to_date.present?|| leave.to_time.present?%>
-                      <td>
-                        <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
-                      </td>
-                    <% end %>
-                    <% if leave.from_date && leave.to_date? || leave.from_time && leave.to_time?%>
-                      <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
-                    <% end %>
-                    <td><%= leave.status %></td>
-                    <% if leave.apporved_by.present? && has_role_admin? %>
-                      <td><%= leave.apporved_by %></td>
-                    <% end %>
+                  <td><%= leave.leave_type %></td>
+                  <td><%= leave.description %></td>
+                  <% if leave.from_date.present? || leave.from_time.present?%>
                     <td>
-                      <% if leave.pending? && has_role_admin? %>
-                      <td class="col-1">
-                        <%= link_to approve_leave_application_path(leave.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Approve Leave' do %>
-                          <i class='bi bi-check-lg' aria-hidden='true'></i>
-                        <% end %>
-                        <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Reject Leave' do %>
-                          <i class='bi bi-x' aria-hidden='true'></i>
-                        <% end %>
-                      </td>
-                      <% elsif leave.pending? && has_role_newuser? %>
-                        <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Leave' do %>
-                          <i class='bi bi-pencil-fill' aria-hidden='true'></i>
-                        <% end %>
+                      <%= leave.half_day? ? leave.from_date.present? ? date_format(leave.from_date):date_format(Time.now) : date_format(leave.from_date) %>
+                    </td>  
+                  <% end %>
+                  <% if leave.to_date.present?|| leave.to_time.present?%>
+                    <td>
+                      <%= leave.half_day? ? leave.to_date.present? ? date_format(leave.to_date):date_format(Time.now) : date_format(leave.to_date) %>
+                    </td>
+                  <% end %>
+                  <% if leave.from_date && leave.to_date? || leave.from_time && leave.to_time?%>
+                    <td><%= leave.half_day? ? 'Half Day' : leave.total_day %></td>
+                  <% end %>
+                  <td><%= leave.status %></td>
+                  <% if leave.apporved_by.present? && has_role_admin? %>
+                    <td><%= leave.apporved_by %></td>
+                  <% end %>
+                  <td>
+                    <% if leave.pending? && has_role_admin? %>
+                    <td class="col-1">
+                      <%= link_to approve_leave_application_path(leave.id), class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Approve Leave' do %>
+                        <i class='bi bi-check-lg' aria-hidden='true'></i>
+                      <% end %>
+                      <%= link_to reject_leave_application_path(leave.id), class: "btn btn-danger btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Reject Leave' do %>
+                        <i class='bi bi-x' aria-hidden='true'></i>
                       <% end %>
                     </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-            <div class="pagination justify-content-center">
-              <%= paginate @leaves, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
-            </div>
+                    <% elsif leave.pending? && has_role_newuser? %>
+                      <%= link_to  edit_leave_application_path(leave), target: "_top", class: "btn btn-success btn-sm", data: {toggle: 'tooltip', placement: 'top'}, title: 'Edit Leave' do %>
+                        <i class='bi bi-pencil-fill' aria-hidden='true'></i>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <div class="pagination justify-content-center">
+            <%= paginate @leaves, theme: 'bootstrap-5', pagination_class: "pagination-sm", nav_class: "d-inline-b" %>
           </div>
         </div>
       </div>

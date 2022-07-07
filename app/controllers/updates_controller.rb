@@ -9,8 +9,8 @@ class UpdatesController < ApplicationController
       if params[:type] == 'day'
         @updates = Update.where('DATE(created_at) = ? ', Date.yesterday)
       elsif params[:type] == 'month'
-        @updates = Update.where("DATE_PART('month', created_at) = ? OR  DATE_PART('year', created_at) = ? ",
-          Date.current.month, Date.current.year)
+        @updates = Update.where("(DATE_PART('month', created_at) = ? OR  DATE_PART('year', created_at) = ?) AND organization_id = ?",
+          Date.current.month, Date.current.year, current_user.organization_id)
       end
     else
       @updates = Update.where(user_id: current_user).order('created_at DESC')
@@ -76,8 +76,12 @@ class UpdatesController < ApplicationController
   end
 
   def import
-    Update.import(params[:file])
-    redirect_to updates_path, notice: 'successfully updated'
+    if params[:file].present?
+      Update.import(params[:file])
+      redirect_to updates_path, notice: 'Successfully updated'
+    else
+      redirect_to updates_path, alert: 'No file choosen'
+    end
   end
 
   private

@@ -17,7 +17,7 @@
     <% invalid = @leave_day.errors.include?(:holiday) %>
     <div class="form-group">
       <div class="input-group date" data-provide="date" >
-        <%= form.text_field :holiday, class: "form-control datepicker-input #{'is-invalid' if invalid}" %>
+        <%= form.text_field :holiday, class: "form-control datepicker-input #{'is-invalid' if invalid}", placeholder: 'date' %>
           <div class="input-group-append">
             <div class="input-group-text"><i class="bi bi-calendar3"></i></i></div>
           </div>
