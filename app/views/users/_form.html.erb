@@ -33,7 +33,7 @@
                   </div>
 
                   <div class="field col-6">
-                  <% invalid = @user.errors.include?(:email) %>
+                    <% invalid = @user.errors.include?(:email) %>
                     <div class="form-group">
                       <%=form.label :Email%>
                       <%= form.text_field :email, class: "form-control #{'is-invalid' if invalid}", placeholder: 'email'%>
@@ -48,7 +48,7 @@
                   </div>
 
                   <div class="field col-6">
-                  <% invalid = @user.errors.include?(:password) %>
+                    <% invalid = @user.errors.include?(:password) %>
                     <div class="form-group">
                       <%=form.label :password %>
                       <%= form.password_field :password, class: "form-control #{'is-invalid' if invalid}", placeholder: 'password'%>
@@ -63,7 +63,7 @@
                   </div>
 
                   <div class="field col-6">
-                  <% invalid = @user.errors.include?(:name) %>
+                    <% invalid = @user.errors.include?(:name) %>
                     <div class="form-group">
                       <%=form.label :Name%>
                       <%= form.text_field :name, class: "form-control #{'is-invalid' if invalid}", placeholder: 'name' %>
