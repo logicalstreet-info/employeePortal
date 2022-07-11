@@ -17,7 +17,8 @@ RSpec.describe "UsersController", type: :request do
           email: "#{Faker::Lorem.word}@hiclark.com",
           password: 11111111,
           password_confirmation: 11111111,
-          organization_id: user.organization_id 
+          organization_id: user.organization_id,
+          employee_positions: "junior"
         }
       }
     
@@ -114,7 +115,7 @@ RSpec.describe "UsersController", type: :request do
 
       it 'Edit User' do
         user = create(:user)
-        get edit_user_path(user)
+        get edit_user_user_path(user)
       end
     
       it 'Update User' do
@@ -126,7 +127,8 @@ RSpec.describe "UsersController", type: :request do
 
       it 'Update User' do
         user = create(:user)
-        patch update_user_user_path(user), params: { user: { mobile_number: 2222222222 } }
+        skill = create(:skill)
+        patch update_user_user_path(user), params: { user: { mobile_number: 2222222222, skills: skill } }
         expect(response.body).to redirect_to(users_path)
         expect(flash[:notice]).to match('User was successfully updated.')
       end
