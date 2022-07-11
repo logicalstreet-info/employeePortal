@@ -27,17 +27,12 @@ RSpec.describe "HomeController", type: :request do
 
     it "for show the assets" do
       get root_path
-      expect(response.body).to include("Assets")
+      expect(response.body).to include("Asset")
     end
 
     it "for show the project" do
       get root_path
       expect(response.body).to include("Project")
-    end
-   
-    it "for show the notification" do
-      get root_path
-      expect(response.body).to include("Notification")
     end
 
     it "for show the Chat" do
@@ -47,25 +42,21 @@ RSpec.describe "HomeController", type: :request do
 
     it "for show the Leaves" do
       get root_path
-      expect(response.body).to include("Leaves")
-    end
-
-    it "for show the Count total leave" do
-      get root_path
-      expect(response.body).to include("Count total leave")
+      expect(response.body).to include("Leave")
     end
 
 
   end
 
   describe "show the home page" do
+    before { cookies['is_admin_view'] = true }
 
     describe "get admin page" do
 
       it "show the admin name in home page" do
         user.add_role(:admin)
         get root_path, params: {}, as: :turbo_stream
-        expect(response.body).to include("Admin")
+        expect(response.body).to include("Admin Details")
       end 
       
       it "show the admin name in home page" do
