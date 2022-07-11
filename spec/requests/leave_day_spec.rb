@@ -11,6 +11,7 @@ RSpec.describe "LeaveDaysController", type: :request do
     before do 
       @params = { 
         leave_day: { 
+          name: "Rakshabandhan",          
           holiday: "2022-07-03 00:00:00 UTC", 
           organization_id: user.organization_id 
         } 
@@ -24,7 +25,6 @@ RSpec.describe "LeaveDaysController", type: :request do
     end
     
     it "for a leave_day holiday" do
-      # user =  create(:user)
       get new_leave_day_path, params: @params, as: :turbo_stream
       expect(response.body).to include("holiday")
     end
