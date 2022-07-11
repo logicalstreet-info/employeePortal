@@ -55,7 +55,7 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
 
     it "for a leave application" do
       get new_leave_application_path
-      expect(response.body).to include("Leaves")
+      expect(response.body).to include("New LeaveApplication")
     end
 
     it "for a leave application from_date" do
@@ -134,7 +134,7 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
 
       it 'request referer and status is not right' do
         leave_application = create(:leave_application)
-        post approve_leave_application_path(leave_application),params: { leave_application: { status: :approved } }, headers: { 'HTTP_REFERER' => '' }, as: :turbo_stream
+        patch approve_leave_application_path(leave_application),params: { leave_application: { status: :approved } }, headers: { 'HTTP_REFERER' => '' }, as: :turbo_stream
         expect(response.body).to redirect_to(root_path)
         expect(flash[:notice]).to match('Leaves Approve Succsesfully')
       end
