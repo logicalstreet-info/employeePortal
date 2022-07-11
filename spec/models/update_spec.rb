@@ -43,7 +43,7 @@ RSpec.describe Update, type: :model do
         expect(record).to be_valid  
       end
 
-      it "is not pressent" do 
+      it "is not present" do 
         record = build(:update, out_time: nil)
         expect(record).to be_invalid
         expect(record.errors.messages).to have_key(:out_time)

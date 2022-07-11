@@ -23,12 +23,6 @@ RSpec.describe 'UpdatesController', type: :request do
       expect(response).to be_successful
     end
 
-    it 'creates a new contract' do
-      record = create(:update)
-      expect { post updates_path, params: @params, as: :turbo_stream }.to change(Update, :count).by(0)
-    end
-
-
     it "check the description is right" do
       record = create(:update)
       get updates_path, params: {}, as: :turbo_stream
@@ -51,7 +45,7 @@ RSpec.describe 'UpdatesController', type: :request do
     it "for edit update form" do
       record = create(:update)
       get edit_update_path(record)
-      expect(response.body).to include("Add Update")
+      expect(response.body).to include("Edit Daily-Update")
     end
     
     describe "GET /Update" do
@@ -68,7 +62,7 @@ RSpec.describe 'UpdatesController', type: :request do
       end
     
       it "for new update form" do
-        expect(response.body).to include("Add Update")
+        expect(response.body).to include("New Daily-Update")
       end
 
       it "shows Start_time label" do
@@ -130,7 +124,7 @@ RSpec.describe 'UpdatesController', type: :request do
     it "imports the Update file" do
       expect(Update).to receive(:import).with("foo.txt")
       post import_updates_path, params: { file: 'foo.txt' }
-      expect(flash[:notice]).to eq "successfully updated"
+      expect(flash[:notice]).to eq "Successfully updated"
     end
 
   end
