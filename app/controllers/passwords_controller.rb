@@ -15,6 +15,7 @@ class PasswordsController < ApplicationController
           partial: 'passwords/form',
           locals: { user: @user })
         end
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
@@ -33,7 +34,7 @@ class PasswordsController < ApplicationController
           render turbo_stream: turbo_stream.replace('edit_user_password_form', partial: 'passwords/admin_form',
           locals: { password: @password })
         end
-        format.html { render :edit_password }
+        format.html { render :edit_password, status: :unprocessable_entity }
       end
     end
   end
