@@ -8,24 +8,9 @@ RSpec.describe "UsersController", type: :request do
 
   describe "user" do
     
-    before do 
-      @params = { 
-        user: { 
-          name: Faker::Name.name,
-          mobile_number: 1111111111, 
-          parent_mobile_number: 1111111111,
-          email: "#{Faker::Lorem.word}@hiclark.com",
-          password: 11111111,
-          password_confirmation: 11111111,
-          organization_id: user.organization_id,
-          employee_positions: "junior"
-        }
-      }
-    
-    end
 
     it "should show user" do
-      get users_path, params: @params
+      get users_path
       expect(response).to be_successful
     end
 
@@ -109,6 +94,16 @@ RSpec.describe "UsersController", type: :request do
         get new_user_path
       end
 
+      it 'user redirect_url to' do
+        redirect_url = "/users"
+        skill = create(:skill)
+        post employees_path, params: { user: 
+         UserHelper.user_params(user).merge!( skills: skill), 
+         redirect_url: redirect_url }
+        expect(response.body).to redirect_to(redirect_url)
+        expect(flash[:notice]).to match('User was successfully created.')
+      end
+
     end
 
     describe "PATCH /User" do
@@ -120,17 +115,29 @@ RSpec.describe "UsersController", type: :request do
     
       it 'Update User' do
         user = create(:user)
-        put user_path(user), params: { user: { mobile_number: 2222222222 } }
+        put user_path(user), params: { user: UserHelper.user_params(user).
+          merge!( mobile_number: 2222222222 ) }
         expect(response.body).to redirect_to(users_path)
         expect(flash[:notice]).to match('User was successfully updated.')
       end
 
+
       it 'Update User' do
         user = create(:user)
         skill = create(:skill)
-        patch update_user_user_path(user), params: { user: { mobile_number: 2222222222, skills: skill } }
+        patch update_user_user_path(user), params: { user: UserHelper.
+          user_params(user).merge!( mobile_number: 2222222222, skills: skill ) }
         expect(response.body).to redirect_to(users_path)
         expect(flash[:notice]).to match('User was successfully updated.')
+      end
+
+      it 'invalid request' do
+        user = create(:user)
+        skill = create(:skill)
+        patch update_user_user_path(user), params: 
+         { user: UserHelper.user_params(user).
+         merge!( mobile_number: nil, name: nil, skills: skill) }
+        expect(response).to have_http_status(422)
       end
     
     end

@@ -7,19 +7,6 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
   end
   
   describe "leave application" do
-    before do
-      @params = {
-        leave_application: {
-          description: "Leave",
-          from_date: Date.today,
-          to_date: Date.today,
-          from_time: Time.now - 4.hours,
-          to_time: Time.now - 3.hours,
-          leave_type: :Personal,
-          half_day: true
-        }
-      }
-    end
     
     it "should show leave_day" do
       get leave_applications_path
@@ -100,10 +87,18 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
       end
       
       it 'Create LeaveApplication' do
-        post leave_applications_path, params: @params
+        post leave_applications_path, params: { leave_application: 
+          LeaveApplicationHelper.leave_application_params}
         expect(response.body).to redirect_to(leave_applications_path)
         expect(flash[:notice]).to match("Leave Application Created Sucessfully")
         expect(LeaveApplication.last.leave_type).to match("Personal")
+      end
+
+      it 'invalid request' do
+        post leave_applications_path, params: { leave_application: 
+          LeaveApplicationHelper.leave_application_params.merge!( description: nil, 
+          from_date: nil, to_date: nil) } 
+        expect(response).to have_http_status(422)
       end
     end 
     
@@ -116,9 +111,19 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
     
       it 'Update LeaveApplication' do
         leave = create(:leave_application)
-        put leave_application_path(leave), params: { leave_application: { leave_type: :Medical } }, as: :turbo_stream
+        put leave_application_path(leave), params: { leave_application: 
+          LeaveApplicationHelper.leave_application_params.
+          merge!( leave_type: :Medical ) }, as: :turbo_stream
         expect(response.body).to redirect_to(leave_applications_path)
         expect(flash[:notice]).to match('Your LeaveApplication Was Successfully Updated.')
+      end
+
+      it 'invalid request' do
+        leave = create(:leave_application)
+        put leave_application_path(leave), params: { 
+          leave_application: LeaveApplicationHelper.leave_application_params.
+          merge!( description: nil, from_date: nil, to_date: nil ) }
+        expect(response).to have_http_status(422)
       end
     
     end
@@ -127,14 +132,20 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
 
       it 'request referer and status is right' do
         leave_application = create(:leave_application)
-        patch approve_leave_application_path(leave_application),params: { leave_application: { status: :approved } }, headers: { 'HTTP_REFERER' => '/leave_applications' }, as: :turbo_stream
+        patch approve_leave_application_path(leave_application), params: { 
+          leave_application: LeaveApplicationHelper.leave_application_params.
+          merge!( status: :approved ) }, 
+          headers: { 'HTTP_REFERER' => '/leave_applications' }, as: :turbo_stream
         expect(response.body).to redirect_to(leave_applications_path)
         expect(flash[:notice]).to match('Leaves Approve Succsesfully')
       end
 
       it 'request referer and status is not right' do
         leave_application = create(:leave_application)
-        patch approve_leave_application_path(leave_application),params: { leave_application: { status: :approved } }, headers: { 'HTTP_REFERER' => '' }, as: :turbo_stream
+        patch approve_leave_application_path(leave_application), params: { 
+          leave_application: LeaveApplicationHelper.leave_application_params.
+          merge!( status: :approved ) }, 
+          headers: { 'HTTP_REFERER' => '' }, as: :turbo_stream
         expect(response.body).to redirect_to(root_path)
         expect(flash[:notice]).to match('Leaves Approve Succsesfully')
       end
@@ -145,14 +156,20 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
 
       it 'request referer and status is right' do
         leave_application = create(:leave_application)
-        patch reject_leave_application_path(leave_application),params: { leave_application: { status: :rejected } }, headers: { 'HTTP_REFERER' => '/leave_applications' }, as: :turbo_stream
+        patch reject_leave_application_path(leave_application), params: { 
+          leave_application: LeaveApplicationHelper.leave_application_params.
+          merge!(status: :rejected )}, 
+          headers: { 'HTTP_REFERER' => '/leave_applications' }, as: :turbo_stream
         expect(response.body).to redirect_to(leave_applications_path)
         expect(flash[:notice]).to match('Leaves Reject Succsesfull')
       end
 
       it 'request referer and status is not right' do
         leave_application = create(:leave_application)
-        patch reject_leave_application_path(leave_application),params: { leave_application: { status: :rejected } }, headers: { 'HTTP_REFERER' => '' }, as: :turbo_stream
+        patch reject_leave_application_path(leave_application),params: { 
+          leave_application: LeaveApplicationHelper.leave_application_params.
+          merge!(status: :rejected ) }, 
+          headers: { 'HTTP_REFERER' => '' }, as: :turbo_stream
         expect(response.body).to redirect_to(root_path)
         expect(flash[:notice]).to match('Leaves Reject Succsesfully')
       end
