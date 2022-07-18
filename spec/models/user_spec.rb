@@ -19,7 +19,7 @@ RSpec.describe User, type: :model do
       end
     
       it "is require unique" do 
-        user = create(:user, email: "#{Faker::Lorem.word}@hiclark.com", mobile_number: 1111111111, parent_mobile_number: 2222222222)
+        user = create(:user, email: "#{Faker::Lorem.word}@gmail.com", mobile_number: 1111111111, parent_mobile_number: 2222222222)
         expect(user).to be_valid
       end
     
