@@ -3,14 +3,19 @@ class PropertiesController < ApplicationController
 
   def index
     @asset_types = Property.assets_types.keys.collect { |s| [s.upcase, s] }
+    @property = if has_role_admin?
+                  Property.where(organization_id: current_user.organization_id)
+                else
+                  Property.where(user_id: current_user)
+                end
     @properties = if params[:user_id].present? && params[:assets_type].present?
-                    Property.where(user_id: params[:user_id], assets_type: params[:assets_type])
+                    @property.where(user_id: params[:user_id], assets_type: params[:assets_type])
                   elsif params[:user_id].present?
-                    Property.where(user_id: params[:user_id])
+                    @property.where(user_id: params[:user_id])
                   elsif params[:assets_type].present?
-                    Property.where(assets_type: params[:assets_type])
+                    @property.where(assets_type: params[:assets_type])
                   else 
-                    Property.where(organization_id: current_user.organization_id)
+                    @property.all
                   end
     @properties = @properties.page(params[:page]).per(5)
   end
