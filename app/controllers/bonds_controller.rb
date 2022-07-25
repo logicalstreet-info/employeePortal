@@ -2,8 +2,8 @@ class BondsController < ApplicationController
   before_action :get_users, only: %i[new create edit update index]
 
   def index
-    if current_user.organization.feature_flag.employee_bond == 'on'
-      @bonds = Bond.all
+    if current_user&.organization&.feature_flag&.employee_bond == 'on'
+      @bonds = Bond.where(organization_id: current_user.organization_id)
     else
       redirect_to root_path
     end
@@ -15,7 +15,7 @@ class BondsController < ApplicationController
 
   def create
     @bond = Bond.new(bond_params.merge(organization_id: current_user.organization_id))
-    respond_to do |format|
+    respond_to do |format|  
       if @bond.save
         format.html { redirect_to bonds_path, notice: 'Bond Sucessfully Created ' }
       else
@@ -30,17 +30,19 @@ class BondsController < ApplicationController
 
   def update
     @bond = Bond.find(params[:id])
-    if @bond.update(bond_params)
-      redirect_to bonds_path
-    else
-      render :edit
-    end  
+    respond_to do |format|
+      if @bond.update(bond_params)
+        format.html { redirect_to bonds_path, notice: 'Bond Sucessfully updated' } 
+      else
+        format.html { render :edit, status: :unprocessable_entity}
+      end
+    end 
   end
 
   def destroy
     @bond = Bond.find(params[:id])
     @bond.destroy
-    redirect_to bonds_path
+    redirect_to bonds_path, notice: 'Bond was successfully destroyed.'
   end
 
   private

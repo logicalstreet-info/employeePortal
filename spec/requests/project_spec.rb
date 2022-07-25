@@ -6,17 +6,10 @@ RSpec.describe "ProjectsController", type: :request do
     sign_in(user)
   end
 
+  let(:valid_attributes) { {name: 'My project', 
+    organization_id: user.organization_id }  }
+
   describe "project" do
-    
-    before do 
-      @params = { 
-        project: { 
-          name: 'My project', 
-          organization_id: user.organization_id 
-        }, 
-        user_ids: [user.id] 
-      }
-    end
 
     it "should show project" do
       user = create(:user)
@@ -26,7 +19,8 @@ RSpec.describe "ProjectsController", type: :request do
     
     it "for a project name" do
       user =  create(:user)
-      get new_project_path(user), params: @params, as: :turbo_stream
+      get new_project_path(user), params: { project: valid_attributes }, 
+        as: :turbo_stream
       expect(response.body).to include("name")
     end
 
@@ -39,10 +33,19 @@ RSpec.describe "ProjectsController", type: :request do
       
       it 'Create project' do
         user = create(:user)
-        post projects_path(user), params: @params, as: :turbo_stream
+        post projects_path(user), params: { project: valid_attributes.
+          merge!(user_ids: [user.id]) }, as: :turbo_stream
         expect(response.body).to redirect_to(projects_path)
         expect(flash[:notice]).to match('Project was successfully created.')
         expect(Project.last.name).to match('My project')
+      end
+
+      it 'invalid request' do
+        user = create(:user)
+        post projects_path(user), params: { project: valid_attributes.
+          merge!( name: nil, organization_id: user.organization_id, 
+          user_ids: [user.id]) }
+        expect(response).to have_http_status(422)
       end
 
     end
@@ -58,9 +61,18 @@ RSpec.describe "ProjectsController", type: :request do
       it 'Update project' do
         user = create(:user)
         project = create(:project)
-        put project_path(user, project), params: { project: { name: 'My new project' } }, as: :turbo_stream
+        put project_path(user, project), params: { project: valid_attributes.
+          merge!( name: 'My new project' ) }, as: :turbo_stream
         expect(response.body).to redirect_to(projects_path)
         expect(flash[:notice]).to match('Project was successfully updated.')
+      end
+
+      it 'invalid request' do
+        user = create(:user)
+        project = create(:project)
+        put project_path(user, project), params: { project: valid_attributes.
+          merge!( name: nil ) }
+        expect(response).to have_http_status(422)
       end
     
     end

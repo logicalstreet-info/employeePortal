@@ -5,24 +5,16 @@ RSpec.describe 'PropertiesController', type: :request do
   before :each do
     sign_in(user)
   end
-  
-  describe "property registration" do
-    before do
-      @params = {
-        property: {
-          name: 'My asset',
-          description: 'my asset description',
-          assets_type: :LED,
-          purchase_date: Date.today,
-          warranty_month: 2,
-          organization_id: user.organization_id
-        }
-      }
-    end
-    
 
+  let(:valid_attributes) { { name: 'My asset',
+    description: 'my asset description', assets_type: :LED,
+    purchase_date: Date.today, warranty_month: 2,
+    organization_id: user.organization_id }}
+
+  describe "property registration" do
+    
     it "should show properties" do
-      get properties_path, params: @params, as: :turbo_stream
+      get properties_path
       expect(response).to be_successful
     end
 
@@ -34,13 +26,13 @@ RSpec.describe 'PropertiesController', type: :request do
     it 'check the description format value is right' do
       user.add_role(:admin)
       record = create(:property)
-      get properties_index_path, params: {}, as: :turbo_stream
+      get properties_index_path
       expect(response.body).to include(record.description.to_plain_text)
     end
 
     it 'check the warranty_monthe format value is right' do
       property = create(:property)
-      get properties_index_path, params: {}, as: :turbo_stream
+      get properties_index_path
       expect(response.body).to include(property.warranty_month.to_s)
     end
 
@@ -87,10 +79,19 @@ RSpec.describe 'PropertiesController', type: :request do
       end
       
       it 'Create property' do
-        post properties_path, params: @params, as: :turbo_stream
+        post properties_path, params: { property: valid_attributes },
+          as: :turbo_stream
         expect(response.body).to redirect_to(properties_index_path)
         expect(flash[:notice]).to match('Property was successfully created.')
         expect(Property.last.name).to match('My asset')
+      end
+
+      it 'invalid request' do
+        post properties_path, params: { property: valid_attributes.
+          merge!( name: nil, description: nil, assets_type: nil, 
+          purchase_date: Date.today, warranty_month: 2, 
+          organization_id: user.organization_id ) }
+        expect(response).to have_http_status(422)
       end
     
     end
@@ -103,11 +104,20 @@ RSpec.describe 'PropertiesController', type: :request do
       end
     
       it 'property' do
-        # user.add_role(:admin)
         property = create(:property)
-        patch property_path(property), params: { property: { name: 'assests1' } }, as: :turbo_stream
+        patch property_path(property), params: { property: valid_attributes.
+          merge!( name: 'assests1' ) }, as: :turbo_stream
         expect(response.body).to redirect_to(properties_index_path)
         expect(flash[:notice]).to match('Property was successfully updated')
+      end
+
+      it 'invalid request' do
+        property = create(:property)
+        patch property_path(property), params: { property: valid_attributes.
+          merge!( name: nil, description: nil, assets_type: nil, 
+          purchase_date: Date.today, warranty_month: 2, 
+          organization_id: user.organization_id ) }
+        expect(response).to have_http_status(422)
       end
     
     end

@@ -3,7 +3,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     mobile_number { 1111111111 }
     parent_mobile_number { 1111111111 }
-    email { "#{Faker::Lorem.word}@hiclark.com" }
+    email { "#{Faker::Lorem.word}@gmail.com" }
     password { 11111111 }
     password_confirmation { 11111111 }
     birth_date {Faker::Date.birthday(min_age: 18, max_age: 65)}

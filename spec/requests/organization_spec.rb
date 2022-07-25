@@ -6,16 +6,11 @@ RSpec.describe "OrganizationsController", type: :request do
     sign_in(user)
   end
 
+  let(:valid_attributes) { { name: Faker::Name.name, 
+   weekly_off: "sunday"  }}
+
   describe "organization" do
     
-    before do 
-      @params = { 
-        organization: { 
-          name: Faker::Name.name, 
-          weekly_off: "sunday"  
-        } 
-      }
-    end
 
     it "should show organization for super admin" do
       get organizations_path
@@ -23,7 +18,8 @@ RSpec.describe "OrganizationsController", type: :request do
     end
 
     it "should a show organization for admin" do
-      get organizations_admin_index_path, params: @params, as: :turbo_stream
+      get organizations_admin_index_path, params: { organization: 
+        valid_attributes }, as: :turbo_stream
       expect(response).to be_successful
     end
 
@@ -34,7 +30,8 @@ RSpec.describe "OrganizationsController", type: :request do
     end
     
     it "for a name include" do
-      get new_organization_path, params: @params, as: :turbo_stream
+      get new_organization_path, params: { organization: 
+        valid_attributes }, as: :turbo_stream
       expect(response.body).to include("name")
     end
 
@@ -45,7 +42,8 @@ RSpec.describe "OrganizationsController", type: :request do
       end
       
       it 'Create Organization' do
-        post organizations_path, params: { organization: { name: 'Google', weekly_off: "sunday" } }, as: :turbo_stream
+        post organizations_path, params: { organization: valid_attributes.
+          merge!(name: 'Google') }, as: :turbo_stream
         expect(response.body).to redirect_to(organizations_index_path)
         expect(flash[:notice]).to match("Organization was successfully created.")
         expect(Organization.last.name).to match('Google')
@@ -62,7 +60,8 @@ RSpec.describe "OrganizationsController", type: :request do
     
       it 'Update Organization' do
         organization = create(:organization)
-        put organization_path(organization), params: { organization: { name: 'Amazon' } }, as: :turbo_stream
+        put organization_path(organization), params: { organization: 
+          valid_attributes.merge!( name: 'Amazon' ) }, as: :turbo_stream
         expect(response.body).to redirect_to(organizations_index_path)
         expect(flash[:notice]).to match('Organization was successfully updated')
       end
