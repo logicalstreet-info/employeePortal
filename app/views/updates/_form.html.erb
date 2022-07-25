@@ -1,5 +1,6 @@
 <div class="row">
   <div class="field col-4">
+    <%= form.hidden_field :organization_id, :value => current_user.organization_id %>
     <% invalid = @update.errors.include?(:in_time) %>
       <div class="form-group">
         <%= form.label :Start_time %>

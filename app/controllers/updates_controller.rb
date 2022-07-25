@@ -3,7 +3,7 @@ class UpdatesController < ApplicationController
   before_action :get_users, only: %i[index]
 
   def index
-    if has_role_admin?
+    if current_user.has_role_admin
       @updates = Update.joins(:user).where(users: { organization_id: current_user.organization_id }).order(
         'updates.created_at DESC')
       if params[:type] == 'day'
@@ -15,13 +15,15 @@ class UpdatesController < ApplicationController
     else
       @updates = Update.where(user_id: current_user).order('created_at DESC')
     end
-    @daily_updates = if params[:user_id].present?
-                      @updates.where(user_id: params[:user_id])
-                     elsif params[:date].present?
-                      @updates.where("DATE(in_time) = ?", params[:date].to_date)
-                     else
-                      @updates.all
-                     end
+    @daily_updates =  if params[:user_id].present? && params[:date].present?
+                        @updates.where("DATE(in_time) = ? AND user_id = ?", params[:date].to_date, params[:user_id])
+                      elsif params[:user_id].present?
+                        @updates.where(user_id: params[:user_id])
+                      elsif params[:date].present?
+                        @updates.where("DATE(in_time) = ?", params[:date].to_date)
+                      else
+                        @updates.all
+                      end
     @daily_updates = @daily_updates.page(params[:page]).per(5)
     respond_to do |format|
       format.html
@@ -87,7 +89,7 @@ class UpdatesController < ApplicationController
   private
 
   def update_params
-    params.require(:update).permit(:description, :in_time, :out_time, :project_id)
+    params.require(:update).permit(:description, :in_time, :out_time, :project_id, :organization_id)
   end
 
   def find_user
