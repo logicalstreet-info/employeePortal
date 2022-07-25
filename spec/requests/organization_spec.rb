@@ -77,6 +77,29 @@ RSpec.describe "OrganizationsController", type: :request do
         expect(flash[:notice]).to match('Organization was successfully destroyed.')
       end
     end
+
+    it "super fetaure edit " do
+      organization = create(:organization)
+      feature_flag = create(:feature_flag, employee_bond: "on",
+        organization_id: user.organization_id)
+      get super_fetaure_edit_path(organization)
+      expect(response.body).to include(organization.name)
+      expect(response.body.to_s).to include(organization.feature_flag.employee_bond.to_s)
+    end
+
+    it "super fetaure update" do
+      organization = create(:organization)
+      patch super_fetaure_update_path(organization), params: { organization: 
+      valid_attributes }
+      expect(response.body).to redirect_to(organizations_index_path)
+    end
+    
+    # it "super fetaure update" do
+    #   organization = create(:organization)
+    #   patch super_fetaure_update_path(organization), params: { organization: 
+    #   valid_attributes.merge!(name: nil) }
+    #   expect(response).to have_http_status(422)
+    # end
     
   end
 

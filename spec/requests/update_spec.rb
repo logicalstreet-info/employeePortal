@@ -74,6 +74,63 @@ RSpec.describe 'UpdatesController', type: :request do
       expect(response.body).to include("button")
     end
   end
+
+  describe "add the admin" do
+    # before { cookies['is_admin_view'] = true }
+
+    it "if admin page show the leave" do
+      user.add_role(:admin)
+      user.has_role_admin
+      user = create(:user)
+      update = create(:update,)
+      get updates_path(user, format: :csv)
+      expect(response.body).to include(update.user.name)
+    end
+
+    it "params type days present" do
+      user.add_role(:admin)
+      user.has_role_admin
+      user = create(:user)
+      record = create(:update, created_at: Date.yesterday)
+      get updates_path(format: :csv), params: {type: :day} 
+      expect(response.body).to include(record.user.name)
+    end
+
+    it "params type months present" do
+      user.add_role(:admin)
+      user.has_role_admin
+      user = create(:user)
+      record = create(:update, created_at: Date.current.month)
+      get updates_path(format: :csv), params: {type: :month} 
+      expect(response.body).to include(record.user.name)
+    end
+
+    it "if params of user and date present" do
+      record = create(:update)
+      get updates_path, params: { user_id: user.id, date: Date.today} 
+      expect(response.body).to include(record.user_id.to_s) 
+    end
+;
+
+    it "if params of user present" do
+      record = create(:update)
+      get updates_path, params: { user_id: user.id } 
+      expect(response.body).to include(record.user_id.to_s) 
+    end
+
+    it "if params of date present" do
+      record = create(:update)
+      get updates_path, params: { date: Date.today} 
+      expect(response.body).to include(record.in_time.strftime('%I:%M %p')) 
+    end
+
+    it "defaults data are show" do
+      record = create(:update)
+      get updates_path
+      expect(response.body).to include(record.in_time.strftime('%I:%M %p'))
+    end
+
+  end
     
   
   describe "POST /create" do
@@ -85,7 +142,7 @@ RSpec.describe 'UpdatesController', type: :request do
     it 'Create Update' do
       project = create(:project)
       post updates_path, params: { update: valid_attributes.
-        merge!(project_id: project.id) }, as: :turbo_stream
+        merge!(project_id: project.id, organization_id: user.organization_id) }, as: :turbo_stream
       expect(response.body).to redirect_to(updates_path)
       expect(flash[:notice]).to match('Update was successfully created.')
       expect(Update.last.in_time.utc.to_i).to match(Time.now.to_i)

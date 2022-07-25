@@ -24,6 +24,12 @@ RSpec.describe "ProjectsController", type: :request do
       expect(response.body).to include("name")
     end
 
+    it "project show page" do
+      project = create(:project)
+      get project_path(project)
+      expect(response).to be_successful
+    end
+
     describe "POST /create" do
      
       it 'New project ' do

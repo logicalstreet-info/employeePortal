@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe 'LeaveApplicationsController', type: :request do
-
+  let(:user) {create(:user)}
   before :each do
-    sign_in(create(:user))
+    sign_in(user)
   end
   
   describe "leave application" do
@@ -38,6 +38,66 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
         expect(response.body).to include(record.to_date.strftime('%d-%m-%Y'))
       end
 
+      describe "add the admin" do
+
+        it "if admin page show the leave" do
+          user.add_role(:admin)
+          user.has_role_admin
+          user = create(:user)
+          get leave_applications_path(user)
+          expect(response.body).to include(user.name)
+        end
+
+        it "if admin page show the leave" do
+          record = create(:leave_application)
+          get leave_applications_path
+          expect(response.body).to include(record.from_date.strftime('%d-%m-%Y'))
+        end
+
+        it "if params of user and status present" do
+          record = create(:leave_application)
+          get leave_applications_path(record), params: { user_id: user.id, status: :pending } 
+          expect(response.body).to include(record.status) 
+        end
+;
+        it "if params of user present" do
+          record = create(:leave_application)
+          get leave_applications_path(record), params: { user_id: user.id } 
+          expect(response.body.to_s).to include(record.user_id.to_s) 
+        end
+
+        it "if params of status present" do
+          record = create(:leave_application)
+          get leave_applications_path(record), params: { status: :pending } 
+          expect(response.body).to include(record.status) 
+        end
+
+        it "if params of order present" do
+          record = create(:leave_application)
+          get leave_applications_path(record), params: {order: "ASC"} 
+          expect(response.body).to include(record.from_date.strftime('%d-%m-%Y'))
+        end
+
+        it "if params of from_date and to_date present" do
+          record = create(:leave_application)
+          get leave_applications_path(record), params: { from_date: Date.today,
+          to_date: Date.today + 3 }
+          expect(response.body).to include(record.from_date.strftime('%d-%m-%Y'))
+        end
+
+        it "if params of from_date present" do
+          record = create(:leave_application)
+          get leave_applications_path(record), params: { from_date: Date.today}
+          expect(response.body).to include(record.from_date.strftime('%d-%m-%Y'))
+        end
+
+        it "defaults data are show" do
+          record = create(:leave_application)
+          get leave_applications_path(record)
+          expect(response.body).to include(record.from_date.strftime('%d-%m-%Y'))
+        end
+
+      end
     end
 
     it "for a leave application" do
@@ -174,6 +234,11 @@ RSpec.describe 'LeaveApplicationsController', type: :request do
         expect(flash[:notice]).to match('Leaves Reject Succsesfully')
       end
     
+    end
+
+    it "Get calculated leaves" do
+      post leave_applications_get_calculated_leaves_path
+      expect(response.body).to redirect_to(leave_applications_path)
     end
     
   end 

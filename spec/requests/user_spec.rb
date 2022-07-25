@@ -8,7 +8,6 @@ RSpec.describe "UsersController", type: :request do
 
   describe "user" do
     
-
     it "should show user" do
       get users_path
       expect(response).to be_successful
@@ -21,6 +20,7 @@ RSpec.describe "UsersController", type: :request do
     end
     
     describe "new form validation" do 
+      
       it "for a name include" do
         get new_user_path
         expect(response.body).to include("name")
@@ -176,7 +176,53 @@ RSpec.describe "UsersController", type: :request do
       end
 
     end
+      
+    it "Assign the admin role" do
+      user = create(:user)
+      user.add_role(:admin)
+      post assign_admin_role_user_path(user)
+      expect(response.body).to redirect_to(users_index_path)
+      expect(flash[:notice]).to match('Successfully Assign Admin Role To ')
+    end 
     
+    it "Remove the admin role" do
+      user = create(:user)
+      user.remove_role(:admin)
+      post remove_admin_role_user_path(user)
+      expect(response.body).to redirect_to(users_index_path)
+      expect(flash[:notice]).to match('Successfully Remove Admin Role To ')
+    end
+
+    describe " check cookie and redirect view" do
+      
+      it "switch and redirect user view" do
+        cookies[:is_admin_view].present?
+        get users_switch_and_redirect_view_path
+        expect(response.cookies["is_user_view"]).to eq("true") 
+      end
+
+      describe "add cookie for user" do
+        before { cookies['is_user_view'] = true }
+
+        it "switch and redirect admin view" do
+          cookies[:is_user_view].present?
+          get users_switch_and_redirect_view_path
+          expect(response.cookies["is_admin_view"]).to eq("true") 
+        end
+
+      end
+
+      it "set default cookie" do
+        get users_switch_and_redirect_view_path
+        expect(response.cookies["is_user_view"]).to eq("true")
+      end
+
+      it "redirect to root path" do
+        get users_switch_and_redirect_view_path
+        expect(response.body).to redirect_to(root_path)
+      end
+    end
+
   end
 
 end 

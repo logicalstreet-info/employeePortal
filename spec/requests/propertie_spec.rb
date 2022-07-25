@@ -7,7 +7,7 @@ RSpec.describe 'PropertiesController', type: :request do
   end
 
   let(:valid_attributes) { { name: 'My asset',
-    description: 'my asset description', assets_type: :LED,
+    description: 'my asset description', assets_type: "Laptop",
     purchase_date: Date.today, warranty_month: 2,
     organization_id: user.organization_id }}
 
@@ -36,6 +36,33 @@ RSpec.describe 'PropertiesController', type: :request do
       expect(response.body).to include(property.warranty_month.to_s)
     end
 
+    describe "property index page" do
+      
+      it "if params of user and assets_type present" do
+        record = create(:property)
+        get properties_index_path(record), params: { user_id: user.id, assets_type: "Laptop"} 
+        expect(response.body.to_s).to include(record.assets_type) 
+      end
+
+      it "if params of user present" do
+        record = create(:property)
+        get properties_index_path(record), params: { user_id: user.id} 
+        expect(response.body.to_s).to include(record.user_id.to_s) 
+      end
+
+      it "if params of assets_type present" do
+        record = create(:property)
+        get properties_index_path, params: { assets_type: "Laptop" } 
+        expect(response.body).to include(record.assets_type.to_s) 
+      end
+
+      it "defaults data are show" do
+        record = create(:property)
+        get properties_index_path
+        expect(response.body).to include(record.assets_type.to_s) 
+      end
+
+    end
 
     
     describe "GET/ new property page" do
