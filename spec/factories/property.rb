@@ -2,11 +2,13 @@ FactoryBot.define do
   factory :property do
     name { Faker::Name.name }
     description { "properties" }
-    assets_type { Faker::Number.between(from: 0, to: 5) }
+    assets_type { "Laptop" }
     purchase_date { Date.today }
+    user { User.first || create(:user) }
+    organization { Organization.first || create(:organization) }
     warranty_month { Faker::Number.between(from: 0, to: 120) }
     
-    association :user, factory: :user
+    # association :user, factory: :user
 
     trait :Laptop do
       assets_type { :Laptop }
